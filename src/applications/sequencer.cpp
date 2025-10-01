@@ -1,26 +1,33 @@
 #include "sequencer.hpp"
-#include "msg/message.hpp"
+#include <chrono>
 #include <iostream>
 
 Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
-uint64_t Sequencer::publish(uint32_t type,
-                            const std::vector<uint8_t> &payload) {
+void Sequencer::attach_command_bus(CommandBus &bus) {
+  bus_ = &bus;
+  bus.subscribe(
+      [this](const toysequencer::TextCommand &cmd) { this->publish(cmd); });
+}
+
+uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
   uint64_t seq = next_seq_.fetch_add(1);
 
-  // construct a message
-  Message msg;
-  msg.header.seq = seq;
-  msg.header.timestamp =
+  toysequencer::TextEvent event;
+  event.set_seq(seq);
+  event.set_text(command.text());
+  uint64_t ts =
       std::chrono::duration_cast<std::chrono::microseconds>(
           std::chrono::high_resolution_clock::now().time_since_epoch())
           .count();
-  msg.header.type = type;
-  msg.header.payload_size = payload.size();
-  msg.payload = payload;
+  event.set_timestamp(ts);
 
-  auto serialized = msg.serialize();
-  bool success = sender_.send(serialized);
+  std::string bytes;
+  bytes.resize(event.ByteSizeLong());
+  event.SerializeToArray(bytes.data(), static_cast<int>(bytes.size()));
+  std::vector<uint8_t> payload(bytes.begin(), bytes.end());
+
+  bool success = sender_.send(payload);
 
   if (!success) {
     std::cerr << "Failed to send message with sequence " << seq << std::endl;
