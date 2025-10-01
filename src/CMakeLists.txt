@@ -1,6 +1,7 @@
 add_executable(toy-sequencer 
     main.cpp
-    applications/ping_pong.cpp
+    applications/ping.cpp
+    applications/pong.cpp
     core/multicast_sender.cpp
     core/inproc_multicast.cpp
     applications/sequencer.cpp

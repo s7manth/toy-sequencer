@@ -1,4 +1,5 @@
-#include "applications/ping_pong.hpp"
+#include "applications/ping.hpp"
+#include "applications/pong.hpp"
 #include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
 #include "core/inproc_multicast.hpp"
@@ -30,7 +31,7 @@ int main(int, char **) {
     inproc_sender.register_subscriber(
         [&](const std::vector<uint8_t> &bytes) { pong_rx.on_bytes(bytes); });
 
-    std::thread ping_thread([&] { ping.start(); });
+    std::thread ping_thread([&] { ping.run(); });
 
     // let system run briefly
     if (ping_thread.joinable()) {
