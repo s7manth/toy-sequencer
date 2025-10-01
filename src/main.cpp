@@ -1,6 +1,6 @@
+#include "applications/receiver.hpp"
+#include "applications/sequencer.hpp"
 #include "core/multicast_sender.hpp"
-#include "receiver.hpp"
-#include "sequencer.hpp"
 #include <chrono>
 #include <iostream>
 

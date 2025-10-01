@@ -17,6 +17,9 @@ if(CLANG_FORMAT_EXECUTABLE)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/*.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/applications/*.cpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/applications/*.hpp
+        ${CMAKE_CURRENT_SOURCE_DIR}/src/msg/*.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp
     )
 

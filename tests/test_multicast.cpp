@@ -1,6 +1,6 @@
+#include "applications/receiver.hpp"
 #include "core/multicast_sender.hpp"
-#include "message.hpp"
-#include "receiver.hpp"
+#include "msg/message.hpp"
 #include <chrono>
 #include <iostream>
 #include <thread>

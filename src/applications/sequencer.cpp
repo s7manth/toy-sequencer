@@ -1,5 +1,5 @@
 #include "sequencer.hpp"
-#include "message.hpp"
+#include "msg/message.hpp"
 #include <iostream>
 
 Sequencer::Sequencer(MulticastSender &sender) : sender_(sender) {}

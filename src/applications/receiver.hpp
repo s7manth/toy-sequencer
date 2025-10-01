@@ -1,5 +1,5 @@
 #pragma once
-#include "message.hpp"
+#include "msg/message.hpp"
 #include <functional>
 
 class Receiver {

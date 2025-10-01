@@ -1,8 +1,8 @@
 add_executable(toy-sequencer 
     main.cpp
     core/multicast_sender.cpp
-    sequencer.cpp
-    receiver.cpp
+    applications/sequencer.cpp
+    applications/receiver.cpp
 )
 
 target_include_directories(toy-sequencer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

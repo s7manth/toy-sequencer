@@ -1,7 +1,7 @@
 add_executable(test_multicast 
     test_multicast.cpp
     ${CMAKE_SOURCE_DIR}/src/core/multicast_sender.cpp
-    ${CMAKE_SOURCE_DIR}/src/receiver.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/receiver.cpp
 )
 
 target_include_directories(test_multicast PRIVATE ${CMAKE_SOURCE_DIR}/src)
