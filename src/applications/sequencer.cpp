@@ -6,8 +6,30 @@ Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
 void Sequencer::attach_command_bus(CommandBus &bus) {
   bus_ = &bus;
-  bus.subscribe(
-      [this](const toysequencer::TextCommand &cmd) { this->publish(cmd); });
+  bus.subscribe([this](const toysequencer::TextCommand &cmd) {
+    {
+      std::lock_guard<std::mutex> lock(queue_mutex_);
+      queue_.push(cmd);
+    }
+    queue_cv_.notify_one();
+  });
+}
+
+void Sequencer::start() {
+  if (running_.exchange(true)) {
+    return;
+  }
+  worker_ = std::thread([this] { this->worker_loop(); });
+}
+
+void Sequencer::stop() {
+  if (!running_.exchange(false)) {
+    return;
+  }
+  queue_cv_.notify_all();
+  if (worker_.joinable()) {
+    worker_.join();
+  }
 }
 
 uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
@@ -43,4 +65,20 @@ void Sequencer::retransmit(uint64_t from_seq, uint64_t to_seq) {
   // 2. resending them via multicast
   std::cout << "Retransmit requested for sequences " << from_seq << " to "
             << to_seq << std::endl;
+}
+
+void Sequencer::worker_loop() {
+  while (running_) {
+    toysequencer::TextCommand cmd;
+    {
+      std::unique_lock<std::mutex> lock(queue_mutex_);
+      queue_cv_.wait(lock, [this] { return !running_ || !queue_.empty(); });
+      if (!running_ && queue_.empty()) {
+        return;
+      }
+      cmd = queue_.front();
+      queue_.pop();
+    }
+    this->publish(cmd);
+  }
 }

@@ -1,46 +1,45 @@
+#include "applications/ping_pong.hpp"
 #include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
-#include "core/multicast_sender.hpp"
+#include "core/inproc_multicast.hpp"
 #include "generated/messages.pb.h"
 #include <chrono>
 #include <iostream>
+#include <thread>
 
 int main(int, char **) {
   try {
-    MulticastSender sender("239.255.0.1", 30001);
-    Sequencer sequencer(sender);
+    InprocMulticastSender inproc_sender;
+    Sequencer sequencer(inproc_sender);
+    CommandBus bus;
+    sequencer.attach_command_bus(bus);
+    sequencer.start();
 
-    auto message_handler = [](const toysequencer::TextEvent &msg) {
-      std::cout << "Received message - Seq: " << msg.seq()
-                << ", Size: " << msg.text().size() << std::endl;
-    };
+    auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    Receiver receiver(message_handler);
+    PingApp ping(bus, log);
+    PongApp pong(log);
 
-    std::string payload = "Hello, world!";
-    std::vector<uint8_t> payload_bytes(payload.begin(), payload.end());
-    toysequencer::TextCommand cmd;
-    cmd.set_text(payload);
-    uint64_t seq = sequencer.publish(cmd);
+    Receiver ping_rx(
+        [&](const toysequencer::TextEvent &e) { ping.on_event(e); });
+    Receiver pong_rx(
+        [&](const toysequencer::TextEvent &e) { pong.on_event(e); });
 
-    std::cout << "Published message with sequence: " << seq << std::endl;
+    inproc_sender.register_subscriber(
+        [&](const std::vector<uint8_t> &bytes) { ping_rx.on_bytes(bytes); });
+    inproc_sender.register_subscriber(
+        [&](const std::vector<uint8_t> &bytes) { pong_rx.on_bytes(bytes); });
 
-    toysequencer::TextEvent msg;
-    msg.set_seq(seq);
-    msg.set_timestamp(
-        std::chrono::duration_cast<std::chrono::microseconds>(
-            std::chrono::high_resolution_clock::now().time_since_epoch())
-            .count());
-    msg.set_text(payload);
+    std::thread ping_thread([&] { ping.start(); });
 
-    std::string bytes;
-    bytes.resize(msg.ByteSizeLong());
-    msg.SerializeToArray(bytes.data(), static_cast<int>(bytes.size()));
+    // let system run briefly
+    if (ping_thread.joinable()) {
+      ping_thread.join();
+    }
 
-    receiver.on_datagram(reinterpret_cast<const uint8_t *>(bytes.data()),
-                         bytes.size());
-    std::cout << "Received message - Seq: " << msg.seq()
-              << ", Size: " << msg.text().size() << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(200));
+
+    sequencer.stop();
 
     return 0;
   } catch (const std::exception &e) {

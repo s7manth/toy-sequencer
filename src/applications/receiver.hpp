@@ -9,6 +9,11 @@ public:
 
   void on_datagram(const uint8_t *data, size_t len);
 
+  // Convenience for in-process bus subscription
+  void on_bytes(const std::vector<uint8_t> &bytes) {
+    on_datagram(bytes.data(), bytes.size());
+  }
+
   template <typename TDeserializer>
   bool try_deserialize(TDeserializer deserializer) {
     (void)deserializer;
