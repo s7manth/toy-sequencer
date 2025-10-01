@@ -42,7 +42,6 @@ int main() {
   // Assertions: we received all, in order, with correct metadata
   assert(received.size() == test_messages.size());
   for (size_t i = 0; i < received.size(); ++i) {
-    const auto &ev = received[i];
     assert(ev.seq() == seqNos[i]);
     assert(ev.text() == test_messages[i]);
     assert(ev.timestamp() > 0);

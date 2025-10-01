@@ -62,6 +62,13 @@ void MulticastSender::setup_socket() {
       throw std::runtime_error("Failed to set multicast TTL");
     }
 
+    // Enable loopback so local subscribers on the same host receive packets
+    unsigned char loop = 1;
+    if (setsockopt(socket_, IPPROTO_IP, IP_MULTICAST_LOOP,
+                   reinterpret_cast<const char *>(&loop), sizeof(loop)) < 0) {
+      throw std::runtime_error("Failed to enable multicast loopback");
+    }
+
     // Allow multiple sockets to bind to the same address
     int reuse = 1;
     if (setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR,
