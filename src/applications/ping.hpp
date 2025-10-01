@@ -1,11 +1,13 @@
 #pragma once
 
 #include "core/command_bus.hpp"
+#include "core/command_sender.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <functional>
 #include <string>
 
-class PingApp {
+class PingApp : public ICommandSender, public IEventReceiver {
 public:
   PingApp(CommandBus &bus, std::function<void(const std::string &)> log);
   ~PingApp() = default;
@@ -13,7 +15,11 @@ public:
   // Executed by caller-managed thread/context
   void run();
 
-  void on_event(const toysequencer::TextEvent &event);
+  // IEventReceiver
+  void on_event(const toysequencer::TextEvent &event) override;
+
+  // ICommandSender
+  void send_command(const toysequencer::TextCommand &command) override;
 
 private:
   CommandBus &bus_;

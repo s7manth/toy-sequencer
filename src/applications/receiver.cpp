@@ -14,17 +14,21 @@ void Receiver::on_datagram(const uint8_t *data, size_t len) {
       return;
     }
 
+    if (event.seq() < expected_seq_) {
+      // Duplicate/old for this receiver; drop quietly.
+      return;
+    }
+
     if (event.seq() == expected_seq_) {
       on_event_(event);
       expected_seq_++;
-    } else if (event.seq() > expected_seq_) {
-      std::cout << "Out of order event received. Expected: " << expected_seq_
-                << ", Got: " << event.seq() << std::endl;
-      on_event_(event);
-    } else {
-      std::cout << "Duplicate/old event received. Expected: " << expected_seq_
-                << ", Got: " << event.seq() << std::endl;
+      return;
     }
+
+    // event.seq() > expected_seq_
+    std::cout << "Out of order event received. Expected: " << expected_seq_
+              << ", Got: " << event.seq() << std::endl;
+    on_event_(event);
 
   } catch (const std::exception &e) {
     std::cerr << "Receiver error: " << e.what() << std::endl;

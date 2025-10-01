@@ -16,6 +16,11 @@ void PingApp::on_event(const toysequencer::TextEvent &event) {
 void PingApp::run() {
   toysequencer::TextCommand cmd;
   cmd.set_text("PING");
-  bus_.publish(cmd);
+  send_command(cmd);
+  log_("Ping sent PING");
   std::this_thread::sleep_for(std::chrono::milliseconds(100));
+}
+
+void PingApp::send_command(const toysequencer::TextCommand &command) {
+  bus_.publish(command);
 }
