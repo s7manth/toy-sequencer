@@ -1,21 +1,25 @@
-add_executable(test_multicast 
-    test_multicast.cpp
-    ${CMAKE_SOURCE_DIR}/src/core/multicast_sender.cpp
+add_library(test_support STATIC
+    support/test_harness.cpp
     ${CMAKE_SOURCE_DIR}/src/applications/receiver.cpp
 )
 
-target_include_directories(test_multicast PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(test_support PUBLIC
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/support
+    ${CMAKE_CURRENT_SOURCE_DIR}/stubs
+)
 
-
-if(WIN32)
-    target_link_libraries(test_multicast ws2_32)
-else()
-    # unix/linux - no additional libraries needed for basic socket operations
-endif()
-
-# compiler flags
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_multicast PRIVATE -Wall -Wextra -std=c++17)
+    target_compile_options(test_support PRIVATE -Wall -Wextra -std=c++17)
 endif()
 
-add_test(NAME test_multicast COMMAND test_multicast)
+add_executable(test_sequencer_basic
+    cases/test_sequencer_basic.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+)
+target_link_libraries(test_sequencer_basic PRIVATE test_support)
+target_include_directories(test_sequencer_basic PRIVATE ${CMAKE_SOURCE_DIR}/src)
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(test_sequencer_basic PRIVATE -Wall -Wextra -std=c++17)
+endif()
+add_test(NAME test_sequencer_basic COMMAND test_sequencer_basic)

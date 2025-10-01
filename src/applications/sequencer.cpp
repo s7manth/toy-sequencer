@@ -2,7 +2,7 @@
 #include "msg/message.hpp"
 #include <iostream>
 
-Sequencer::Sequencer(MulticastSender &sender) : sender_(sender) {}
+Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
 uint64_t Sequencer::publish(uint32_t type,
                             const std::vector<uint8_t> &payload) {

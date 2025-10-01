@@ -30,7 +30,7 @@ if(CLANG_FORMAT_EXECUTABLE)
     )
 
     add_dependencies(toy-sequencer clangformat)
-    add_dependencies(test_multicast clangformat)
+    add_dependencies(test_sequencer_basic clangformat)
 else()
     message(WARNING "clang-format executable not found. Code formatting target will not be available.")
 endif()

@@ -1,12 +1,12 @@
 #pragma once
 
-#include "core/multicast_sender.hpp"
+#include "core/sender_iface.hpp"
 #include <atomic>
 #include <cstdint>
 
 class Sequencer {
 public:
-  Sequencer(MulticastSender &sender);
+  Sequencer(ISender &sender);
 
   // accept an application event (payload & type) -> assigns seq and multicasts
   uint64_t publish(uint32_t type, const std::vector<uint8_t> &payload);
@@ -16,5 +16,5 @@ public:
 
 private:
   std::atomic<uint64_t> next_seq_{1}; // start at 1
-  MulticastSender &sender_;
+  ISender &sender_;
 };
