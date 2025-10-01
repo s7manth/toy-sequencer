@@ -1,3 +1,5 @@
+find_package(Protobuf QUIET REQUIRED)
+
 add_library(test_support STATIC
     support/test_harness.cpp
     ${CMAKE_SOURCE_DIR}/src/applications/receiver.cpp
@@ -11,6 +13,19 @@ target_include_directories(test_support PUBLIC
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(test_support PRIVATE -Wall -Wextra -std=c++17)
+endif()
+
+# Ensure generated protobuf headers exist before compiling test_support
+if(TARGET generate_msg_protos)
+    add_dependencies(test_support generate_msg_protos)
+endif()
+
+# Provide protobuf headers/libs when compiling files that include generated .pb.h
+if(TARGET protobuf::libprotobuf)
+    target_link_libraries(test_support PUBLIC protobuf::libprotobuf)
+else()
+    target_include_directories(test_support PUBLIC ${Protobuf_INCLUDE_DIRS})
+    target_link_libraries(test_support PUBLIC ${Protobuf_LIBRARIES})
 endif()
 
 add_executable(test_sequencer_basic
