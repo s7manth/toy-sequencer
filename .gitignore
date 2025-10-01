@@ -1,0 +1,41 @@
+# Build directories
+build/
+out/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# CMake presets
+CMakePresets.json.user
+
+# Compiled object files and binaries
+*.o
+*.obj
+*.so
+*.dll
+*.dylib
+*.a
+*.lib
+*.exe
+
+# Editor/IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+*.user
+*.log
+
+# Test output
+Testing/
+test_output/
+*.gcda
+*.gcno
+*.gcov
+
+# MacOS
+.DS_Store
+
+# Windows
+Thumbs.db
