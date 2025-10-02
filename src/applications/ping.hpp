@@ -7,16 +7,16 @@
 #include <functional>
 #include <string>
 
-class PingApp : public ICommandSender, public IEventReceiver {
+class PingApp : public ICommandSender, public EventReceiver {
 public:
   PingApp(CommandBus &bus, std::function<void(const std::string &)> log,
-          uint64_t instance_id);
+          uint64_t instance_id, uint64_t pong_instance_id);
   ~PingApp() = default;
 
   // Executed by caller-managed thread/context
   void run();
 
-  // IEventReceiver
+  // EventReceiver
   void on_event(const toysequencer::TextEvent &event) override;
 
   // ICommandSender
@@ -26,5 +26,5 @@ public:
 private:
   CommandBus &bus_;
   std::function<void(const std::string &)> log_;
-  uint64_t instance_id_;
+  uint64_t pong_instance_id_;
 };

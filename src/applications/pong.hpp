@@ -5,12 +5,12 @@
 #include <functional>
 #include <string>
 
-class PongApp : public ICommandSender, public IEventReceiver {
+class PongApp : public ICommandSender, public EventReceiver {
 public:
   PongApp(CommandBus &bus, std::function<void(const std::string &)> log,
-          uint64_t instance_id);
+          uint64_t instance_id, uint64_t ping_instance_id);
 
-  // IEventReceiver
+  // EventReceiver
   void on_event(const toysequencer::TextEvent &event) override;
 
   // ICommandSender
@@ -20,5 +20,5 @@ public:
 private:
   CommandBus &bus_;
   std::function<void(const std::string &)> log_;
-  uint64_t instance_id_;
+  uint64_t ping_instance_id_;
 };

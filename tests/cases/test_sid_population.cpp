@@ -1,8 +1,8 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
-#include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <chrono>
@@ -35,8 +35,15 @@ int main() {
 
   // Create receiver for target
   std::vector<toysequencer::TextEvent> received;
-  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); },
-              target_id);
+  struct TestReceiver : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } rx(target_id);
+  rx.on = [&](const toysequencer::TextEvent &e) { received.push_back(e); };
 
   // Process the sent datagram
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
