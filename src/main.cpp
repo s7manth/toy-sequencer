@@ -1,6 +1,6 @@
 #include "applications/ping.hpp"
 #include "applications/pong.hpp"
-#include "applications/receiver.hpp"
+#include "applications/scrappy.hpp"
 #include "applications/sequencer.hpp"
 #include "core/multicast_receiver.hpp"
 #include "core/multicast_sender.hpp"
@@ -31,25 +31,23 @@ int main(int, char **) {
     uint64_t ping_instance_id = sequencer.assign_instance_id();
     uint64_t pong_instance_id = sequencer.assign_instance_id();
 
-    PingApp ping(bus, log, ping_instance_id);
-    PongApp pong(bus, log, pong_instance_id);
+    PingApp ping(bus, log, ping_instance_id, pong_instance_id);
+    PongApp pong(bus, log, pong_instance_id, ping_instance_id);
 
-    // Both applications subscribe to the single events stream
-    Receiver ping_rx(
-        [&](const toysequencer::TextEvent &e) { ping.on_event(e); },
-        ping_instance_id);
-    Receiver pong_rx(
-        [&](const toysequencer::TextEvent &e) { pong.on_event(e); },
-        pong_instance_id);
+    // Scrappy listens to ALL events and stores them in a file
+    ScrappyApp scrappy("sequenced_events.txt");
+
+    // Subscribe Scrappy directly to Sequencer events (bypasses multicast
+    // duplication)
+    sequencer.subscribe_to_events(
+        [&](const toysequencer::TextEvent &event) { scrappy.on_event(event); });
 
     MulticastReceiver rx_events(mcast_addr, events_port);
 
-    rx_events.subscribe([&](const uint8_t *data, size_t len) {
-      ping_rx.on_datagram(data, len);
-    });
-    rx_events.subscribe([&](const uint8_t *data, size_t len) {
-      pong_rx.on_datagram(data, len);
-    });
+    rx_events.subscribe(
+        [&](const uint8_t *data, size_t len) { ping.on_datagram(data, len); });
+    rx_events.subscribe(
+        [&](const uint8_t *data, size_t len) { pong.on_datagram(data, len); });
 
     rx_events.start();
 

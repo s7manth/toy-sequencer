@@ -2,7 +2,6 @@ find_package(Protobuf QUIET REQUIRED)
 
 add_library(test_support STATIC
     support/test_harness.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/receiver.cpp
 )
 
 target_include_directories(test_support PUBLIC

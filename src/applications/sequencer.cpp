@@ -59,6 +59,9 @@ uint64_t Sequencer::publish(const toysequencer::TextCommand &command,
     std::cerr << "Failed to send message with sequence " << seq << std::endl;
   }
 
+  // Notify direct event subscribers (like Scrappy) before returning
+  notify_event_subscribers(event);
+
   return seq;
 }
 
@@ -66,13 +69,20 @@ uint64_t Sequencer::assign_instance_id() {
   return next_instance_id_.fetch_add(1);
 }
 
-void Sequencer::retransmit(uint64_t from_seq, uint64_t to_seq) {
-  // TODO: implement retransmission logic
-  // this would typically involve:
-  // 1. looking up messages in the persistent log (WAL)
-  // 2. resending them via multicast
-  std::cout << "Retransmit requested for sequences " << from_seq << " to "
-            << to_seq << std::endl;
+void Sequencer::subscribe_to_events(EventHandler handler) {
+  std::lock_guard<std::mutex> lock(event_handlers_mutex_);
+  event_handlers_.push_back(std::move(handler));
+}
+
+void Sequencer::notify_event_subscribers(const toysequencer::TextEvent &event) {
+  std::vector<EventHandler> copy;
+  {
+    std::lock_guard<std::mutex> lock(event_handlers_mutex_);
+    copy = event_handlers_;
+  }
+  for (auto &handler : copy) {
+    handler(event);
+  }
 }
 
 void Sequencer::worker_loop() {

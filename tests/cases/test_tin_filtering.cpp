@@ -1,8 +1,8 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
-#include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <iostream>
@@ -28,12 +28,20 @@ int main() {
 
   // Create receivers for both target and non-target
   std::vector<toysequencer::TextEvent> target_received, other_received;
-  Receiver target_rx(
-      [&](const toysequencer::TextEvent &e) { target_received.push_back(e); },
-      target_id);
-  Receiver other_rx(
-      [&](const toysequencer::TextEvent &e) { other_received.push_back(e); },
-      other_id);
+  struct TestReceiver : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } target_rx(target_id), other_rx(other_id);
+  target_rx.on = [&](const toysequencer::TextEvent &e) {
+    target_received.push_back(e);
+  };
+  other_rx.on = [&](const toysequencer::TextEvent &e) {
+    other_received.push_back(e);
+  };
 
   // Process the sent datagram through both receivers
   for (const auto &datagram : stubSender.get_sent_datagrams()) {

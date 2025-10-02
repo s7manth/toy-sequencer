@@ -2,9 +2,9 @@
 #include "../support/test_harness.hpp"
 #include "applications/ping.hpp"
 #include "applications/pong.hpp"
-#include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <chrono>
@@ -30,15 +30,23 @@ void test_cross_instance_communication() {
   // Create receivers for all instances
   std::vector<toysequencer::TextEvent> ping_received, pong_received,
       third_received;
-  Receiver ping_rx(
-      [&](const toysequencer::TextEvent &e) { ping_received.push_back(e); },
-      ping_id);
-  Receiver pong_rx(
-      [&](const toysequencer::TextEvent &e) { pong_received.push_back(e); },
-      pong_id);
-  Receiver third_rx(
-      [&](const toysequencer::TextEvent &e) { third_received.push_back(e); },
-      third_id);
+  struct TestReceiver : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } ping_rx(ping_id), pong_rx(pong_id), third_rx(third_id);
+  ping_rx.on = [&](const toysequencer::TextEvent &e) {
+    ping_received.push_back(e);
+  };
+  pong_rx.on = [&](const toysequencer::TextEvent &e) {
+    pong_received.push_back(e);
+  };
+  third_rx.on = [&](const toysequencer::TextEvent &e) {
+    third_received.push_back(e);
+  };
 
   // Send commands: Ping -> Pong, Pong -> Third, Third -> Ping
   toysequencer::TextCommand cmd1;
@@ -113,8 +121,15 @@ void test_sequence_number_assignment() {
 
   // Create receiver
   std::vector<toysequencer::TextEvent> received;
-  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); },
-              target_id);
+  struct TestReceiver2 : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } rx(target_id);
+  rx.on = [&](const toysequencer::TextEvent &e) { received.push_back(e); };
 
   // Process all datagrams
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
@@ -158,8 +173,15 @@ void test_timestamp_assignment() {
 
   // Create receiver
   std::vector<toysequencer::TextEvent> received;
-  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); },
-              target_id);
+  struct TestReceiver3 : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } rx(target_id);
+  rx.on = [&](const toysequencer::TextEvent &e) { received.push_back(e); };
 
   // Process the datagram
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
@@ -193,17 +215,25 @@ void test_ping_pong_integration() {
   auto ping_logger = [&](const std::string &msg) { ping_logs.push_back(msg); };
   auto pong_logger = [&](const std::string &msg) { pong_logs.push_back(msg); };
 
-  PingApp ping(bus, ping_logger, ping_id);
-  PongApp pong(bus, pong_logger, pong_id);
+  PingApp ping(bus, ping_logger, ping_id, pong_id);
+  PongApp pong(bus, pong_logger, pong_id, ping_id);
 
   // Create receivers
   std::vector<toysequencer::TextEvent> ping_received, pong_received;
-  Receiver ping_rx(
-      [&](const toysequencer::TextEvent &e) { ping_received.push_back(e); },
-      ping_id);
-  Receiver pong_rx(
-      [&](const toysequencer::TextEvent &e) { pong_received.push_back(e); },
-      pong_id);
+  struct TestReceiver4 : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } ping_rx(ping_id), pong_rx(pong_id);
+  ping_rx.on = [&](const toysequencer::TextEvent &e) {
+    ping_received.push_back(e);
+  };
+  pong_rx.on = [&](const toysequencer::TextEvent &e) {
+    pong_received.push_back(e);
+  };
 
   // Send commands using the applications
   toysequencer::TextCommand ping_cmd;

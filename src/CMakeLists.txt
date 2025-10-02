@@ -2,11 +2,11 @@ add_executable(toy-sequencer
     main.cpp
     applications/ping.cpp
     applications/pong.cpp
+    applications/scrappy.cpp
     core/multicast_sender.cpp
     core/multicast_receiver.cpp
     core/fanout_sender.hpp
     applications/sequencer.cpp
-    applications/receiver.cpp
 )
 
 target_include_directories(toy-sequencer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})

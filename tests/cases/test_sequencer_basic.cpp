@@ -1,8 +1,8 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
-#include "applications/receiver.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <iostream>
@@ -18,8 +18,15 @@ int main() {
   seq.attach_command_bus(bus);
 
   std::vector<toysequencer::TextEvent> received;
-  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); },
-              1);
+  struct TestReceiver : public EventReceiver {
+    using EventReceiver::EventReceiver;
+    std::function<void(const toysequencer::TextEvent &)> on;
+    void on_event(const toysequencer::TextEvent &e) override {
+      if (on)
+        on(e);
+    }
+  } rx(1);
+  rx.on = [&](const toysequencer::TextEvent &e) { received.push_back(e); };
 
   // Scenarios adapted from test_multicast.cpp
   std::vector<std::string> test_messages = {
