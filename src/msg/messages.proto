@@ -3,11 +3,16 @@ syntax = "proto3";
 package toysequencer;
 
 // Application -> Sequencer: logical "Text" command (no sequence number here)
-message TextCommand { string text = 1; }
+message TextCommand { 
+  string text = 1;
+  uint64 tin = 2; // Target Instance ID - which instance should receive this event
+}
 
 // Sequencer -> Subscribers: sequenced "Text" event
 message TextEvent {
   uint64 seq = 1; // assigned by the sequencer
   string text = 2;
   uint64 timestamp = 3; // emission time from sequencer (optional)
+  uint64 sid = 4; // Sender Instance ID - which instance sent the original command
+  uint64 tin = 5; // Target Instance ID - which instance should receive this event
 }

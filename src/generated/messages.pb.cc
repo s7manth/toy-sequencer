@@ -33,7 +33,9 @@ inline constexpr TextEvent::Impl_::Impl_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
         seq_{::uint64_t{0u}},
-        timestamp_{::uint64_t{0u}} {}
+        timestamp_{::uint64_t{0u}},
+        sid_{::uint64_t{0u}},
+        tin_{::uint64_t{0u}} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TextEvent::TextEvent(::_pbi::ConstantInitialized)
@@ -60,7 +62,8 @@ inline constexpr TextCommand::Impl_::Impl_(
       : _cached_size_{0},
         text_(
             &::google::protobuf::internal::fixed_address_empty_string,
-            ::_pbi::ConstantInitialized()) {}
+            ::_pbi::ConstantInitialized()),
+        tin_{::uint64_t{0u}} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TextCommand::TextCommand(::_pbi::ConstantInitialized)
@@ -91,24 +94,30 @@ const ::uint32_t
         protodesc_cold) = {
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_._has_bits_),
-        4, // hasbit index offset
+        5, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.text_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.tin_),
         0,
+        1,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_._has_bits_),
-        6, // hasbit index offset
+        8, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.seq_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.text_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.timestamp_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.sid_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.tin_),
         1,
         0,
         2,
+        3,
+        4,
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::toysequencer::TextCommand)},
-        {5, sizeof(::toysequencer::TextEvent)},
+        {7, sizeof(::toysequencer::TextEvent)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::toysequencer::_TextCommand_default_instance_._instance,
@@ -116,16 +125,17 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
 };
 const char descriptor_table_protodef_messages_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\016messages.proto\022\014toysequencer\"\033\n\013TextCo"
-    "mmand\022\014\n\004text\030\001 \001(\t\"9\n\tTextEvent\022\013\n\003seq\030"
-    "\001 \001(\004\022\014\n\004text\030\002 \001(\t\022\021\n\ttimestamp\030\003 \001(\004b\006"
-    "proto3"
+    "\n\016messages.proto\022\014toysequencer\"(\n\013TextCo"
+    "mmand\022\014\n\004text\030\001 \001(\t\022\013\n\003tin\030\002 \001(\004\"S\n\tText"
+    "Event\022\013\n\003seq\030\001 \001(\004\022\014\n\004text\030\002 \001(\t\022\021\n\ttime"
+    "stamp\030\003 \001(\004\022\013\n\003sid\030\004 \001(\004\022\013\n\003tin\030\005 \001(\004b\006p"
+    "roto3"
 };
 static ::absl::once_flag descriptor_table_messages_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_messages_2eproto = {
     false,
     false,
-    126,
+    165,
     descriptor_table_protodef_messages_2eproto,
     "messages.proto",
     &descriptor_table_messages_2eproto_once,
@@ -179,6 +189,7 @@ TextCommand::TextCommand(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  _impl_.tin_ = from._impl_.tin_;
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TextCommand)
 }
@@ -190,6 +201,7 @@ PROTOBUF_NDEBUG_INLINE TextCommand::Impl_::Impl_(
 
 inline void TextCommand::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
+  _impl_.tin_ = {};
 }
 TextCommand::~TextCommand() {
   // @@protoc_insertion_point(destructor:toysequencer.TextCommand)
@@ -249,16 +261,16 @@ TextCommand::GetClassData() const {
   return TextCommand_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<0, 1, 0, 37, 2>
+const ::_pbi::TcParseTable<1, 2, 0, 37, 2>
 TextCommand::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TextCommand, _impl_._has_bits_),
     0, // no _extensions_
-    1, 0,  // max_field_number, fast_idx_mask
+    2, 8,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967294,  // skipmap
+    4294967292,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    1,  // num_field_entries
+    2,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TextCommand_class_data_.base(),
@@ -268,6 +280,9 @@ TextCommand::_table_ = {
     ::_pbi::TcParser::GetTable<::toysequencer::TextCommand>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
+    // uint64 tin = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.tin_), 1>(),
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_)}},
     // string text = 1;
     {::_pbi::TcParser::FastUS1,
      {10, 0, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_)}},
@@ -276,6 +291,8 @@ TextCommand::_table_ = {
   }}, {{
     // string text = 1;
     {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // uint64 tin = 2;
+    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   // no aux_entries
   {{
@@ -295,6 +312,7 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   if ((cached_has_bits & 0x00000001U) != 0) {
     _impl_.text_.ClearNonDefaultToEmpty();
   }
+  _impl_.tin_ = ::uint64_t{0u};
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -327,6 +345,15 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
     }
   }
 
+  // uint64 tin = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_tin(), target);
+    }
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -350,13 +377,21 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void)cached_has_bits;
 
-   {
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000003U) != 0) {
     // string text = 1;
-    cached_has_bits = this_._impl_._has_bits_[0];
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_text());
+      }
+    }
+    // uint64 tin = 2;
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (this_._internal_tin() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_tin());
       }
     }
   }
@@ -376,12 +411,19 @@ void TextCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000001U) != 0) {
-    if (!from._internal_text().empty()) {
-      _this->_internal_set_text(from._internal_text());
-    } else {
-      if (_this->_impl_.text_.IsDefault()) {
-        _this->_internal_set_text("");
+  if ((cached_has_bits & 0x00000003U) != 0) {
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!from._internal_text().empty()) {
+        _this->_internal_set_text(from._internal_text());
+      } else {
+        if (_this->_impl_.text_.IsDefault()) {
+          _this->_internal_set_text("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (from._internal_tin() != 0) {
+        _this->_impl_.tin_ = from._impl_.tin_;
       }
     }
   }
@@ -404,6 +446,7 @@ void TextCommand::InternalSwap(TextCommand* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.text_, &other->_impl_.text_, arena);
+  swap(_impl_.tin_, other->_impl_.tin_);
 }
 
 ::google::protobuf::Metadata TextCommand::GetMetadata() const {
@@ -453,9 +496,9 @@ TextEvent::TextEvent(
                offsetof(Impl_, seq_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, seq_),
-           offsetof(Impl_, timestamp_) -
+           offsetof(Impl_, tin_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::timestamp_));
+               sizeof(Impl_::tin_));
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TextEvent)
 }
@@ -470,9 +513,9 @@ inline void TextEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, seq_),
            0,
-           offsetof(Impl_, timestamp_) -
+           offsetof(Impl_, tin_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::timestamp_));
+               sizeof(Impl_::tin_));
 }
 TextEvent::~TextEvent() {
   // @@protoc_insertion_point(destructor:toysequencer.TextEvent)
@@ -532,16 +575,16 @@ TextEvent::GetClassData() const {
   return TextEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<2, 3, 0, 35, 2>
+const ::_pbi::TcParseTable<3, 5, 0, 35, 2>
 TextEvent::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TextEvent, _impl_._has_bits_),
     0, // no _extensions_
-    3, 24,  // max_field_number, fast_idx_mask
+    5, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967288,  // skipmap
+    4294967264,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    3,  // num_field_entries
+    5,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TextEvent_class_data_.base(),
@@ -561,6 +604,14 @@ TextEvent::_table_ = {
     // uint64 timestamp = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.timestamp_), 2>(),
      {24, 2, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)}},
+    // uint64 sid = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.sid_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_)}},
+    // uint64 tin = 5;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.tin_), 4>(),
+     {40, 4, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
@@ -570,6 +621,10 @@ TextEvent::_table_ = {
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
     // uint64 timestamp = 3;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 sid = 4;
+    {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 tin = 5;
+    {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   // no aux_entries
   {{
@@ -589,10 +644,10 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
   if ((cached_has_bits & 0x00000001U) != 0) {
     _impl_.text_.ClearNonDefaultToEmpty();
   }
-  if ((cached_has_bits & 0x00000006U) != 0) {
+  if ((cached_has_bits & 0x0000001eU) != 0) {
     ::memset(&_impl_.seq_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.timestamp_) -
-        reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.timestamp_));
+        reinterpret_cast<char*>(&_impl_.tin_) -
+        reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.tin_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -644,6 +699,24 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
     }
   }
 
+  // uint64 sid = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (this_._internal_sid() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_sid(), target);
+    }
+  }
+
+  // uint64 tin = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          5, this_._internal_tin(), target);
+    }
+  }
+
   if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
     target =
         ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
@@ -669,7 +742,7 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007U) != 0) {
+  if ((cached_has_bits & 0x0000001fU) != 0) {
     // string text = 2;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
@@ -691,6 +764,20 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
             this_._internal_timestamp());
       }
     }
+    // uint64 sid = 4;
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (this_._internal_sid() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_sid());
+      }
+    }
+    // uint64 tin = 5;
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (this_._internal_tin() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_tin());
+      }
+    }
   }
   return this_.MaybeComputeUnknownFieldsSize(total_size,
                                              &this_._impl_._cached_size_);
@@ -708,7 +795,7 @@ void TextEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::googl
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000007U) != 0) {
+  if ((cached_has_bits & 0x0000001fU) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!from._internal_text().empty()) {
         _this->_internal_set_text(from._internal_text());
@@ -726,6 +813,16 @@ void TextEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::googl
     if ((cached_has_bits & 0x00000004U) != 0) {
       if (from._internal_timestamp() != 0) {
         _this->_impl_.timestamp_ = from._impl_.timestamp_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (from._internal_sid() != 0) {
+        _this->_impl_.sid_ = from._impl_.sid_;
+      }
+    }
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (from._internal_tin() != 0) {
+        _this->_impl_.tin_ = from._impl_.tin_;
       }
     }
   }
@@ -749,8 +846,8 @@ void TextEvent::InternalSwap(TextEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.text_, &other->_impl_.text_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)
-      + sizeof(TextEvent::_impl_.timestamp_)
+      PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)
+      + sizeof(TextEvent::_impl_.tin_)
       - PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_)>(
           reinterpret_cast<char*>(&_impl_.seq_),
           reinterpret_cast<char*>(&other->_impl_.seq_));

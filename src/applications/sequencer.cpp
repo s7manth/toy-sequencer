@@ -6,13 +6,14 @@ Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
 void Sequencer::attach_command_bus(CommandBus &bus) {
   bus_ = &bus;
-  bus.subscribe([this](const toysequencer::TextCommand &cmd) {
-    {
-      std::lock_guard<std::mutex> lock(queue_mutex_);
-      queue_.push(cmd);
-    }
-    queue_cv_.notify_one();
-  });
+  bus.subscribe(
+      [this](const toysequencer::TextCommand &cmd, uint64_t sender_id) {
+        {
+          std::lock_guard<std::mutex> lock(queue_mutex_);
+          queue_.push({cmd, sender_id});
+        }
+        queue_cv_.notify_one();
+      });
 }
 
 void Sequencer::start() {
@@ -32,7 +33,8 @@ void Sequencer::stop() {
   }
 }
 
-uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
+uint64_t Sequencer::publish(const toysequencer::TextCommand &command,
+                            uint64_t sender_id) {
   uint64_t seq = next_seq_.fetch_add(1);
 
   toysequencer::TextEvent event;
@@ -43,6 +45,8 @@ uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
           std::chrono::high_resolution_clock::now().time_since_epoch())
           .count();
   event.set_timestamp(ts);
+  event.set_sid(sender_id);     // Set sender instance ID
+  event.set_tin(command.tin()); // Copy TIN from command
 
   std::string bytes;
   bytes.resize(event.ByteSizeLong());
@@ -58,6 +62,10 @@ uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
   return seq;
 }
 
+uint64_t Sequencer::assign_instance_id() {
+  return next_instance_id_.fetch_add(1);
+}
+
 void Sequencer::retransmit(uint64_t from_seq, uint64_t to_seq) {
   // TODO: implement retransmission logic
   // this would typically involve:
@@ -69,16 +77,16 @@ void Sequencer::retransmit(uint64_t from_seq, uint64_t to_seq) {
 
 void Sequencer::worker_loop() {
   while (running_) {
-    toysequencer::TextCommand cmd;
+    std::pair<toysequencer::TextCommand, uint64_t> cmd_pair;
     {
       std::unique_lock<std::mutex> lock(queue_mutex_);
       queue_cv_.wait(lock, [this] { return !running_ || !queue_.empty(); });
       if (!running_ && queue_.empty()) {
         return;
       }
-      cmd = queue_.front();
+      cmd_pair = queue_.front();
       queue_.pop();
     }
-    this->publish(cmd);
+    this->publish(cmd_pair.first, cmd_pair.second);
   }
 }

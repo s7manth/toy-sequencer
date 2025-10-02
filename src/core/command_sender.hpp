@@ -5,5 +5,6 @@
 class ICommandSender {
 public:
   virtual ~ICommandSender() = default;
-  virtual void send_command(const toysequencer::TextCommand &command) = 0;
+  virtual void send_command(const toysequencer::TextCommand &command,
+                            uint64_t sender_id) = 0;
 };

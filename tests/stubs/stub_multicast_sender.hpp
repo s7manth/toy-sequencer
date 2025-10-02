@@ -12,6 +12,10 @@ public:
     return sent_;
   }
 
+  void clear_sent_datagrams() {
+    sent_.clear();
+  }
+
 private:
   bool record(const std::vector<uint8_t> &data) {
     sent_.push_back(data);
