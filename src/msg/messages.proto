@@ -1,0 +1,13 @@
+syntax = "proto3";
+
+package toysequencer;
+
+// Application -> Sequencer: logical "Text" command (no sequence number here)
+message TextCommand { string text = 1; }
+
+// Sequencer -> Subscribers: sequenced "Text" event
+message TextEvent {
+  uint64 seq = 1; // assigned by the sequencer
+  string text = 2;
+  uint64 timestamp = 3; // emission time from sequencer (optional)
+}

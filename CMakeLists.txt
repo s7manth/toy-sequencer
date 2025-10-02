@@ -1,6 +1,13 @@
 cmake_minimum_required(VERSION 3.10.0)
 project(toy-sequencer VERSION 0.1.0 LANGUAGES C CXX)
 
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
+
+# removing this will cause a linker error on arm64
+set(CMAKE_BUILD_TYPE Release)
+
 include(CTest)
 enable_testing()
 
@@ -19,7 +26,6 @@ if(CLANG_FORMAT_EXECUTABLE)
         ${CMAKE_CURRENT_SOURCE_DIR}/src/core/*.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/applications/*.cpp
         ${CMAKE_CURRENT_SOURCE_DIR}/src/applications/*.hpp
-        ${CMAKE_CURRENT_SOURCE_DIR}/src/msg/*.hpp
         ${CMAKE_CURRENT_SOURCE_DIR}/tests/*.cpp
     )
 

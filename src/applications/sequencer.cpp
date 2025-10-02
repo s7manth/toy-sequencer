@@ -1,26 +1,55 @@
 #include "sequencer.hpp"
-#include "msg/message.hpp"
+#include <chrono>
 #include <iostream>
 
 Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
-uint64_t Sequencer::publish(uint32_t type,
-                            const std::vector<uint8_t> &payload) {
+void Sequencer::attach_command_bus(CommandBus &bus) {
+  bus_ = &bus;
+  bus.subscribe([this](const toysequencer::TextCommand &cmd) {
+    {
+      std::lock_guard<std::mutex> lock(queue_mutex_);
+      queue_.push(cmd);
+    }
+    queue_cv_.notify_one();
+  });
+}
+
+void Sequencer::start() {
+  if (running_.exchange(true)) {
+    return;
+  }
+  worker_ = std::thread([this] { this->worker_loop(); });
+}
+
+void Sequencer::stop() {
+  if (!running_.exchange(false)) {
+    return;
+  }
+  queue_cv_.notify_all();
+  if (worker_.joinable()) {
+    worker_.join();
+  }
+}
+
+uint64_t Sequencer::publish(const toysequencer::TextCommand &command) {
   uint64_t seq = next_seq_.fetch_add(1);
 
-  // construct a message
-  Message msg;
-  msg.header.seq = seq;
-  msg.header.timestamp =
+  toysequencer::TextEvent event;
+  event.set_seq(seq);
+  event.set_text(command.text());
+  uint64_t ts =
       std::chrono::duration_cast<std::chrono::microseconds>(
           std::chrono::high_resolution_clock::now().time_since_epoch())
           .count();
-  msg.header.type = type;
-  msg.header.payload_size = payload.size();
-  msg.payload = payload;
+  event.set_timestamp(ts);
 
-  auto serialized = msg.serialize();
-  bool success = sender_.send(serialized);
+  std::string bytes;
+  bytes.resize(event.ByteSizeLong());
+  event.SerializeToArray(bytes.data(), static_cast<int>(bytes.size()));
+  std::vector<uint8_t> payload(bytes.begin(), bytes.end());
+
+  bool success = sender_.send(payload);
 
   if (!success) {
     std::cerr << "Failed to send message with sequence " << seq << std::endl;
@@ -36,4 +65,20 @@ void Sequencer::retransmit(uint64_t from_seq, uint64_t to_seq) {
   // 2. resending them via multicast
   std::cout << "Retransmit requested for sequences " << from_seq << " to "
             << to_seq << std::endl;
+}
+
+void Sequencer::worker_loop() {
+  while (running_) {
+    toysequencer::TextCommand cmd;
+    {
+      std::unique_lock<std::mutex> lock(queue_mutex_);
+      queue_cv_.wait(lock, [this] { return !running_ || !queue_.empty(); });
+      if (!running_ && queue_.empty()) {
+        return;
+      }
+      cmd = queue_.front();
+      queue_.pop();
+    }
+    this->publish(cmd);
+  }
 }
