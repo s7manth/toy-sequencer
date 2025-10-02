@@ -3,14 +3,21 @@
 #include <iostream>
 
 Receiver::Receiver(
-    std::function<void(const toysequencer::TextEvent &)> on_event)
-    : on_event_(std::move(on_event)) {}
+    std::function<void(const toysequencer::TextEvent &)> on_event,
+    uint64_t instance_id)
+    : on_event_(std::move(on_event)), instance_id_(instance_id) {}
 
 void Receiver::on_datagram(const uint8_t *data, size_t len) {
   try {
     toysequencer::TextEvent event;
     if (!event.ParseFromArray(data, static_cast<int>(len))) {
       std::cerr << "Failed to parse TextEvent from datagram" << std::endl;
+      return;
+    }
+
+    // Filter events based on TIN (Target Instance ID)
+    if (event.tin() != instance_id_) {
+      // This event is not for this instance; drop silently
       return;
     }
 

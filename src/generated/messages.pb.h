@@ -220,6 +220,8 @@ class TextEvent final : public ::google::protobuf::Message
     kTextFieldNumber = 2,
     kSeqFieldNumber = 1,
     kTimestampFieldNumber = 3,
+    kSidFieldNumber = 4,
+    kTinFieldNumber = 5,
   };
   // string text = 2;
   void clear_text() ;
@@ -256,11 +258,31 @@ class TextEvent final : public ::google::protobuf::Message
   void _internal_set_timestamp(::uint64_t value);
 
   public:
+  // uint64 sid = 4;
+  void clear_sid() ;
+  ::uint64_t sid() const;
+  void set_sid(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_sid() const;
+  void _internal_set_sid(::uint64_t value);
+
+  public:
+  // uint64 tin = 5;
+  void clear_tin() ;
+  ::uint64_t tin() const;
+  void set_tin(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_tin() const;
+  void _internal_set_tin(::uint64_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TextEvent)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<2, 3,
+  static const ::google::protobuf::internal::TcParseTable<3, 5,
                                    0, 35,
                                    2>
       _table_;
@@ -285,6 +307,8 @@ class TextEvent final : public ::google::protobuf::Message
     ::google::protobuf::internal::ArenaStringPtr text_;
     ::uint64_t seq_;
     ::uint64_t timestamp_;
+    ::uint64_t sid_;
+    ::uint64_t tin_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -438,6 +462,7 @@ class TextCommand final : public ::google::protobuf::Message
   // accessors -------------------------------------------------------
   enum : int {
     kTextFieldNumber = 1,
+    kTinFieldNumber = 2,
   };
   // string text = 1;
   void clear_text() ;
@@ -454,11 +479,21 @@ class TextCommand final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_text();
 
   public:
+  // uint64 tin = 2;
+  void clear_tin() ;
+  ::uint64_t tin() const;
+  void set_tin(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_tin() const;
+  void _internal_set_tin(::uint64_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TextCommand)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<0, 1,
+  static const ::google::protobuf::internal::TcParseTable<1, 2,
                                    0, 37,
                                    2>
       _table_;
@@ -481,6 +516,7 @@ class TextCommand final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr text_;
+    ::uint64_t tin_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -568,6 +604,30 @@ inline void TextCommand::set_allocated_text(::std::string* PROTOBUF_NULLABLE val
     _impl_.text_.Set("", GetArena());
   }
   // @@protoc_insertion_point(field_set_allocated:toysequencer.TextCommand.text)
+}
+
+// uint64 tin = 2;
+inline void TextCommand::clear_tin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tin_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000002U;
+}
+inline ::uint64_t TextCommand::tin() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextCommand.tin)
+  return _internal_tin();
+}
+inline void TextCommand::set_tin(::uint64_t value) {
+  _internal_set_tin(value);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextCommand.tin)
+}
+inline ::uint64_t TextCommand::_internal_tin() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tin_;
+}
+inline void TextCommand::_internal_set_tin(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tin_ = value;
 }
 
 // -------------------------------------------------------------------
@@ -685,6 +745,54 @@ inline ::uint64_t TextEvent::_internal_timestamp() const {
 inline void TextEvent::_internal_set_timestamp(::uint64_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.timestamp_ = value;
+}
+
+// uint64 sid = 4;
+inline void TextEvent::clear_sid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000008U;
+}
+inline ::uint64_t TextEvent::sid() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextEvent.sid)
+  return _internal_sid();
+}
+inline void TextEvent::set_sid(::uint64_t value) {
+  _internal_set_sid(value);
+  _impl_._has_bits_[0] |= 0x00000008U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextEvent.sid)
+}
+inline ::uint64_t TextEvent::_internal_sid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.sid_;
+}
+inline void TextEvent::_internal_set_sid(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = value;
+}
+
+// uint64 tin = 5;
+inline void TextEvent::clear_tin() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tin_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000010U;
+}
+inline ::uint64_t TextEvent::tin() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextEvent.tin)
+  return _internal_tin();
+}
+inline void TextEvent::set_tin(::uint64_t value) {
+  _internal_set_tin(value);
+  _impl_._has_bits_[0] |= 0x00000010U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextEvent.tin)
+}
+inline ::uint64_t TextEvent::_internal_tin() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.tin_;
+}
+inline void TextEvent::_internal_set_tin(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.tin_ = value;
 }
 
 #ifdef __GNUC__

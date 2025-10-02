@@ -27,14 +27,20 @@ int main(int, char **) {
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    PingApp ping(bus, log);
-    PongApp pong(bus, log);
+    // Assign instance IDs to applications
+    uint64_t ping_instance_id = sequencer.assign_instance_id();
+    uint64_t pong_instance_id = sequencer.assign_instance_id();
+
+    PingApp ping(bus, log, ping_instance_id);
+    PongApp pong(bus, log, pong_instance_id);
 
     // Both applications subscribe to the single events stream
     Receiver ping_rx(
-        [&](const toysequencer::TextEvent &e) { ping.on_event(e); });
+        [&](const toysequencer::TextEvent &e) { ping.on_event(e); },
+        ping_instance_id);
     Receiver pong_rx(
-        [&](const toysequencer::TextEvent &e) { pong.on_event(e); });
+        [&](const toysequencer::TextEvent &e) { pong.on_event(e); },
+        pong_instance_id);
 
     MulticastReceiver rx_events(mcast_addr, events_port);
 

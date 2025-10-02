@@ -18,7 +18,8 @@ int main() {
   seq.attach_command_bus(bus);
 
   std::vector<toysequencer::TextEvent> received;
-  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); });
+  Receiver rx([&](const toysequencer::TextEvent &e) { received.push_back(e); },
+              1);
 
   // Scenarios adapted from test_multicast.cpp
   std::vector<std::string> test_messages = {
@@ -30,8 +31,8 @@ int main() {
   for (const auto &text : test_messages) {
     toysequencer::TextCommand cmd;
     cmd.set_text(text);
-    auto seqNo = seq.publish(cmd);
-    seqNos.push_back(seqNo);
+    cmd.set_tin(1);      // Set target instance ID
+    bus.publish(cmd, 1); // Publish with sender ID 1
   }
 
   // Deliver what was "sent" through the stub to our receiver
@@ -42,9 +43,11 @@ int main() {
   // Assertions: we received all, in order, with correct metadata
   assert(received.size() == test_messages.size());
   for (size_t i = 0; i < received.size(); ++i) {
-    assert(ev.seq() == seqNos[i]);
-    assert(ev.text() == test_messages[i]);
-    assert(ev.timestamp() > 0);
+    assert(received[i].seq() == i + 1); // Sequence numbers start at 1
+    assert(received[i].text() == test_messages[i]);
+    assert(received[i].timestamp() > 0);
+    assert(received[i].sid() == 1); // Sender ID should be 1
+    assert(received[i].tin() == 1); // Target ID should be 1
   }
 
   std::cout << "test_sequencer_basic passed" << std::endl;

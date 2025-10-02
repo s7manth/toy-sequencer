@@ -9,7 +9,8 @@
 
 class PingApp : public ICommandSender, public IEventReceiver {
 public:
-  PingApp(CommandBus &bus, std::function<void(const std::string &)> log);
+  PingApp(CommandBus &bus, std::function<void(const std::string &)> log,
+          uint64_t instance_id);
   ~PingApp() = default;
 
   // Executed by caller-managed thread/context
@@ -19,9 +20,11 @@ public:
   void on_event(const toysequencer::TextEvent &event) override;
 
   // ICommandSender
-  void send_command(const toysequencer::TextCommand &command) override;
+  void send_command(const toysequencer::TextCommand &command,
+                    uint64_t sender_id) override;
 
 private:
   CommandBus &bus_;
   std::function<void(const std::string &)> log_;
+  uint64_t instance_id_;
 };
