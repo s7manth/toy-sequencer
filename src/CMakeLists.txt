@@ -5,14 +5,12 @@ add_executable(toy-sequencer
     core/multicast_sender.cpp
     core/multicast_receiver.cpp
     core/fanout_sender.hpp
-    core/inproc_multicast.cpp
     applications/sequencer.cpp
     applications/receiver.cpp
 )
 
 target_include_directories(toy-sequencer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
 
-# Generated protos for typed messages
 add_subdirectory(msg)
 
 if(TARGET msg_protos)
