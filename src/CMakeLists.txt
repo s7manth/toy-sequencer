@@ -6,7 +6,7 @@ add_executable(toy-sequencer
     core/multicast_sender.cpp
     core/multicast_receiver.cpp
     core/fanout_sender.hpp
-    applications/sequencer.cpp
+    applications/sequencer.hpp
 )
 
 target_include_directories(toy-sequencer PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
