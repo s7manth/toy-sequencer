@@ -22,13 +22,9 @@ public:
 
   ~MulticastSender();
 
-  // Send a message to the multicast group
-  bool send(const std::vector<uint8_t> &data) override;
+  bool send_m(const std::vector<uint8_t> &data) override;
+  bool send_m(const std::vector<uint8_t> &data, uint8_t ttl) override;
 
-  // Send a message with specific TTL
-  bool send(const std::vector<uint8_t> &data, uint8_t ttl) override;
-
-  // Get multicast address and port
   std::string get_address() const { return multicast_address_; }
   uint16_t get_port() const { return port_; }
 

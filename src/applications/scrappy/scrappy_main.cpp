@@ -1,4 +1,3 @@
-#include "../core/multicast_receiver.hpp"
 #include "scrappy.hpp"
 #include <iostream>
 #include <string>
@@ -19,23 +18,17 @@ int main(int argc, char **argv) {
       port = static_cast<uint16_t>(std::stoi(argv[3]));
     }
 
-    ScrappyApp scrappy(output);
-    MulticastReceiver rx(mcast_addr, port);
-
-    rx.subscribe([&](const uint8_t *data, size_t len) {
-      scrappy.on_datagram(data, len);
-    });
-    rx.start();
+    ScrappyApp scrappy(output, mcast_addr, port);
+    scrappy.start();
 
     std::cout << "scrappy listening on " << mcast_addr << ":" << port
               << ", writing to " << output << std::endl;
 
-    // Block forever; users can Ctrl-C to exit
     while (true) {
       std::this_thread::sleep_for(std::chrono::seconds(1));
     }
 
-    rx.stop();
+    scrappy.stop();
     return 0;
   } catch (const std::exception &e) {
     std::cerr << "scrappy error: " << e.what() << std::endl;

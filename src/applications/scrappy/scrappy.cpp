@@ -1,8 +1,8 @@
 #include "scrappy.hpp"
 #include <iostream>
 
-ScrappyApp::ScrappyApp(const std::string &output_file)
-    : EventReceiver<ScrappyApp>(0), output_filename_(output_file) {
+ScrappyApp::ScrappyApp(const std::string &output_file, const std::string &multicast_address, const uint16_t port)
+    : EventReceiver<ScrappyApp>(0, multicast_address, port), output_filename_(output_file) {
   output_file_.open(output_file, std::ios::out | std::ios::app);
   if (!output_file_.is_open()) {
     std::cerr << "Failed to open output file: " << output_file << std::endl;

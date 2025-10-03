@@ -20,6 +20,14 @@ public:
   void send_command(const toysequencer::TextCommand &command,
                     const uint64_t sender_id);
 
+  void start() {
+    EventReceiver<PongApp>::start();
+  }
+
+  void stop() {
+    EventReceiver<PongApp>::stop();
+  }
+
 private:
   CommandBus &bus_;
   std::function<void(const std::string &)> log_;

@@ -5,5 +5,5 @@
 class MdNotifier {
     public:
       virtual ~MdNotifier() = default;
-      virtual void notify(const std::string &data) = 0;
+      virtual void notify(const std::string &data) { (void)data; }
 };

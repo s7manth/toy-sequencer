@@ -38,7 +38,7 @@ public:
                   .count();
           EventT event = adapter.make_event(cmd, seq, sender_id, ts);
           std::vector<uint8_t> payload = adapter.serialize(event);
-          bool success = sender_.send(payload);
+          bool success = sender_.send_m(payload);
           if (!success) {
             std::cerr << "Failed to send message with sequence " << seq
                       << std::endl;

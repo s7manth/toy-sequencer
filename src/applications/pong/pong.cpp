@@ -4,7 +4,7 @@ PongApp::PongApp(const std::string &multicast_address, uint16_t port, uint8_t tt
                  CommandBus &bus, std::function<void(const std::string &)> log,
                  uint64_t instance_id, uint64_t ping_instance_id)
     : ICommandSender<PongApp>(multicast_address, port, ttl),
-      EventReceiver<PongApp>(instance_id), bus_(bus), log_(std::move(log)),
+      EventReceiver<PongApp>(instance_id, multicast_address, port), bus_(bus), log_(std::move(log)),
       ping_instance_id_(ping_instance_id) {}
 
 void PongApp::on_event(const toysequencer::TextEvent &event) {

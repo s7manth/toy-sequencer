@@ -1,13 +1,36 @@
 #pragma once
 
+#include "core/multicast_receiver.hpp"
 #include <cstdint>
 #include <iostream>
 #include <vector>
 
-template <typename Derived> class EventReceiver {
+template <typename Derived> class EventReceiver: public MulticastReceiver {
 public:
-  explicit EventReceiver(uint64_t instance_id) : instance_id_(instance_id) {}
+  explicit EventReceiver(
+    uint64_t instance_id, 
+    const std::string &multicast_address, 
+    uint16_t port) : 
+    instance_id_(instance_id), 
+    MulticastReceiver(multicast_address, port) {
+      this->subscribe([&](const uint8_t *data, size_t len) {
+        static_cast<Derived *>(this)->on_datagram(data, len);
+      });
+    }
+
   virtual ~EventReceiver() = default;
+
+  void start() {
+    MulticastReceiver::start();
+  }
+
+  void stop() {
+    MulticastReceiver::stop();
+  }
+
+  void subscribe(DatagramHandler handler) {
+    MulticastReceiver::subscribe(handler);
+  }
 
   template <typename EventT> void on_datagram(const uint8_t *data, size_t len) {
     try {

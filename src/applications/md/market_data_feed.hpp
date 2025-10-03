@@ -2,8 +2,8 @@
 
 #include "core/command_sender.hpp"
 #include "imarket_data_source.hpp"
-#include "md_notifier.hpp"
 #include "md_utils.hpp"
+#include "md_notifier.hpp"
 #include <functional>
 #include <memory>
 #include <string>
@@ -19,13 +19,12 @@ public:
                     std::unique_ptr<IMarketDataSource> src)
       : ICommandSender<MarketDataFeedApp>(multicast_address, port, ttl),
         log_(std::move(log)), source_(std::move(src)),
-        instance_id_(instance_id) {
-            source_->register_notifier(*this);
-        }
+        instance_id_(instance_id) {}
 
   void start() {
     if (!source_)
       return;
+    source_->register_callback([this](const std::string &data){ this->notify(data); });
     source_->start();
   }
 
@@ -41,7 +40,10 @@ public:
 
   void send_command(const toysequencer::TopOfBookCommand &command,
                     const uint64_t sender_id) {
-    this->send(command, sender_id);
+    std::cout << "command " << command.DebugString() << std::endl;
+    std::string bytes = command.SerializeAsString();
+    std::vector<uint8_t> data(bytes.begin(), bytes.end());
+    this->send_m(data);
   }
 
 private:

@@ -1,6 +1,4 @@
 #include "../core/command_bus.hpp"
-#include "../core/multicast_receiver.hpp"
-#include "../generated/messages.pb.h"
 #include "pong.hpp"
 #include <chrono>
 #include <csignal>
@@ -25,13 +23,9 @@ int main() {
     uint64_t pong_instance_id = 2; // can be passed via CLI later
     uint64_t ping_instance_id = 1;
 
-    PongApp pong(bus, log, pong_instance_id, ping_instance_id);
+    PongApp pong(mcast_addr, events_port, 1, bus, log, pong_instance_id, ping_instance_id);
 
-    MulticastReceiver rx_events(mcast_addr, events_port);
-    rx_events.subscribe([&](const uint8_t *data, size_t len) {
-      pong.on_datagram<toysequencer::TextEvent>(data, len);
-    });
-    rx_events.start();
+    pong.start();
 
     std::cout << "pong listening for TextEvent on " << mcast_addr << ":"
               << events_port << ", instance=" << pong_instance_id << std::endl;
@@ -40,7 +34,7 @@ int main() {
       std::this_thread::sleep_for(std::chrono::milliseconds(200));
     }
 
-    rx_events.stop();
+    pong.stop();
     return 0;
   } catch (const std::exception &e) {
     std::cerr << "pong error: " << e.what() << std::endl;

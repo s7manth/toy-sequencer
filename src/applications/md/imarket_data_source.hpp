@@ -1,10 +1,8 @@
 #pragma once
 
-#include "md_notifier.hpp"
 #include <string>
 #include <vector>
 #include <functional>
-
 
 class IMarketDataSource {
     public:
@@ -12,15 +10,16 @@ class IMarketDataSource {
       virtual void start() = 0;
       virtual void stop() = 0;
     
-    std::vector<std::reference_wrapper<MdNotifier>> notifiers{};
+    using MdCallback = std::function<void(const std::string&)>;
+    std::vector<MdCallback> callbacks{};
     
-    void register_notifier(MdNotifier &notifier) {
-        notifiers.emplace_back(notifier);
+    void register_callback(MdCallback cb) {
+        callbacks.emplace_back(std::move(cb));
     }
     
     void on_top_of_book(const std::string &data) {
-        for (auto &notifier: notifiers) {
-            notifier.get().notify(data);
+        for (auto &cb: callbacks) {
+            cb(data);
         }
     };
 };
