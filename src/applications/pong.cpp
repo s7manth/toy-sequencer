@@ -2,7 +2,7 @@
 
 PongApp::PongApp(CommandBus &bus, std::function<void(const std::string &)> log,
                  uint64_t instance_id, uint64_t ping_instance_id)
-    : EventReceiver(instance_id), bus_(bus), log_(std::move(log)),
+    : EventReceiver<PongApp>(instance_id), bus_(bus), log_(std::move(log)),
       ping_instance_id_(ping_instance_id) {}
 
 void PongApp::on_event(const toysequencer::TextEvent &event) {

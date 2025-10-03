@@ -35,10 +35,10 @@ int main() {
 
   // Create receiver for target
   std::vector<toysequencer::TextEvent> received;
-  struct TestReceiver : public EventReceiver {
+  struct TestReceiver : public EventReceiver<TestReceiver> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -47,7 +47,7 @@ int main() {
 
   // Process the sent datagram
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    rx.on_datagram(datagram.data(), datagram.size());
+    rx.on_datagram<toysequencer::TextEvent>(datagram.data(), datagram.size());
   }
 
   // Verify SID is correctly set

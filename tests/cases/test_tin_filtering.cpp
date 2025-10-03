@@ -28,10 +28,10 @@ int main() {
 
   // Create receivers for both target and non-target
   std::vector<toysequencer::TextEvent> target_received, other_received;
-  struct TestReceiver : public EventReceiver {
+  struct TestReceiver : public EventReceiver<TestReceiver> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -45,8 +45,10 @@ int main() {
 
   // Process the sent datagram through both receivers
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    target_rx.on_datagram(datagram.data(), datagram.size());
-    other_rx.on_datagram(datagram.data(), datagram.size());
+    target_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                   datagram.size());
+    other_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                  datagram.size());
   }
 
   // Verify TIN filtering worked

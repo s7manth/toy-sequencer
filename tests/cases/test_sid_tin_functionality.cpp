@@ -30,10 +30,10 @@ void test_cross_instance_communication() {
   // Create receivers for all instances
   std::vector<toysequencer::TextEvent> ping_received, pong_received,
       third_received;
-  struct TestReceiver : public EventReceiver {
+  struct TestReceiver : public EventReceiver<TestReceiver> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -70,9 +70,12 @@ void test_cross_instance_communication() {
 
   // Process all datagrams through all receivers
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    ping_rx.on_datagram(datagram.data(), datagram.size());
-    pong_rx.on_datagram(datagram.data(), datagram.size());
-    third_rx.on_datagram(datagram.data(), datagram.size());
+    ping_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
+    pong_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
+    third_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                  datagram.size());
   }
 
   // Verify each instance received only its targeted message
@@ -121,10 +124,10 @@ void test_sequence_number_assignment() {
 
   // Create receiver
   std::vector<toysequencer::TextEvent> received;
-  struct TestReceiver2 : public EventReceiver {
+  struct TestReceiver2 : public EventReceiver<TestReceiver2> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -133,7 +136,7 @@ void test_sequence_number_assignment() {
 
   // Process all datagrams
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    rx.on_datagram(datagram.data(), datagram.size());
+    rx.on_datagram<toysequencer::TextEvent>(datagram.data(), datagram.size());
   }
 
   // Verify sequence numbers are consecutive starting from 1
@@ -173,10 +176,10 @@ void test_timestamp_assignment() {
 
   // Create receiver
   std::vector<toysequencer::TextEvent> received;
-  struct TestReceiver3 : public EventReceiver {
+  struct TestReceiver3 : public EventReceiver<TestReceiver3> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -185,7 +188,7 @@ void test_timestamp_assignment() {
 
   // Process the datagram
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    rx.on_datagram(datagram.data(), datagram.size());
+    rx.on_datagram<toysequencer::TextEvent>(datagram.data(), datagram.size());
   }
 
   // Verify timestamp is set
@@ -220,10 +223,10 @@ void test_ping_pong_integration() {
 
   // Create receivers
   std::vector<toysequencer::TextEvent> ping_received, pong_received;
-  struct TestReceiver4 : public EventReceiver {
+  struct TestReceiver4 : public EventReceiver<TestReceiver4> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -252,8 +255,10 @@ void test_ping_pong_integration() {
 
   // Process all datagrams
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    ping_rx.on_datagram(datagram.data(), datagram.size());
-    pong_rx.on_datagram(datagram.data(), datagram.size());
+    ping_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
+    pong_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
   }
 
   // Verify applications work correctly

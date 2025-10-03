@@ -1,10 +1,13 @@
 #pragma once
 
-#include "generated/messages.pb.h"
+#include <cstdint>
 
-class ICommandSender {
+template <typename Derived> class ICommandSender {
 public:
   virtual ~ICommandSender() = default;
-  virtual void send_command(const toysequencer::TextCommand &command,
-                            uint64_t sender_id) = 0;
+
+  template <typename CommandT>
+  void send(const CommandT &cmd, const uint64_t sender_id) {
+    static_cast<Derived *>(this)->send_command(cmd, sender_id);
+  }
 };

@@ -44,14 +44,26 @@ int main(int, char **) {
 
     MulticastReceiver rx_events(mcast_addr, events_port);
 
-    rx_events.subscribe(
-        [&](const uint8_t *data, size_t len) { ping.on_datagram(data, len); });
-    rx_events.subscribe(
-        [&](const uint8_t *data, size_t len) { pong.on_datagram(data, len); });
+    rx_events.subscribe([&](const uint8_t *data, size_t len) {
+      ping.on_datagram<toysequencer::TextEvent>(data, len);
+    });
+    rx_events.subscribe([&](const uint8_t *data, size_t len) {
+      pong.on_datagram<toysequencer::TextEvent>(data, len);
+    });
 
     rx_events.start();
 
-    std::thread ping_thread([&] { ping.run(); });
+    std::thread ping_thread([&] {
+      toysequencer::TextCommand cmd;
+      cmd.set_text("PING");
+      cmd.set_tin(pong_instance_id);
+      ping.send_command(cmd, ping_instance_id);
+
+      toysequencer::TextCommand cmd2;
+      cmd2.set_text("PING");
+      cmd2.set_tin(pong_instance_id);
+      ping.send_command(cmd2, ping_instance_id);
+    });
 
     // let system run briefly
     if (ping_thread.joinable()) {

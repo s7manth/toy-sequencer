@@ -1,10 +1,8 @@
-#include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
 #include "applications/ping.hpp"
 #include "applications/pong.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
-#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <iostream>
@@ -33,10 +31,10 @@ int main() {
 
   // Create receivers
   std::vector<toysequencer::TextEvent> ping_received, pong_received;
-  struct TestReceiver : public EventReceiver {
+  struct TestReceiver : public EventReceiver<TestReceiver> {
     using EventReceiver::EventReceiver;
     std::function<void(const toysequencer::TextEvent &)> on;
-    void on_event(const toysequencer::TextEvent &e) override {
+    void on_event(const toysequencer::TextEvent &e) {
       if (on)
         on(e);
     }
@@ -61,8 +59,10 @@ int main() {
 
   // Process all datagrams
   for (const auto &datagram : stubSender.get_sent_datagrams()) {
-    ping_rx.on_datagram(datagram.data(), datagram.size());
-    pong_rx.on_datagram(datagram.data(), datagram.size());
+    ping_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
+    pong_rx.on_datagram<toysequencer::TextEvent>(datagram.data(),
+                                                 datagram.size());
   }
 
   // Verify applications work correctly
