@@ -13,8 +13,6 @@ public:
   void on_event(const toysequencer::TextEvent &event);
   void on_event(const toysequencer::TopOfBookEvent &event);
 
-  void on_datagram(const uint8_t *data, size_t len);
-
   void start() {
     EventReceiver<ScrappyApp>::start();
   }

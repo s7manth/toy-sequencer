@@ -12,11 +12,7 @@ public:
     const std::string &multicast_address, 
     uint16_t port) : 
     instance_id_(instance_id), 
-    MulticastReceiver(multicast_address, port) {
-      this->subscribe([&](const uint8_t *data, size_t len) {
-        static_cast<Derived *>(this)->on_datagram(data, len);
-      });
-    }
+    MulticastReceiver(multicast_address, port) {}
 
   virtual ~EventReceiver() = default;
 
@@ -28,8 +24,11 @@ public:
     MulticastReceiver::stop();
   }
 
-  void subscribe(DatagramHandler handler) {
-    MulticastReceiver::subscribe(handler);
+  template <typename EventT>
+  void subscribe() {
+    MulticastReceiver::subscribe(std::function<void(const uint8_t *data, size_t len)>([this](const uint8_t *data, size_t len) {
+      on_datagram<EventT>(data, len);
+    }));
   }
 
   template <typename EventT> void on_datagram(const uint8_t *data, size_t len) {
@@ -40,18 +39,7 @@ public:
         return;
       }
 
-      if (event.tin() != instance_id_) {
-        return;
-      }
-
-      // Initialize expected sequence based on the first event we see for this
-      // instance. Sequences are global, so the first targeted event may not
-      // be 1.
-      if (expected_seq_ == 0) {
-        dispatch_event(event);
-        expected_seq_ = event.seq() + 1;
-        return;
-      }
+      std::cout << "EventReceiver: on_datagram seq=" << event.seq() << ", expected_seq=" << expected_seq_ << std::endl;
 
       if (event.seq() < expected_seq_) {
         return;
@@ -65,19 +53,9 @@ public:
 
       std::cout << "Out of order event received. Expected: " << expected_seq_
                 << ", Got: " << event.seq() << std::endl;
-      dispatch_event(event);
-
     } catch (const std::exception &e) {
       std::cerr << "EventReceiver error: " << e.what() << std::endl;
     }
-  }
-
-  template <typename EventT> void on_bytes(const std::vector<uint8_t> &bytes) {
-    on_datagram<EventT>(bytes.data(), bytes.size());
-  }
-
-  template <typename EventT> void receive(const EventT &ev) {
-    dispatch_event(ev);
   }
 
 protected:
@@ -87,6 +65,6 @@ protected:
   }
 
 private:
-  uint64_t expected_seq_ = 0;
+  uint64_t expected_seq_ = 1;
   uint64_t instance_id_;
 };

@@ -28,6 +28,8 @@ public:
     }
     bus_->template subscribe<CommandT>([this, adapter](const CommandT &cmd,
                                                        uint64_t sender_id) {
+      std::cout << "Sequencer received command from sender_id=" << sender_id 
+                << ", cmd=" << cmd.DebugString() << std::endl;
       {
         std::lock_guard<std::mutex> lock(queue_mutex_);
         task_queue_.push([this, adapter, cmd, sender_id]() {
@@ -37,11 +39,16 @@ public:
                   std::chrono::high_resolution_clock::now().time_since_epoch())
                   .count();
           EventT event = adapter.make_event(cmd, seq, sender_id, ts);
+          std::cout << "Sequencer processing event seq=" << seq 
+                    << ", sender_id=" << sender_id 
+                    << ", event=" << event.DebugString() << std::endl;
           std::vector<uint8_t> payload = adapter.serialize(event);
           bool success = sender_.send_m(payload);
           if (!success) {
             std::cerr << "Failed to send message with sequence " << seq
                       << std::endl;
+          } else {
+            std::cout << "Successfully sent event seq=" << seq << std::endl;
           }
           notify_event_subscribers<EventT>(event);
         });

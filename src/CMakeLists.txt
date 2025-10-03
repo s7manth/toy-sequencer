@@ -49,7 +49,7 @@ endif()
 # Standalone market data binary
 add_executable(market_data_app
     applications/md/market_data_main.cpp
-    applications/md/market_data.hpp
+    applications/md/http_market_data_source.hpp
     applications/md/market_data_feed.hpp
     applications/md/md_utils.hpp
     applications/md/md_notifier.hpp

@@ -11,7 +11,6 @@
 #include <thread>
 
 static std::atomic<bool> running{true};
-
 static void handle_signal(int) { running.store(false); }
 
 int main() {
@@ -39,25 +38,37 @@ int main() {
     sequencer.register_pipeline<toysequencer::TopOfBookCommand,
                                 toysequencer::TopOfBookEvent>(tob_adapter);
 
-    // Listen for commands over multicast and publish into the bus
     MulticastReceiver cmd_rx(cmd_addr, cmd_port);
     cmd_rx.subscribe([&](const uint8_t *data, size_t len) {
+      std::cout << "Received " << len << " bytes on command channel" << std::endl;
+      
+      // Try TopOfBookCommand first (more specific)
+      {
+        toysequencer::TopOfBookCommand tob;
+        if (tob.ParseFromArray(data, static_cast<int>(len))) {
+          // Validate that it's actually a TopOfBookCommand by checking required fields
+          if (!tob.symbol().empty() && tob.tin() > 0) {
+            std::cout << "Parsed TopOfBookCommand: " << tob.DebugString() << std::endl;
+            bus.publish(tob, tob.tin());
+            return;
+          }
+        }
+      }
+      
       // Try TextCommand
       {
         toysequencer::TextCommand tc;
         if (tc.ParseFromArray(data, static_cast<int>(len))) {
-          bus.publish(tc, /*sender_id*/ 0);
-          return;
+          // Validate that it's actually a TextCommand by checking required fields
+          if (!tc.text().empty() && tc.tin() > 0) {
+            std::cout << "Parsed TextCommand: " << tc.DebugString() << std::endl;
+            bus.publish(tc, tc.tin());
+            return;
+          }
         }
       }
-      // Try TopOfBookCommand
-      {
-        toysequencer::TopOfBookCommand tob;
-        if (tob.ParseFromArray(data, static_cast<int>(len))) {
-          bus.publish(tob, /*sender_id*/ 0);
-          return;
-        }
-      }
+      
+      std::cout << "Failed to parse received data as any known command type" << std::endl;
     });
 
     sequencer.start();
