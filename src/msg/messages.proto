@@ -26,6 +26,8 @@ message TopOfBookCommand {
 
   double ask_price = 5;
   uint64 ask_size = 6;
+
+  uint64 exchange_time = 7;
 }
 
 message TopOfBookEvent {
@@ -41,4 +43,6 @@ message TopOfBookEvent {
 
   double ask_price = 8;
   uint64 ask_size = 9;
+
+  uint64 exchange_time = 10;
 }

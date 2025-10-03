@@ -1,6 +1,6 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
-#include "applications/sequencer.hpp"
+#include "applications/sequencer/sequencer.hpp"
 #include "core/command_bus.hpp"
 #include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
