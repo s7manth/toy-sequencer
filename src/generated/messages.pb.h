@@ -234,6 +234,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
     kBidSizeFieldNumber = 7,
     kAskPriceFieldNumber = 8,
     kAskSizeFieldNumber = 9,
+    kExchangeTimeFieldNumber = 10,
   };
   // string symbol = 5;
   void clear_symbol() ;
@@ -330,11 +331,21 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_ask_size(::uint64_t value);
 
   public:
+  // uint64 exchange_time = 10;
+  void clear_exchange_time() ;
+  ::uint64_t exchange_time() const;
+  void set_exchange_time(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_exchange_time() const;
+  void _internal_set_exchange_time(::uint64_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TopOfBookEvent)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 9,
+  static const ::google::protobuf::internal::TcParseTable<4, 10,
                                    0, 50,
                                    2>
       _table_;
@@ -365,6 +376,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
     ::uint64_t bid_size_;
     double ask_price_;
     ::uint64_t ask_size_;
+    ::uint64_t exchange_time_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -523,6 +535,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
     kBidSizeFieldNumber = 4,
     kAskPriceFieldNumber = 5,
     kAskSizeFieldNumber = 6,
+    kExchangeTimeFieldNumber = 7,
   };
   // string symbol = 2;
   void clear_symbol() ;
@@ -589,11 +602,21 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_ask_size(::uint64_t value);
 
   public:
+  // uint64 exchange_time = 7;
+  void clear_exchange_time() ;
+  ::uint64_t exchange_time() const;
+  void set_exchange_time(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_exchange_time() const;
+  void _internal_set_exchange_time(::uint64_t value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TopOfBookCommand)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 6,
+  static const ::google::protobuf::internal::TcParseTable<3, 7,
                                    0, 44,
                                    2>
       _table_;
@@ -621,6 +644,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
     ::uint64_t bid_size_;
     double ask_price_;
     ::uint64_t ask_size_;
+    ::uint64_t exchange_time_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -1540,6 +1564,30 @@ inline void TopOfBookCommand::_internal_set_ask_size(::uint64_t value) {
   _impl_.ask_size_ = value;
 }
 
+// uint64 exchange_time = 7;
+inline void TopOfBookCommand::clear_exchange_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.exchange_time_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000040U;
+}
+inline ::uint64_t TopOfBookCommand::exchange_time() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.exchange_time)
+  return _internal_exchange_time();
+}
+inline void TopOfBookCommand::set_exchange_time(::uint64_t value) {
+  _internal_set_exchange_time(value);
+  _impl_._has_bits_[0] |= 0x00000040U;
+  // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.exchange_time)
+}
+inline ::uint64_t TopOfBookCommand::_internal_exchange_time() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.exchange_time_;
+}
+inline void TopOfBookCommand::_internal_set_exchange_time(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.exchange_time_ = value;
+}
+
 // -------------------------------------------------------------------
 
 // TopOfBookEvent
@@ -1799,6 +1847,30 @@ inline ::uint64_t TopOfBookEvent::_internal_ask_size() const {
 inline void TopOfBookEvent::_internal_set_ask_size(::uint64_t value) {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ask_size_ = value;
+}
+
+// uint64 exchange_time = 10;
+inline void TopOfBookEvent::clear_exchange_time() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.exchange_time_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000200U;
+}
+inline ::uint64_t TopOfBookEvent::exchange_time() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TopOfBookEvent.exchange_time)
+  return _internal_exchange_time();
+}
+inline void TopOfBookEvent::set_exchange_time(::uint64_t value) {
+  _internal_set_exchange_time(value);
+  _impl_._has_bits_[0] |= 0x00000200U;
+  // @@protoc_insertion_point(field_set:toysequencer.TopOfBookEvent.exchange_time)
+}
+inline ::uint64_t TopOfBookEvent::_internal_exchange_time() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.exchange_time_;
+}
+inline void TopOfBookEvent::_internal_set_exchange_time(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.exchange_time_ = value;
 }
 
 #ifdef __GNUC__

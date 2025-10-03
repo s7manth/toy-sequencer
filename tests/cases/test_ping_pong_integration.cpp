@@ -1,8 +1,9 @@
 #include "../support/test_harness.hpp"
-#include "applications/ping.hpp"
-#include "applications/pong.hpp"
-#include "applications/sequencer.hpp"
+#include "applications/ping/ping.hpp"
+#include "applications/pong/pong.hpp"
+#include "applications/sequencer/sequencer.hpp"
 #include "core/command_bus.hpp"
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <cassert>
 #include <iostream>
@@ -26,8 +27,8 @@ int main() {
   auto ping_logger = [&](const std::string &msg) { ping_logs.push_back(msg); };
   auto pong_logger = [&](const std::string &msg) { pong_logs.push_back(msg); };
 
-  PingApp ping(bus, ping_logger, ping_id, pong_id);
-  PongApp pong(bus, pong_logger, pong_id, ping_id);
+  PingApp ping("239.255.0.1", 30001, 1, bus, ping_logger, ping_id, pong_id);
+  PongApp pong("239.255.0.1", 30001, 1, bus, pong_logger, pong_id, ping_id);
 
   // Create receivers
   std::vector<toysequencer::TextEvent> ping_received, pong_received;

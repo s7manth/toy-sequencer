@@ -1,5 +1,5 @@
 #include "../support/test_harness.hpp"
-#include "applications/sequencer.hpp"
+#include "applications/sequencer/sequencer.hpp"
 #include <cassert>
 #include <iostream>
 
