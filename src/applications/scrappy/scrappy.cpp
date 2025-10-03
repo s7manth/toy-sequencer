@@ -20,7 +20,9 @@ void ScrappyApp::on_event(const toysequencer::TextEvent &event) {
 }
 
 void ScrappyApp::on_event(const toysequencer::TopOfBookEvent &event) {
-  std::cout << "Scrappy: on_event(TopOfBookEvent)" << std::endl;
+  std::cout << "Scrappy: on_event(TopOfBookEvent) seq=" << event.seq() 
+            << " sid=" << event.sid() << " tin=" << event.tin() 
+            << " symbol=" << event.symbol() << std::endl;
   if (output_file_.is_open()) {
     output_file_ << "#=" << event.seq() << "|" << "SID=" << event.sid() << "|"
                  << "TIN=" << event.tin() << "|" << "SYMBOL=" << event.symbol()
@@ -29,32 +31,5 @@ void ScrappyApp::on_event(const toysequencer::TopOfBookEvent &event) {
                  << "ASK_PRICE=" << event.ask_price() << "|"
                  << "ASK_SIZE=" << event.ask_size() << std::endl;
     output_file_.flush(); // ensure immediate write to file
-  }
-}
-
-void ScrappyApp::on_datagram(const uint8_t *data, size_t len) {
-  try {
-    // Try parse as TopOfBookEvent first (more fields)
-    {
-      toysequencer::TopOfBookEvent tob_ev;
-      if (tob_ev.ParseFromArray(data, static_cast<int>(len))) {
-        on_event(tob_ev);
-        return;
-      }
-    }
-
-    // Fallback: try parse as TextEvent
-    {
-      toysequencer::TextEvent text_ev;
-      if (text_ev.ParseFromArray(data, static_cast<int>(len))) {
-        on_event(text_ev);
-        return;
-      }
-    }
-
-    std::cerr << "Scrappy: unknown datagram payload format" << std::endl;
-
-  } catch (const std::exception &e) {
-    std::cerr << "Scrappy error: " << e.what() << std::endl;
   }
 }

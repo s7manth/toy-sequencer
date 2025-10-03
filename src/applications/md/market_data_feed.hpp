@@ -34,13 +34,14 @@ public:
   }
 
   void notify(const std::string &data) override {
-    toysequencer::TopOfBookCommand cmd = MDUtils::parse_json_tob(data, 0);
+    toysequencer::TopOfBookCommand cmd = MDUtils::parse_json_tob(data, instance_id_);
     this->send_command(cmd, instance_id_);
   }
 
   void send_command(const toysequencer::TopOfBookCommand &command,
                     const uint64_t sender_id) {
     std::cout << "command " << command.DebugString() << std::endl;
+
     std::string bytes = command.SerializeAsString();
     std::vector<uint8_t> data(bytes.begin(), bytes.end());
     this->send_m(data);
