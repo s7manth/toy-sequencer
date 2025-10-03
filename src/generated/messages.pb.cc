@@ -26,6 +26,73 @@ namespace _pbi = ::google::protobuf::internal;
 namespace _fl = ::google::protobuf::internal::field_layout;
 namespace toysequencer {
 
+inline constexpr TopOfBookEvent::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        symbol_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        seq_{::uint64_t{0u}},
+        timestamp_{::uint64_t{0u}},
+        sid_{::uint64_t{0u}},
+        tin_{::uint64_t{0u}},
+        bid_price_{0},
+        bid_size_{::uint64_t{0u}},
+        ask_price_{0},
+        ask_size_{::uint64_t{0u}} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR TopOfBookEvent::TopOfBookEvent(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(TopOfBookEvent_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct TopOfBookEventDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TopOfBookEventDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TopOfBookEventDefaultTypeInternal() {}
+  union {
+    TopOfBookEvent _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TopOfBookEventDefaultTypeInternal _TopOfBookEvent_default_instance_;
+
+inline constexpr TopOfBookCommand::Impl_::Impl_(
+    ::_pbi::ConstantInitialized) noexcept
+      : _cached_size_{0},
+        symbol_(
+            &::google::protobuf::internal::fixed_address_empty_string,
+            ::_pbi::ConstantInitialized()),
+        tin_{::uint64_t{0u}},
+        bid_price_{0},
+        bid_size_{::uint64_t{0u}},
+        ask_price_{0},
+        ask_size_{::uint64_t{0u}} {}
+
+template <typename>
+PROTOBUF_CONSTEXPR TopOfBookCommand::TopOfBookCommand(::_pbi::ConstantInitialized)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(TopOfBookCommand_class_data_.base()),
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(),
+#endif  // PROTOBUF_CUSTOM_VTABLE
+      _impl_(::_pbi::ConstantInitialized()) {
+}
+struct TopOfBookCommandDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR TopOfBookCommandDefaultTypeInternal() : _instance(::_pbi::ConstantInitialized{}) {}
+  ~TopOfBookCommandDefaultTypeInternal() {}
+  union {
+    TopOfBookCommand _instance;
+  };
+};
+
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
+    PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TopOfBookCommandDefaultTypeInternal _TopOfBookCommand_default_instance_;
+
 inline constexpr TextEvent::Impl_::Impl_(
     ::_pbi::ConstantInitialized) noexcept
       : _cached_size_{0},
@@ -95,53 +162,100 @@ const ::uint32_t
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_._has_bits_),
         5, // hasbit index offset
-        PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.text_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.tin_),
-        0,
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.text_),
         1,
+        0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_._has_bits_),
         8, // hasbit index offset
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.seq_),
-        PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.text_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.timestamp_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.sid_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.tin_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.text_),
+        1,
+        2,
+        3,
+        4,
+        0,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_._has_bits_),
+        9, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.tin_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.symbol_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.bid_price_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.bid_size_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.ask_price_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.ask_size_),
         1,
         0,
         2,
         3,
         4,
+        5,
+        0x081, // bitmap
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_._has_bits_),
+        12, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.seq_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.timestamp_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.sid_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.tin_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.symbol_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.bid_price_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.bid_size_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.ask_price_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.ask_size_),
+        1,
+        2,
+        3,
+        4,
+        0,
+        5,
+        6,
+        7,
+        8,
 };
 
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::toysequencer::TextCommand)},
         {7, sizeof(::toysequencer::TextEvent)},
+        {20, sizeof(::toysequencer::TopOfBookCommand)},
+        {35, sizeof(::toysequencer::TopOfBookEvent)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::toysequencer::_TextCommand_default_instance_._instance,
     &::toysequencer::_TextEvent_default_instance_._instance,
+    &::toysequencer::_TopOfBookCommand_default_instance_._instance,
+    &::toysequencer::_TopOfBookEvent_default_instance_._instance,
 };
 const char descriptor_table_protodef_messages_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
     "\n\016messages.proto\022\014toysequencer\"(\n\013TextCo"
-    "mmand\022\014\n\004text\030\001 \001(\t\022\013\n\003tin\030\002 \001(\004\"S\n\tText"
-    "Event\022\013\n\003seq\030\001 \001(\004\022\014\n\004text\030\002 \001(\t\022\021\n\ttime"
-    "stamp\030\003 \001(\004\022\013\n\003sid\030\004 \001(\004\022\013\n\003tin\030\005 \001(\004b\006p"
-    "roto3"
+    "mmand\022\013\n\003tin\030\001 \001(\004\022\014\n\004text\030\002 \001(\t\"S\n\tText"
+    "Event\022\013\n\003seq\030\001 \001(\004\022\021\n\ttimestamp\030\002 \001(\004\022\013\n"
+    "\003sid\030\003 \001(\004\022\013\n\003tin\030\004 \001(\004\022\014\n\004text\030\005 \001(\t\"y\n"
+    "\020TopOfBookCommand\022\013\n\003tin\030\001 \001(\004\022\016\n\006symbol"
+    "\030\002 \001(\t\022\021\n\tbid_price\030\003 \001(\001\022\020\n\010bid_size\030\004 "
+    "\001(\004\022\021\n\task_price\030\005 \001(\001\022\020\n\010ask_size\030\006 \001(\004"
+    "\"\244\001\n\016TopOfBookEvent\022\013\n\003seq\030\001 \001(\004\022\021\n\ttime"
+    "stamp\030\002 \001(\004\022\013\n\003sid\030\003 \001(\004\022\013\n\003tin\030\004 \001(\004\022\016\n"
+    "\006symbol\030\005 \001(\t\022\021\n\tbid_price\030\006 \001(\001\022\020\n\010bid_"
+    "size\030\007 \001(\004\022\021\n\task_price\030\010 \001(\001\022\020\n\010ask_siz"
+    "e\030\t \001(\004b\006proto3"
 };
 static ::absl::once_flag descriptor_table_messages_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_messages_2eproto = {
     false,
     false,
-    165,
+    455,
     descriptor_table_protodef_messages_2eproto,
     "messages.proto",
     &descriptor_table_messages_2eproto_once,
     nullptr,
     0,
-    2,
+    4,
     schemas,
     file_default_instances,
     TableStruct_messages_2eproto::offsets,
@@ -280,23 +394,23 @@ TextCommand::_table_ = {
     ::_pbi::TcParser::GetTable<::toysequencer::TextCommand>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // uint64 tin = 2;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.tin_), 1>(),
-     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_)}},
-    // string text = 1;
+    // string text = 2;
     {::_pbi::TcParser::FastUS1,
-     {10, 0, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_)}},
+     {18, 0, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_)}},
+    // uint64 tin = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.tin_), 1>(),
+     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // string text = 1;
-    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // uint64 tin = 2;
+    // uint64 tin = 1;
     {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string text = 2;
+    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\30\4\0\0\0\0\0\0"
+    "\30\0\4\0\0\0\0\0"
     "toysequencer.TextCommand"
     "text"
   }},
@@ -335,22 +449,22 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // string text = 1;
+  // uint64 tin = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          1, this_._internal_tin(), target);
+    }
+  }
+
+  // string text = 2;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_text().empty()) {
       const ::std::string& _s = this_._internal_text();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TextCommand.text");
-      target = stream->WriteStringMaybeAliased(1, _s, target);
-    }
-  }
-
-  // uint64 tin = 2;
-  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
-    if (this_._internal_tin() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          2, this_._internal_tin(), target);
+      target = stream->WriteStringMaybeAliased(2, _s, target);
     }
   }
 
@@ -380,14 +494,14 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
   if ((cached_has_bits & 0x00000003U) != 0) {
-    // string text = 1;
+    // string text = 2;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_text());
       }
     }
-    // uint64 tin = 2;
+    // uint64 tin = 1;
     if ((cached_has_bits & 0x00000002U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
@@ -598,18 +712,18 @@ TextEvent::_table_ = {
     // uint64 seq = 1;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.seq_), 1>(),
      {8, 1, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_)}},
-    // string text = 2;
-    {::_pbi::TcParser::FastUS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_)}},
-    // uint64 timestamp = 3;
+    // uint64 timestamp = 2;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.timestamp_), 2>(),
-     {24, 2, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)}},
-    // uint64 sid = 4;
+     {16, 2, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)}},
+    // uint64 sid = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.sid_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_)}},
-    // uint64 tin = 5;
+     {24, 3, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_)}},
+    // uint64 tin = 4;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.tin_), 4>(),
-     {40, 4, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)}},
+     {32, 4, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)}},
+    // string text = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 0, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
@@ -617,18 +731,18 @@ TextEvent::_table_ = {
   }}, {{
     // uint64 seq = 1;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // string text = 2;
-    {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // uint64 timestamp = 3;
+    // uint64 timestamp = 2;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 sid = 4;
+    // uint64 sid = 3;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 tin = 5;
+    // uint64 tin = 4;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string text = 5;
+    {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\26\0\4\0\0\0\0\0"
+    "\26\0\0\0\0\4\0\0"
     "toysequencer.TextEvent"
     "text"
   }},
@@ -680,40 +794,40 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
     }
   }
 
-  // string text = 2;
+  // uint64 timestamp = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (this_._internal_timestamp() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_timestamp(), target);
+    }
+  }
+
+  // uint64 sid = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (this_._internal_sid() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          3, this_._internal_sid(), target);
+    }
+  }
+
+  // uint64 tin = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_tin(), target);
+    }
+  }
+
+  // string text = 5;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_text().empty()) {
       const ::std::string& _s = this_._internal_text();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TextEvent.text");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
-    }
-  }
-
-  // uint64 timestamp = 3;
-  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
-    if (this_._internal_timestamp() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          3, this_._internal_timestamp(), target);
-    }
-  }
-
-  // uint64 sid = 4;
-  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
-    if (this_._internal_sid() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          4, this_._internal_sid(), target);
-    }
-  }
-
-  // uint64 tin = 5;
-  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
-    if (this_._internal_tin() != 0) {
-      target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          5, this_._internal_tin(), target);
+      target = stream->WriteStringMaybeAliased(5, _s, target);
     }
   }
 
@@ -743,7 +857,7 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
   if ((cached_has_bits & 0x0000001fU) != 0) {
-    // string text = 2;
+    // string text = 5;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
@@ -757,21 +871,21 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
             this_._internal_seq());
       }
     }
-    // uint64 timestamp = 3;
+    // uint64 timestamp = 2;
     if ((cached_has_bits & 0x00000004U) != 0) {
       if (this_._internal_timestamp() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_timestamp());
       }
     }
-    // uint64 sid = 4;
+    // uint64 sid = 3;
     if ((cached_has_bits & 0x00000008U) != 0) {
       if (this_._internal_sid() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_sid());
       }
     }
-    // uint64 tin = 5;
+    // uint64 tin = 4;
     if ((cached_has_bits & 0x00000010U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
@@ -854,6 +968,946 @@ void TextEvent::InternalSwap(TextEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
 }
 
 ::google::protobuf::Metadata TextEvent::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class TopOfBookCommand::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<TopOfBookCommand>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_._has_bits_);
+};
+
+TopOfBookCommand::TopOfBookCommand(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, TopOfBookCommand_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:toysequencer.TopOfBookCommand)
+}
+PROTOBUF_NDEBUG_INLINE TopOfBookCommand::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::toysequencer::TopOfBookCommand& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        symbol_(arena, from.symbol_) {}
+
+TopOfBookCommand::TopOfBookCommand(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const TopOfBookCommand& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, TopOfBookCommand_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  TopOfBookCommand* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, tin_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, tin_),
+           offsetof(Impl_, ask_size_) -
+               offsetof(Impl_, tin_) +
+               sizeof(Impl_::ask_size_));
+
+  // @@protoc_insertion_point(copy_constructor:toysequencer.TopOfBookCommand)
+}
+PROTOBUF_NDEBUG_INLINE TopOfBookCommand::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        symbol_(arena) {}
+
+inline void TopOfBookCommand::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, tin_),
+           0,
+           offsetof(Impl_, ask_size_) -
+               offsetof(Impl_, tin_) +
+               sizeof(Impl_::ask_size_));
+}
+TopOfBookCommand::~TopOfBookCommand() {
+  // @@protoc_insertion_point(destructor:toysequencer.TopOfBookCommand)
+  SharedDtor(*this);
+}
+inline void TopOfBookCommand::SharedDtor(MessageLite& self) {
+  TopOfBookCommand& this_ = static_cast<TopOfBookCommand&>(self);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.symbol_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL TopOfBookCommand::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) TopOfBookCommand(arena);
+}
+constexpr auto TopOfBookCommand::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(TopOfBookCommand),
+                                            alignof(TopOfBookCommand));
+}
+constexpr auto TopOfBookCommand::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_TopOfBookCommand_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &TopOfBookCommand::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<TopOfBookCommand>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &TopOfBookCommand::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<TopOfBookCommand>(), &TopOfBookCommand::ByteSizeLong,
+              &TopOfBookCommand::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_._cached_size_),
+          false,
+      },
+      &TopOfBookCommand::kDescriptorMethods,
+      &descriptor_table_messages_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull TopOfBookCommand_class_data_ =
+        TopOfBookCommand::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+TopOfBookCommand::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&TopOfBookCommand_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(TopOfBookCommand_class_data_.tc_table);
+  return TopOfBookCommand_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<3, 6, 0, 44, 2>
+TopOfBookCommand::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_._has_bits_),
+    0, // no _extensions_
+    6, 56,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294967232,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    6,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    TopOfBookCommand_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::toysequencer::TopOfBookCommand>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint64 tin = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.tin_), 1>(),
+     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_)}},
+    // string symbol = 2;
+    {::_pbi::TcParser::FastUS1,
+     {18, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.symbol_)}},
+    // double bid_price = 3;
+    {::_pbi::TcParser::FastF64S1,
+     {25, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_)}},
+    // uint64 bid_size = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.bid_size_), 3>(),
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_)}},
+    // double ask_price = 5;
+    {::_pbi::TcParser::FastF64S1,
+     {41, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_)}},
+    // uint64 ask_size = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.ask_size_), 5>(),
+     {48, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint64 tin = 1;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string symbol = 2;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.symbol_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double bid_price = 3;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 bid_size = 4;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // double ask_price = 5;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 ask_size = 6;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+  }},
+  // no aux_entries
+  {{
+    "\35\0\6\0\0\0\0\0"
+    "toysequencer.TopOfBookCommand"
+    "symbol"
+  }},
+};
+PROTOBUF_NOINLINE void TopOfBookCommand::Clear() {
+// @@protoc_insertion_point(message_clear_start:toysequencer.TopOfBookCommand)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    _impl_.symbol_.ClearNonDefaultToEmpty();
+  }
+  if ((cached_has_bits & 0x0000003eU) != 0) {
+    ::memset(&_impl_.tin_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.ask_size_) -
+        reinterpret_cast<char*>(&_impl_.tin_)) + sizeof(_impl_.ask_size_));
+  }
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL TopOfBookCommand::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const TopOfBookCommand& this_ = static_cast<const TopOfBookCommand&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL TopOfBookCommand::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const TopOfBookCommand& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:toysequencer.TopOfBookCommand)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // uint64 tin = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          1, this_._internal_tin(), target);
+    }
+  }
+
+  // string symbol = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+    if (!this_._internal_symbol().empty()) {
+      const ::std::string& _s = this_._internal_symbol();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TopOfBookCommand.symbol");
+      target = stream->WriteStringMaybeAliased(2, _s, target);
+    }
+  }
+
+  // double bid_price = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+          3, this_._internal_bid_price(), target);
+    }
+  }
+
+  // uint64 bid_size = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (this_._internal_bid_size() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_bid_size(), target);
+    }
+  }
+
+  // double ask_price = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+    if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+          5, this_._internal_ask_price(), target);
+    }
+  }
+
+  // uint64 ask_size = 6;
+  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
+    if (this_._internal_ask_size() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          6, this_._internal_ask_size(), target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:toysequencer.TopOfBookCommand)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t TopOfBookCommand::ByteSizeLong(const MessageLite& base) {
+  const TopOfBookCommand& this_ = static_cast<const TopOfBookCommand&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t TopOfBookCommand::ByteSizeLong() const {
+  const TopOfBookCommand& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:toysequencer.TopOfBookCommand)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000003fU) != 0) {
+    // string symbol = 2;
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!this_._internal_symbol().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_symbol());
+      }
+    }
+    // uint64 tin = 1;
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (this_._internal_tin() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_tin());
+      }
+    }
+    // double bid_price = 3;
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
+        total_size += 9;
+      }
+    }
+    // uint64 bid_size = 4;
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (this_._internal_bid_size() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_bid_size());
+      }
+    }
+    // double ask_price = 5;
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
+        total_size += 9;
+      }
+    }
+    // uint64 ask_size = 6;
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (this_._internal_ask_size() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_ask_size());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void TopOfBookCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<TopOfBookCommand*>(&to_msg);
+  auto& from = static_cast<const TopOfBookCommand&>(from_msg);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    from.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:toysequencer.TopOfBookCommand)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x0000003fU) != 0) {
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!from._internal_symbol().empty()) {
+        _this->_internal_set_symbol(from._internal_symbol());
+      } else {
+        if (_this->_impl_.symbol_.IsDefault()) {
+          _this->_internal_set_symbol("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (from._internal_tin() != 0) {
+        _this->_impl_.tin_ = from._impl_.tin_;
+      }
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(from._internal_bid_price()) != 0) {
+        _this->_impl_.bid_price_ = from._impl_.bid_price_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (from._internal_bid_size() != 0) {
+        _this->_impl_.bid_size_ = from._impl_.bid_size_;
+      }
+    }
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(from._internal_ask_price()) != 0) {
+        _this->_impl_.ask_price_ = from._impl_.ask_price_;
+      }
+    }
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (from._internal_ask_size() != 0) {
+        _this->_impl_.ask_size_ = from._impl_.ask_size_;
+      }
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TopOfBookCommand::CopyFrom(const TopOfBookCommand& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:toysequencer.TopOfBookCommand)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void TopOfBookCommand::InternalSwap(TopOfBookCommand* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, &other->_impl_.symbol_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_)
+      + sizeof(TopOfBookCommand::_impl_.ask_size_)
+      - PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_)>(
+          reinterpret_cast<char*>(&_impl_.tin_),
+          reinterpret_cast<char*>(&other->_impl_.tin_));
+}
+
+::google::protobuf::Metadata TopOfBookCommand::GetMetadata() const {
+  return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
+}
+// ===================================================================
+
+class TopOfBookEvent::_Internal {
+ public:
+  using HasBits =
+      decltype(::std::declval<TopOfBookEvent>()._impl_._has_bits_);
+  static constexpr ::int32_t kHasBitsOffset =
+      8 * PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_._has_bits_);
+};
+
+TopOfBookEvent::TopOfBookEvent(::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, TopOfBookEvent_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  SharedCtor(arena);
+  // @@protoc_insertion_point(arena_constructor:toysequencer.TopOfBookEvent)
+}
+PROTOBUF_NDEBUG_INLINE TopOfBookEvent::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena, const Impl_& from,
+    [[maybe_unused]] const ::toysequencer::TopOfBookEvent& from_msg)
+      : _has_bits_{from._has_bits_},
+        _cached_size_{0},
+        symbol_(arena, from.symbol_) {}
+
+TopOfBookEvent::TopOfBookEvent(
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena,
+    const TopOfBookEvent& from)
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+    : ::google::protobuf::Message(arena, TopOfBookEvent_class_data_.base()) {
+#else   // PROTOBUF_CUSTOM_VTABLE
+    : ::google::protobuf::Message(arena) {
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  TopOfBookEvent* const _this = this;
+  (void)_this;
+  _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
+      from._internal_metadata_);
+  new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, seq_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, seq_),
+           offsetof(Impl_, ask_size_) -
+               offsetof(Impl_, seq_) +
+               sizeof(Impl_::ask_size_));
+
+  // @@protoc_insertion_point(copy_constructor:toysequencer.TopOfBookEvent)
+}
+PROTOBUF_NDEBUG_INLINE TopOfBookEvent::Impl_::Impl_(
+    [[maybe_unused]] ::google::protobuf::internal::InternalVisibility visibility,
+    [[maybe_unused]] ::google::protobuf::Arena* PROTOBUF_NULLABLE arena)
+      : _cached_size_{0},
+        symbol_(arena) {}
+
+inline void TopOfBookEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
+  new (&_impl_) Impl_(internal_visibility(), arena);
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, seq_),
+           0,
+           offsetof(Impl_, ask_size_) -
+               offsetof(Impl_, seq_) +
+               sizeof(Impl_::ask_size_));
+}
+TopOfBookEvent::~TopOfBookEvent() {
+  // @@protoc_insertion_point(destructor:toysequencer.TopOfBookEvent)
+  SharedDtor(*this);
+}
+inline void TopOfBookEvent::SharedDtor(MessageLite& self) {
+  TopOfBookEvent& this_ = static_cast<TopOfBookEvent&>(self);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  this_._internal_metadata_.Delete<::google::protobuf::UnknownFieldSet>();
+  ABSL_DCHECK(this_.GetArena() == nullptr);
+  this_._impl_.symbol_.Destroy();
+  this_._impl_.~Impl_();
+}
+
+inline void* PROTOBUF_NONNULL TopOfBookEvent::PlacementNew_(
+    const void* PROTOBUF_NONNULL, void* PROTOBUF_NONNULL mem,
+    ::google::protobuf::Arena* PROTOBUF_NULLABLE arena) {
+  return ::new (mem) TopOfBookEvent(arena);
+}
+constexpr auto TopOfBookEvent::InternalNewImpl_() {
+  return ::google::protobuf::internal::MessageCreator::CopyInit(sizeof(TopOfBookEvent),
+                                            alignof(TopOfBookEvent));
+}
+constexpr auto TopOfBookEvent::InternalGenerateClassData_() {
+  return ::google::protobuf::internal::ClassDataFull{
+      ::google::protobuf::internal::ClassData{
+          &_TopOfBookEvent_default_instance_._instance,
+          &_table_.header,
+          nullptr,  // OnDemandRegisterArenaDtor
+          nullptr,  // IsInitialized
+          &TopOfBookEvent::MergeImpl,
+          ::google::protobuf::Message::GetNewImpl<TopOfBookEvent>(),
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+          &TopOfBookEvent::SharedDtor,
+          ::google::protobuf::Message::GetClearImpl<TopOfBookEvent>(), &TopOfBookEvent::ByteSizeLong,
+              &TopOfBookEvent::_InternalSerialize,
+#endif  // PROTOBUF_CUSTOM_VTABLE
+          PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_._cached_size_),
+          false,
+      },
+      &TopOfBookEvent::kDescriptorMethods,
+      &descriptor_table_messages_2eproto,
+      nullptr,  // tracker
+  };
+}
+
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 const
+    ::google::protobuf::internal::ClassDataFull TopOfBookEvent_class_data_ =
+        TopOfBookEvent::InternalGenerateClassData_();
+
+PROTOBUF_ATTRIBUTE_WEAK const ::google::protobuf::internal::ClassData* PROTOBUF_NONNULL
+TopOfBookEvent::GetClassData() const {
+  ::google::protobuf::internal::PrefetchToLocalCache(&TopOfBookEvent_class_data_);
+  ::google::protobuf::internal::PrefetchToLocalCache(TopOfBookEvent_class_data_.tc_table);
+  return TopOfBookEvent_class_data_.base();
+}
+PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
+const ::_pbi::TcParseTable<4, 9, 0, 50, 2>
+TopOfBookEvent::_table_ = {
+  {
+    PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_._has_bits_),
+    0, // no _extensions_
+    9, 120,  // max_field_number, fast_idx_mask
+    offsetof(decltype(_table_), field_lookup_table),
+    4294966784,  // skipmap
+    offsetof(decltype(_table_), field_entries),
+    9,  // num_field_entries
+    0,  // num_aux_entries
+    offsetof(decltype(_table_), field_names),  // no aux_entries
+    TopOfBookEvent_class_data_.base(),
+    nullptr,  // post_loop_handler
+    ::_pbi::TcParser::GenericFallback,  // fallback
+    #ifdef PROTOBUF_PREFETCH_PARSE_TABLE
+    ::_pbi::TcParser::GetTable<::toysequencer::TopOfBookEvent>(),  // to_prefetch
+    #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
+  }, {{
+    {::_pbi::TcParser::MiniParse, {}},
+    // uint64 seq = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.seq_), 1>(),
+     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_)}},
+    // uint64 timestamp = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.timestamp_), 2>(),
+     {16, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.timestamp_)}},
+    // uint64 sid = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.sid_), 3>(),
+     {24, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.sid_)}},
+    // uint64 tin = 4;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.tin_), 4>(),
+     {32, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.tin_)}},
+    // string symbol = 5;
+    {::_pbi::TcParser::FastUS1,
+     {42, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.symbol_)}},
+    // double bid_price = 6;
+    {::_pbi::TcParser::FastF64S1,
+     {49, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_price_)}},
+    // uint64 bid_size = 7;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.bid_size_), 6>(),
+     {56, 6, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_size_)}},
+    // double ask_price = 8;
+    {::_pbi::TcParser::FastF64S1,
+     {65, 7, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_price_)}},
+    // uint64 ask_size = 9;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.ask_size_), 8>(),
+     {72, 8, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+  }}, {{
+    65535, 65535
+  }}, {{
+    // uint64 seq = 1;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 timestamp = 2;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.timestamp_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 sid = 3;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.sid_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 tin = 4;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.tin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string symbol = 5;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.symbol_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
+    // double bid_price = 6;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_price_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 bid_size = 7;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_size_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // double ask_price = 8;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_price_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 ask_size = 9;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+  }},
+  // no aux_entries
+  {{
+    "\33\0\0\0\0\6\0\0\0\0\0\0\0\0\0\0"
+    "toysequencer.TopOfBookEvent"
+    "symbol"
+  }},
+};
+PROTOBUF_NOINLINE void TopOfBookEvent::Clear() {
+// @@protoc_insertion_point(message_clear_start:toysequencer.TopOfBookEvent)
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  cached_has_bits = _impl_._has_bits_[0];
+  if ((cached_has_bits & 0x00000001U) != 0) {
+    _impl_.symbol_.ClearNonDefaultToEmpty();
+  }
+  if ((cached_has_bits & 0x000000feU) != 0) {
+    ::memset(&_impl_.seq_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.ask_price_) -
+        reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.ask_price_));
+  }
+  _impl_.ask_size_ = ::uint64_t{0u};
+  _impl_._has_bits_.Clear();
+  _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::uint8_t* PROTOBUF_NONNULL TopOfBookEvent::_InternalSerialize(
+    const ::google::protobuf::MessageLite& base, ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) {
+  const TopOfBookEvent& this_ = static_cast<const TopOfBookEvent&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::uint8_t* PROTOBUF_NONNULL TopOfBookEvent::_InternalSerialize(
+    ::uint8_t* PROTOBUF_NONNULL target,
+    ::google::protobuf::io::EpsCopyOutputStream* PROTOBUF_NONNULL stream) const {
+  const TopOfBookEvent& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    this_.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(serialize_to_array_start:toysequencer.TopOfBookEvent)
+  ::uint32_t cached_has_bits = 0;
+  (void)cached_has_bits;
+
+  // uint64 seq = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_seq() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          1, this_._internal_seq(), target);
+    }
+  }
+
+  // uint64 timestamp = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (this_._internal_timestamp() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_timestamp(), target);
+    }
+  }
+
+  // uint64 sid = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (this_._internal_sid() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          3, this_._internal_sid(), target);
+    }
+  }
+
+  // uint64 tin = 4;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          4, this_._internal_tin(), target);
+    }
+  }
+
+  // string symbol = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
+    if (!this_._internal_symbol().empty()) {
+      const ::std::string& _s = this_._internal_symbol();
+      ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
+          _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TopOfBookEvent.symbol");
+      target = stream->WriteStringMaybeAliased(5, _s, target);
+    }
+  }
+
+  // double bid_price = 6;
+  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
+    if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+          6, this_._internal_bid_price(), target);
+    }
+  }
+
+  // uint64 bid_size = 7;
+  if ((this_._impl_._has_bits_[0] & 0x00000040U) != 0) {
+    if (this_._internal_bid_size() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          7, this_._internal_bid_size(), target);
+    }
+  }
+
+  // double ask_price = 8;
+  if ((this_._impl_._has_bits_[0] & 0x00000080U) != 0) {
+    if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteDoubleToArray(
+          8, this_._internal_ask_price(), target);
+    }
+  }
+
+  // uint64 ask_size = 9;
+  if ((this_._impl_._has_bits_[0] & 0x00000100U) != 0) {
+    if (this_._internal_ask_size() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          9, this_._internal_ask_size(), target);
+    }
+  }
+
+  if (ABSL_PREDICT_FALSE(this_._internal_metadata_.have_unknown_fields())) {
+    target =
+        ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+            this_._internal_metadata_.unknown_fields<::google::protobuf::UnknownFieldSet>(::google::protobuf::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:toysequencer.TopOfBookEvent)
+  return target;
+}
+
+#if defined(PROTOBUF_CUSTOM_VTABLE)
+::size_t TopOfBookEvent::ByteSizeLong(const MessageLite& base) {
+  const TopOfBookEvent& this_ = static_cast<const TopOfBookEvent&>(base);
+#else   // PROTOBUF_CUSTOM_VTABLE
+::size_t TopOfBookEvent::ByteSizeLong() const {
+  const TopOfBookEvent& this_ = *this;
+#endif  // PROTOBUF_CUSTOM_VTABLE
+  // @@protoc_insertion_point(message_byte_size_start:toysequencer.TopOfBookEvent)
+  ::size_t total_size = 0;
+
+  ::uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void)cached_has_bits;
+
+  ::_pbi::Prefetch5LinesFrom7Lines(&this_);
+  cached_has_bits = this_._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x000000ffU) != 0) {
+    // string symbol = 5;
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!this_._internal_symbol().empty()) {
+        total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
+                                        this_._internal_symbol());
+      }
+    }
+    // uint64 seq = 1;
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (this_._internal_seq() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_seq());
+      }
+    }
+    // uint64 timestamp = 2;
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (this_._internal_timestamp() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_timestamp());
+      }
+    }
+    // uint64 sid = 3;
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (this_._internal_sid() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_sid());
+      }
+    }
+    // uint64 tin = 4;
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (this_._internal_tin() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_tin());
+      }
+    }
+    // double bid_price = 6;
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
+        total_size += 9;
+      }
+    }
+    // uint64 bid_size = 7;
+    if ((cached_has_bits & 0x00000040U) != 0) {
+      if (this_._internal_bid_size() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_bid_size());
+      }
+    }
+    // double ask_price = 8;
+    if ((cached_has_bits & 0x00000080U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
+        total_size += 9;
+      }
+    }
+  }
+   {
+    // uint64 ask_size = 9;
+    if ((cached_has_bits & 0x00000100U) != 0) {
+      if (this_._internal_ask_size() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_ask_size());
+      }
+    }
+  }
+  return this_.MaybeComputeUnknownFieldsSize(total_size,
+                                             &this_._impl_._cached_size_);
+}
+
+void TopOfBookEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::google::protobuf::MessageLite& from_msg) {
+  auto* const _this = static_cast<TopOfBookEvent*>(&to_msg);
+  auto& from = static_cast<const TopOfBookEvent&>(from_msg);
+  if constexpr (::_pbi::DebugHardenVerifyHasBitConsistency()) {
+    from.VerifyHasBitConsistency();
+  }
+  // @@protoc_insertion_point(class_specific_merge_from_start:toysequencer.TopOfBookEvent)
+  ABSL_DCHECK_NE(&from, _this);
+  ::uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  cached_has_bits = from._impl_._has_bits_[0];
+  if ((cached_has_bits & 0x000000ffU) != 0) {
+    if ((cached_has_bits & 0x00000001U) != 0) {
+      if (!from._internal_symbol().empty()) {
+        _this->_internal_set_symbol(from._internal_symbol());
+      } else {
+        if (_this->_impl_.symbol_.IsDefault()) {
+          _this->_internal_set_symbol("");
+        }
+      }
+    }
+    if ((cached_has_bits & 0x00000002U) != 0) {
+      if (from._internal_seq() != 0) {
+        _this->_impl_.seq_ = from._impl_.seq_;
+      }
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
+      if (from._internal_timestamp() != 0) {
+        _this->_impl_.timestamp_ = from._impl_.timestamp_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (from._internal_sid() != 0) {
+        _this->_impl_.sid_ = from._impl_.sid_;
+      }
+    }
+    if ((cached_has_bits & 0x00000010U) != 0) {
+      if (from._internal_tin() != 0) {
+        _this->_impl_.tin_ = from._impl_.tin_;
+      }
+    }
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(from._internal_bid_price()) != 0) {
+        _this->_impl_.bid_price_ = from._impl_.bid_price_;
+      }
+    }
+    if ((cached_has_bits & 0x00000040U) != 0) {
+      if (from._internal_bid_size() != 0) {
+        _this->_impl_.bid_size_ = from._impl_.bid_size_;
+      }
+    }
+    if ((cached_has_bits & 0x00000080U) != 0) {
+      if (::absl::bit_cast<::uint64_t>(from._internal_ask_price()) != 0) {
+        _this->_impl_.ask_price_ = from._impl_.ask_price_;
+      }
+    }
+  }
+  if ((cached_has_bits & 0x00000100U) != 0) {
+    if (from._internal_ask_size() != 0) {
+      _this->_impl_.ask_size_ = from._impl_.ask_size_;
+    }
+  }
+  _this->_impl_._has_bits_[0] |= cached_has_bits;
+  _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void TopOfBookEvent::CopyFrom(const TopOfBookEvent& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:toysequencer.TopOfBookEvent)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+
+void TopOfBookEvent::InternalSwap(TopOfBookEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL other) {
+  using ::std::swap;
+  auto* arena = GetArena();
+  ABSL_DCHECK_EQ(arena, other->GetArena());
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
+  ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, &other->_impl_.symbol_, arena);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_)
+      + sizeof(TopOfBookEvent::_impl_.ask_size_)
+      - PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_)>(
+          reinterpret_cast<char*>(&_impl_.seq_),
+          reinterpret_cast<char*>(&other->_impl_.seq_));
+}
+
+::google::protobuf::Metadata TopOfBookEvent::GetMetadata() const {
   return ::google::protobuf::Message::GetMetadataImpl(GetClassData()->full());
 }
 // @@protoc_insertion_point(namespace_scope)

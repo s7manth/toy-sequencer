@@ -1,3 +1,4 @@
+#include "applications/adapters.hpp"
 #include "applications/ping.hpp"
 #include "applications/pong.hpp"
 #include "applications/scrappy.hpp"
@@ -21,6 +22,10 @@ int main(int, char **) {
     Sequencer sequencer(events_sender);
     CommandBus bus;
     sequencer.attach_command_bus(bus);
+    adapters::TextCommandToTextEvent text_adapter;
+    sequencer
+        .register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+            text_adapter);
     sequencer.start();
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
@@ -32,7 +37,7 @@ int main(int, char **) {
     PongApp pong(bus, log, pong_instance_id, ping_instance_id);
 
     ScrappyApp scrappy("sequenced_events.txt");
-    sequencer.subscribe_to_events(
+    sequencer.subscribe_to_events<toysequencer::TextEvent>(
         [&](const toysequencer::TextEvent &event) { scrappy.on_event(event); });
 
     MulticastReceiver rx_events(mcast_addr, events_port);

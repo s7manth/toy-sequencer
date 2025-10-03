@@ -1,5 +1,6 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
+#include "applications/adapters.hpp"
 #include "applications/ping.hpp"
 #include "applications/pong.hpp"
 #include "applications/sequencer.hpp"
@@ -21,6 +22,9 @@ void test_cross_instance_communication() {
   Sequencer seq(stubSender);
   CommandBus bus;
   seq.attach_command_bus(bus);
+  adapters::TextCommandToTextEvent adapter;
+  seq.register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+      adapter);
   seq.start();
 
   uint64_t ping_id = seq.assign_instance_id();
@@ -104,6 +108,9 @@ void test_sequence_number_assignment() {
   Sequencer seq(stubSender);
   CommandBus bus;
   seq.attach_command_bus(bus);
+  adapters::TextCommandToTextEvent adapter2;
+  seq.register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+      adapter2);
   seq.start();
 
   uint64_t sender_id = seq.assign_instance_id();
@@ -159,6 +166,9 @@ void test_timestamp_assignment() {
   Sequencer seq(stubSender);
   CommandBus bus;
   seq.attach_command_bus(bus);
+  adapters::TextCommandToTextEvent adapter3;
+  seq.register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+      adapter3);
   seq.start();
 
   uint64_t sender_id = seq.assign_instance_id();
@@ -207,6 +217,9 @@ void test_ping_pong_integration() {
   Sequencer seq(stubSender);
   CommandBus bus;
   seq.attach_command_bus(bus);
+  adapters::TextCommandToTextEvent adapter4;
+  seq.register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+      adapter4);
   seq.start();
 
   // Assign instance IDs

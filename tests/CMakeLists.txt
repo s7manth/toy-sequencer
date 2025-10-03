@@ -29,7 +29,7 @@ endif()
 
 add_executable(test_sequencer_basic
     cases/test_sequencer_basic.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
 )
 target_link_libraries(test_sequencer_basic PRIVATE test_support)
 target_include_directories(test_sequencer_basic PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -44,7 +44,7 @@ add_test(NAME test_sequencer_basic COMMAND test_sequencer_basic)
 # Individual SID/TIN functionality tests
 add_executable(test_instance_id_assignment
     cases/test_instance_id_assignment.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
 )
 target_link_libraries(test_instance_id_assignment PRIVATE test_support)
 target_include_directories(test_instance_id_assignment PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -58,7 +58,7 @@ add_test(NAME test_instance_id_assignment COMMAND test_instance_id_assignment)
 
 add_executable(test_sid_population
     cases/test_sid_population.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
 )
 target_link_libraries(test_sid_population PRIVATE test_support)
 target_include_directories(test_sid_population PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -72,7 +72,7 @@ add_test(NAME test_sid_population COMMAND test_sid_population)
 
 add_executable(test_tin_filtering
     cases/test_tin_filtering.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
 )
 target_link_libraries(test_tin_filtering PRIVATE test_support)
 target_include_directories(test_tin_filtering PRIVATE ${CMAKE_SOURCE_DIR}/src)
@@ -86,7 +86,7 @@ add_test(NAME test_tin_filtering COMMAND test_tin_filtering)
 
 add_executable(test_ping_pong_integration
     cases/test_ping_pong_integration.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
     ${CMAKE_SOURCE_DIR}/src/applications/ping.cpp
     ${CMAKE_SOURCE_DIR}/src/applications/pong.cpp
 )
@@ -103,7 +103,7 @@ add_test(NAME test_ping_pong_integration COMMAND test_ping_pong_integration)
 # Comprehensive SID/TIN functionality test suite
 add_executable(test_sid_tin_functionality
     cases/test_sid_tin_functionality.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.cpp
+    ${CMAKE_SOURCE_DIR}/src/applications/sequencer.hpp
     ${CMAKE_SOURCE_DIR}/src/applications/ping.cpp
     ${CMAKE_SOURCE_DIR}/src/applications/pong.cpp
 )

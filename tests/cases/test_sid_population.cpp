@@ -1,5 +1,6 @@
 #include "../stubs/stub_multicast_sender.hpp"
 #include "../support/test_harness.hpp"
+#include "applications/adapters.hpp"
 #include "applications/sequencer.hpp"
 #include "core/command_bus.hpp"
 #include "core/event_receiver.hpp"
@@ -17,6 +18,9 @@ int main() {
   Sequencer seq(stubSender);
   CommandBus bus;
   seq.attach_command_bus(bus);
+  adapters::TextCommandToTextEvent adapter;
+  seq.register_pipeline<toysequencer::TextCommand, toysequencer::TextEvent>(
+      adapter);
 
   uint64_t sender_id = seq.assign_instance_id();
   uint64_t target_id = seq.assign_instance_id();
