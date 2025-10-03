@@ -7,13 +7,21 @@
 
 class ScrappyApp : public EventReceiver<ScrappyApp> {
 public:
-  ScrappyApp(const std::string &output_file);
+  ScrappyApp(const std::string &output_file, const std::string &multicast_address, const uint16_t port);
   ~ScrappyApp() = default;
 
   void on_event(const toysequencer::TextEvent &event);
   void on_event(const toysequencer::TopOfBookEvent &event);
 
   void on_datagram(const uint8_t *data, size_t len);
+
+  void start() {
+    EventReceiver<ScrappyApp>::start();
+  }
+
+  void stop() {
+    EventReceiver<ScrappyApp>::stop();
+  }
 
 private:
   std::ofstream output_file_;

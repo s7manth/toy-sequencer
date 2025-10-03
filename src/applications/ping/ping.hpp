@@ -20,6 +20,14 @@ public:
 
   void send_command(const toysequencer::TextCommand &command,
                     const uint64_t sender_id);
+  
+  void start() {
+    EventReceiver<PingApp>::start();
+  }
+
+  void stop() {
+    EventReceiver<PingApp>::stop();
+  }
 
 private:
   CommandBus &bus_;

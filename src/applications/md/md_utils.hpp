@@ -17,7 +17,7 @@ public:
         uint64_t bid_s = 0, ask_s = 0;
         double ts_sec = 0.0;
 
-        toysequencer::TopOfBookCommand out;
+        toysequencer::TopOfBookCommand out = toysequencer::TopOfBookCommand();
 
         {
             std::string_view sv;
