@@ -23,8 +23,7 @@ int main() {
         std::make_unique<HttpSseMarketDataSource>(
             /*host=*/"127.0.0.1",
             /*port=*/"8000",
-            /*path=*/"/stream/AAPL",
-            /*target_instance=*/md_instance_id);
+            /*path=*/"/stream/AAPL");
 
     MarketDataFeedApp md("239.255.0.1", 30001, 1, md_instance_id, log, std::move(src));
 

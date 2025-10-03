@@ -1,16 +1,12 @@
 #pragma once
 
-#include "generated/messages.pb.h"
 #include "imarket_data_source.hpp"
 #include <atomic>
-#include <cstdint>
 #include <cstring>
 #include <sstream>
 #include <string>
 #include <thread>
 #include <vector>
-
-#include <simdjson.h>
 
 #include <netdb.h>
 #include <sys/socket.h>
@@ -22,10 +18,8 @@
 // events.
 class HttpSseMarketDataSource : public IMarketDataSource {
 public:
-  HttpSseMarketDataSource(std::string host, std::string port, std::string path,
-                          uint64_t target_instance)
-      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)),
-        target_instance_(target_instance) {}
+  HttpSseMarketDataSource(std::string host, std::string port, std::string path)
+      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)) {}
 
   void start() override {
     if (running_.exchange(true))
@@ -123,7 +117,6 @@ private:
           if (p < line.size() && line[p] == ' ')
             ++p;
           std::string json = line.substr(p);
-          toysequencer::TopOfBookCommand cmd;
           on_top_of_book(json);
         }
       }
@@ -136,7 +129,6 @@ private:
   std::string host_;
   std::string port_;
   std::string path_;
-  uint64_t target_instance_;
   std::thread worker_;
   std::atomic<bool> running_{false};
   std::atomic<int> sock_{-1};

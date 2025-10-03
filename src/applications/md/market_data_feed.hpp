@@ -18,8 +18,8 @@ public:
                     std::function<void(const std::string &)> log,
                     std::unique_ptr<IMarketDataSource> src)
       : ICommandSender<MarketDataFeedApp>(multicast_address, port, ttl),
-        instance_id_(instance_id),
-        log_(std::move(log)), source_(std::move(src)) {
+        log_(std::move(log)), source_(std::move(src)),
+        instance_id_(instance_id) {
             source_->register_notifier(*this);
         }
 

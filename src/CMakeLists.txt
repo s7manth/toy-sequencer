@@ -52,7 +52,9 @@ add_executable(market_data_app
     applications/md/market_data.hpp
     applications/md/market_data_feed.hpp
     applications/md/md_utils.hpp
+    applications/md/md_notifier.hpp
     applications/md/imarket_data_source.hpp
+    generated/messages.pb.h
     core/multicast_receiver.cpp
     core/command_sender.hpp
     core/multicast_sender.cpp
