@@ -45,8 +45,8 @@ uint64_t Sequencer::publish(const toysequencer::TextCommand &command,
           std::chrono::high_resolution_clock::now().time_since_epoch())
           .count();
   event.set_timestamp(ts);
-  event.set_sid(sender_id);     // Set sender instance ID
-  event.set_tin(command.tin()); // Copy TIN from command
+  event.set_sid(sender_id);
+  event.set_tin(command.tin());
 
   std::string bytes;
   bytes.resize(event.ByteSizeLong());

@@ -2,7 +2,7 @@
 #include <iostream>
 
 ScrappyApp::ScrappyApp(const std::string &output_file)
-    : output_filename_(output_file) {
+    : EventReceiver<ScrappyApp>(0), output_filename_(output_file) {
   output_file_.open(output_file, std::ios::out | std::ios::app);
   if (!output_file_.is_open()) {
     std::cerr << "Failed to open output file: " << output_file << std::endl;
@@ -11,11 +11,11 @@ ScrappyApp::ScrappyApp(const std::string &output_file)
 
 void ScrappyApp::on_event(const toysequencer::TextEvent &event) {
   if (output_file_.is_open()) {
-    // Format: Sequence Number|SID|TIN|Payload
+    // format: Sequence Number|SID|TIN|Payload
     output_file_ << "#=" << event.seq() << "|" << "SID=" << event.sid() << "|"
                  << "TIN=" << event.tin() << "|" << "TEXT=" << event.text()
                  << std::endl;
-    output_file_.flush(); // Ensure immediate write to file
+    output_file_.flush(); // ensure immediate write to file
   }
 }
 

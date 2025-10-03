@@ -33,7 +33,7 @@ public:
   // for retransmit requests
   void retransmit(uint64_t from_seq, uint64_t to_seq);
 
-  // Subscribe to all events published by this sequencer
+  // subscribe to all events published by this sequencer
   void subscribe_to_events(EventHandler handler);
 
 private:
@@ -52,7 +52,7 @@ private:
   std::thread worker_;
   std::atomic<bool> running_{false};
 
-  // Event subscription mechanism
+  // event subscription mechanism
   std::mutex event_handlers_mutex_;
   std::vector<EventHandler> event_handlers_;
 };

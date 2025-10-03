@@ -1,18 +1,16 @@
 #pragma once
 
+#include "core/event_receiver.hpp"
 #include "generated/messages.pb.h"
 #include <fstream>
 #include <string>
 
-class ScrappyApp {
+class ScrappyApp : public EventReceiver<ScrappyApp> {
 public:
   ScrappyApp(const std::string &output_file);
   ~ScrappyApp() = default;
 
-  // Method to handle incoming events (bypasses TIN filtering)
   void on_event(const toysequencer::TextEvent &event);
-
-  // Method to handle raw datagrams (for direct multicast subscription)
   void on_datagram(const uint8_t *data, size_t len);
 
 private:

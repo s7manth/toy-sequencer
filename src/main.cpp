@@ -12,12 +12,10 @@
 
 int main(int, char **) {
   try {
-    // Configure multicast transport
     const std::string mcast_addr = "239.255.0.1";
     const uint16_t events_port = 30001; // single events stream
     const uint8_t mcast_ttl = 1;
 
-    // Single events sender/port
     MulticastSender events_sender(mcast_addr, events_port, mcast_ttl);
 
     Sequencer sequencer(events_sender);
@@ -27,18 +25,13 @@ int main(int, char **) {
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    // Assign instance IDs to applications
     uint64_t ping_instance_id = sequencer.assign_instance_id();
     uint64_t pong_instance_id = sequencer.assign_instance_id();
 
     PingApp ping(bus, log, ping_instance_id, pong_instance_id);
     PongApp pong(bus, log, pong_instance_id, ping_instance_id);
 
-    // Scrappy listens to ALL events and stores them in a file
     ScrappyApp scrappy("sequenced_events.txt");
-
-    // Subscribe Scrappy directly to Sequencer events (bypasses multicast
-    // duplication)
     sequencer.subscribe_to_events(
         [&](const toysequencer::TextEvent &event) { scrappy.on_event(event); });
 
@@ -55,12 +48,12 @@ int main(int, char **) {
 
     std::thread ping_thread([&] {
       toysequencer::TextCommand cmd;
-      cmd.set_text("PING");
+      cmd.set_text("PING1");
       cmd.set_tin(pong_instance_id);
       ping.send_command(cmd, ping_instance_id);
 
       toysequencer::TextCommand cmd2;
-      cmd2.set_text("PING");
+      cmd2.set_text("PING2");
       cmd2.set_tin(pong_instance_id);
       ping.send_command(cmd2, ping_instance_id);
     });
