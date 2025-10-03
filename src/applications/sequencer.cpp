@@ -6,7 +6,7 @@ Sequencer::Sequencer(ISender &sender) : sender_(sender) {}
 
 void Sequencer::attach_command_bus(CommandBus &bus) {
   bus_ = &bus;
-  bus.subscribe(
+  bus.subscribe<toysequencer::TextCommand>(
       [this](const toysequencer::TextCommand &cmd, uint64_t sender_id) {
         {
           std::lock_guard<std::mutex> lock(queue_mutex_);

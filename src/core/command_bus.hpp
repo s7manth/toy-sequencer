@@ -1,37 +1,46 @@
 #pragma once
 
-#include "generated/messages.pb.h"
 #include <functional>
 #include <mutex>
+#include <typeindex>
+#include <unordered_map>
 #include <utility>
 #include <vector>
 
-// Simple in-process command bus. Applications publish commands here.
-// Sequencer subscribes and emits events to the multicast stream.
 class CommandBus {
 public:
-  using CommandHandler = std::function<void(const toysequencer::TextCommand &,
-                                            uint64_t sender_id)>;
+  template <typename CommandT>
+  using CommandHandler =
+      std::function<void(const CommandT &, uint64_t sender_id)>;
 
-  void subscribe(CommandHandler handler) {
+  template <typename CommandT>
+  void subscribe(CommandHandler<CommandT> handler) {
     std::lock_guard<std::mutex> lock(mutex_);
-    handlers_.push_back(std::move(handler));
+    auto &bucket = handlers_[std::type_index(typeid(CommandT))];
+    bucket.push_back([h = std::move(handler)](const void *ptr, uint64_t sid) {
+      h(*static_cast<const CommandT *>(ptr), sid);
+    });
   }
 
-  void publish(const toysequencer::TextCommand &command,
-               uint64_t sender_id) const {
-    // Call without holding lock to avoid handler reentrancy issues.
-    std::vector<CommandHandler> copy;
+  template <typename CommandT>
+  void publish(const CommandT &command, uint64_t sender_id) const {
+    // call without holding lock to avoid handler reentrancy issues
+    std::vector<std::function<void(const void *, uint64_t)>> copy;
     {
       std::lock_guard<std::mutex> lock(mutex_);
-      copy = handlers_;
+      auto it = handlers_.find(std::type_index(typeid(CommandT)));
+      if (it != handlers_.end()) {
+        copy = it->second;
+      }
     }
-    for (auto &h : copy) {
-      h(command, sender_id);
+    for (auto &erased : copy) {
+      erased(&command, sender_id);
     }
   }
 
 private:
+  using ErasedHandler = std::function<void(const void *, uint64_t)>;
   mutable std::mutex mutex_;
-  std::vector<CommandHandler> handlers_;
+  mutable std::unordered_map<std::type_index, std::vector<ErasedHandler>>
+      handlers_;
 };
