@@ -1,12 +1,12 @@
-## Building 
+## Building
 
-```shell 
-cmake --build build
+```shell
+cmake -S . -B build && cmake --build build
 ```
 
-## Testing 
+## Testing
 
-```shell 
+```shell
 # Run all tests
 ctest --test-dir build
 

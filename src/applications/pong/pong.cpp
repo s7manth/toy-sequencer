@@ -1,10 +1,15 @@
 #include "pong.hpp"
 
-PongApp::PongApp(const std::string &multicast_address, uint16_t port, uint8_t ttl,
-                 std::function<void(const std::string &)> log, uint64_t instance_id,
-                 uint64_t ping_instance_id)
-    : ICommandSender<PongApp>(multicast_address, port, ttl),
-      EventReceiver<PongApp>(instance_id, multicast_address, port), log_(std::move(log)),
+PongApp::PongApp(const std::string &cmd_multicast_address, 
+                 const uint16_t cmd_port, 
+                 const uint8_t ttl,
+                 const std::string &events_multicast_address, 
+                 const uint16_t events_port,
+                 const std::function<void(const std::string &)> log,
+                 const uint64_t instance_id,
+                 const uint64_t ping_instance_id)
+    : ICommandSender<PongApp>(cmd_multicast_address, cmd_port, ttl),
+      EventReceiver<PongApp>(instance_id, events_multicast_address, events_port), log_(std::move(log)),
       ping_instance_id_(ping_instance_id) {}
 
 void PongApp::on_event(const toysequencer::TextEvent &event) {

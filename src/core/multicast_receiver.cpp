@@ -1,8 +1,7 @@
 #include "multicast_receiver.hpp"
 #include <stdexcept>
 
-MulticastReceiver::MulticastReceiver(const std::string &multicast_address,
-                                     uint16_t port)
+MulticastReceiver::MulticastReceiver(const std::string &multicast_address, uint16_t port)
     : multicast_address_(multicast_address), port_(port) {}
 
 MulticastReceiver::~MulticastReceiver() { stop(); }
@@ -53,8 +52,7 @@ void MulticastReceiver::run_loop() {
 #endif
 
   int reuse = 1;
-  setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR,
-             reinterpret_cast<const char *>(&reuse), sizeof(reuse));
+  setsockopt(socket_, SOL_SOCKET, SO_REUSEADDR, reinterpret_cast<const char *>(&reuse), sizeof(reuse));
 
   sockaddr_in local{};
   local.sin_family = AF_INET;
@@ -67,8 +65,7 @@ void MulticastReceiver::run_loop() {
   ip_mreq mreq{};
   mreq.imr_multiaddr.s_addr = inet_addr(multicast_address_.c_str());
   mreq.imr_interface.s_addr = htonl(INADDR_ANY);
-  if (setsockopt(socket_, IPPROTO_IP, IP_ADD_MEMBERSHIP,
-                 reinterpret_cast<const char *>(&mreq), sizeof(mreq)) < 0) {
+  if (setsockopt(socket_, IPPROTO_IP, IP_ADD_MEMBERSHIP, reinterpret_cast<const char *>(&mreq), sizeof(mreq)) < 0) {
     throw std::runtime_error("Failed to join multicast group");
   }
 
@@ -77,13 +74,11 @@ void MulticastReceiver::run_loop() {
     sockaddr_in src{};
 #ifdef _WIN32
     int srclen = sizeof(src);
-    int n = recvfrom(socket_, reinterpret_cast<char *>(buffer.data()),
-                     static_cast<int>(buffer.size()), 0,
+    int n = recvfrom(socket_, reinterpret_cast<char *>(buffer.data()), static_cast<int>(buffer.size()), 0,
                      reinterpret_cast<sockaddr *>(&src), &srclen);
 #else
     socklen_t srclen = sizeof(src);
-    ssize_t n = recvfrom(socket_, buffer.data(), buffer.size(), 0,
-                         reinterpret_cast<sockaddr *>(&src), &srclen);
+    ssize_t n = recvfrom(socket_, buffer.data(), buffer.size(), 0, reinterpret_cast<sockaddr *>(&src), &srclen);
 #endif
     if (n <= 0) {
       continue;
@@ -99,6 +94,5 @@ void MulticastReceiver::run_loop() {
     }
   }
 
-  setsockopt(socket_, IPPROTO_IP, IP_DROP_MEMBERSHIP,
-             reinterpret_cast<const char *>(&mreq), sizeof(mreq));
+  setsockopt(socket_, IPPROTO_IP, IP_DROP_MEMBERSHIP, reinterpret_cast<const char *>(&mreq), sizeof(mreq));
 }

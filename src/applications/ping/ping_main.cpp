@@ -1,4 +1,3 @@
-#include "../core/command_bus.hpp"
 #include "ping.hpp"
 #include <chrono>
 #include <csignal>
@@ -15,21 +14,24 @@ int main() {
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    const std::string mcast_addr = "239.255.0.1";
+    const std::string cmd_addr = "239.255.0.2"; // commands to sequencer
+    const uint16_t cmd_port = 30002;
+    const std::string events_addr = "239.255.0.1"; // events from sequencer
     const uint16_t events_port = 30001;
 
-    uint64_t ping_instance_id = 1;
-    uint64_t pong_instance_id = 2;
+    uint64_t ping_instance_id = 18;
+    uint64_t pong_instance_id = 81;
 
-    PingApp ping(mcast_addr, events_port, 1, log, ping_instance_id,
-                 pong_instance_id);
+    PingApp ping(cmd_addr, cmd_port, 1, events_addr, events_port, log, ping_instance_id, pong_instance_id);
+
     ping.start();
-    std::cout << "ping listening for TextEvent on " << mcast_addr << ":"
-              << events_port << ", instance=" << ping_instance_id << std::endl;
+    std::cout << "ping sending commands to " << cmd_addr << ":" << cmd_port << ", listening for events on "
+              << events_addr << ":" << events_port << ", instance=" << ping_instance_id << std::endl;
 
-    while (running.load()) {
-      std::this_thread::sleep_for(std::chrono::milliseconds(200));
-    }
+    auto cmd = toysequencer::TextCommand();
+    cmd.set_text("PING");
+    cmd.set_tin(pong_instance_id);
+    ping.send_command(cmd, ping_instance_id);
 
     ping.stop();
     return 0;

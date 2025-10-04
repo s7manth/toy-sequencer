@@ -21,14 +21,12 @@ int main() {
 
     uint64_t md_instance_id = 3;
 
-    std::unique_ptr<IMarketDataSource> src =
-        std::make_unique<HttpSseMarketDataSource>(
-            /*host=*/"127.0.0.1",
-            /*port=*/"8000",
-            /*path=*/"/stream/AAPL");
+    std::unique_ptr<IMarketDataSource> src = std::make_unique<HttpSseMarketDataSource>(
+        /*host=*/"127.0.0.1",
+        /*port=*/"8000",
+        /*path=*/"/stream/AAPL");
 
-    MarketDataFeedApp md("239.255.0.2", 30002, 1, md_instance_id, log,
-                         std::move(src));
+    MarketDataFeedApp md("239.255.0.2", 30002, 1, md_instance_id, log, std::move(src));
 
     std::cout << "md: calling start()" << std::endl;
     md.start();

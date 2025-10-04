@@ -1,4 +1,3 @@
-#include "../core/command_bus.hpp"
 #include "pong.hpp"
 #include <chrono>
 #include <csignal>
@@ -15,20 +14,20 @@ int main() {
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    const std::string mcast_addr = "239.255.0.1";
+    const std::string cmd_addr = "239.255.0.2"; // commands to sequencer
+    const uint16_t cmd_port = 30002;
+    const std::string events_addr = "239.255.0.1"; // events from sequencer
     const uint16_t events_port = 30001;
 
-    // Assign instance ids locally for filtering
-    uint64_t pong_instance_id = 2; // can be passed via CLI later
-    uint64_t ping_instance_id = 1;
+    uint64_t ping_instance_id = 18;
+    uint64_t pong_instance_id = 81;
 
-    PongApp pong(mcast_addr, events_port, 1, log, pong_instance_id,
-                 ping_instance_id);
+    PongApp pong(cmd_addr, cmd_port, 1, events_addr, events_port, log, pong_instance_id, ping_instance_id);
 
     pong.start();
 
-    std::cout << "pong listening for TextEvent on " << mcast_addr << ":"
-              << events_port << ", instance=" << pong_instance_id << std::endl;
+    std::cout << "pong listening for TextEvent on " << cmd_addr << ":" << cmd_port << ", instance=" << pong_instance_id
+              << std::endl;
 
     while (running.load()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(200));
