@@ -11,7 +11,7 @@
 class PongApp : public ICommandSender<PongApp>, public EventReceiver<PongApp> {
 public:
   PongApp(const std::string &multicast_address, uint16_t port, uint8_t ttl,
-          CommandBus &bus, std::function<void(const std::string &)> log,
+          std::function<void(const std::string &)> log,
           uint64_t instance_id, uint64_t ping_instance_id);
 
   // callbacks
@@ -29,7 +29,6 @@ public:
   }
 
 private:
-  CommandBus &bus_;
   std::function<void(const std::string &)> log_;
   uint64_t ping_instance_id_;
 };

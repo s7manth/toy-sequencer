@@ -13,7 +13,6 @@ int main() {
     std::signal(SIGINT, handle_signal);
     std::signal(SIGTERM, handle_signal);
 
-    CommandBus bus;
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
     const std::string mcast_addr = "239.255.0.1";
@@ -23,7 +22,7 @@ int main() {
     uint64_t pong_instance_id = 2; // can be passed via CLI later
     uint64_t ping_instance_id = 1;
 
-    PongApp pong(mcast_addr, events_port, 1, bus, log, pong_instance_id, ping_instance_id);
+    PongApp pong(mcast_addr, events_port, 1, log, pong_instance_id, ping_instance_id);
 
     pong.start();
 
