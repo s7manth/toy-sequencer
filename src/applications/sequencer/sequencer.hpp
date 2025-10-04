@@ -132,7 +132,6 @@ private:
   std::thread worker_;
   std::atomic<bool> running_{false};
 
-  // event subscription mechanism
   std::mutex event_handlers_mutex_;
   std::unordered_map<std::type_index,
                      std::vector<std::function<void(const void *)>>>

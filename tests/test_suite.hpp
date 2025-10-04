@@ -2,15 +2,15 @@
 
 #include "test_harness.hpp"
 #include <string>
+#include <utility>
 #include <vector>
 
 namespace test_framework {
 
 class TestSuite {
 public:
-  TestSuite(const std::string &name) : name_(name) {}
+  TestSuite(std::string name) : name_(std::move(name)) {}
   virtual ~TestSuite() {
-    // Ensure cleanup happens even if teardown wasn't called explicitly
     ensure_cleanup();
   }
 
@@ -18,7 +18,6 @@ public:
   virtual void teardown() {}
   virtual void run_tests() = 0;
 
-  // Ensure proper cleanup even if tests fail
   void ensure_cleanup() {
     try {
       harness_.get_event_collector().stop();
@@ -70,40 +69,6 @@ public:
 protected:
   TestHarness harness_;
 
-  void assert_true(bool condition, const std::string &message = "") {
-    if (!condition) {
-      throw std::runtime_error("Assertion failed: " + message);
-    }
-  }
-
-  void assert_false(bool condition, const std::string &message = "") {
-    assert_true(!condition, message);
-  }
-
-  void assert_equals(const std::string &expected, const std::string &actual,
-                     const std::string &message = "") {
-    if (expected != actual) {
-      throw std::runtime_error("Assertion failed: Expected '" + expected + "', got '" + actual +
-                               "'" + (message.empty() ? "" : " - " + message));
-    }
-  }
-
-  void assert_greater_than(size_t expected, size_t actual, const std::string &message = "") {
-    if (actual <= expected) {
-      throw std::runtime_error("Assertion failed: Expected > " + std::to_string(expected) +
-                               ", got " + std::to_string(actual) +
-                               (message.empty() ? "" : " - " + message));
-    }
-  }
-
-  void assert_greater_equal(size_t expected, size_t actual, const std::string &message = "") {
-    if (actual < expected) {
-      throw std::runtime_error("Assertion failed: Expected >= " + std::to_string(expected) +
-                               ", got " + std::to_string(actual) +
-                               (message.empty() ? "" : " - " + message));
-    }
-  }
-
 private:
   std::string name_;
   std::vector<std::pair<std::string, std::function<void()>>> tests_;
@@ -112,18 +77,14 @@ private:
 class TestRunner {
 public:
   static void run_suite(std::unique_ptr<TestSuite> suite) {
-    suite->run_tests(); // Register test cases first
+    suite->run_tests();
     suite->run_all_tests();
   }
 
   static void run_multiple_suites(std::vector<std::unique_ptr<TestSuite>> suites) {
-    int total_passed = 0;
-    int total_failed = 0;
-
     for (auto &suite : suites) {
-      suite->run_tests(); // Register test cases first
+      suite->run_tests();
       suite->run_all_tests();
-      // Note: Individual suite results are printed by TestSuite::run_all_tests()
     }
 
     std::cout << "\n=== Overall Test Results ===" << std::endl;
@@ -131,4 +92,4 @@ public:
   }
 };
 
-} // namespace test_framework
+}

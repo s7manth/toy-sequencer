@@ -43,12 +43,9 @@ int main() {
       std::cout << "Received " << len << " bytes on command channel"
                 << std::endl;
 
-      // Try TopOfBookCommand first (more specific)
       {
         toysequencer::TopOfBookCommand tob;
         if (tob.ParseFromArray(data, static_cast<int>(len))) {
-          // Validate that it's actually a TopOfBookCommand by checking required
-          // fields
           if (!tob.symbol().empty() && tob.tin() > 0) {
             std::cout << "Parsed TopOfBookCommand: " << tob.DebugString()
                       << std::endl;
@@ -58,12 +55,9 @@ int main() {
         }
       }
 
-      // Try TextCommand
       {
         toysequencer::TextCommand tc;
         if (tc.ParseFromArray(data, static_cast<int>(len))) {
-          // Validate that it's actually a TextCommand by checking required
-          // fields
           if (!tc.text().empty() && tc.tin() > 0) {
             std::cout << "Parsed TextCommand: " << tc.DebugString()
                       << std::endl;

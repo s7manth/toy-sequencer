@@ -11,7 +11,6 @@
 
 namespace test_framework {
 
-// Utility function to find available ports
 uint16_t find_available_port(uint16_t start_port) {
   for (uint16_t port = start_port; port < start_port + 1000; ++port) {
     int sock = socket(AF_INET, SOCK_DGRAM, 0);
@@ -32,7 +31,6 @@ uint16_t find_available_port(uint16_t start_port) {
   throw std::runtime_error("Could not find available port");
 }
 
-// ApplicationManager Implementation
 bool ApplicationManager::start_application(const ApplicationConfig &config) {
   std::lock_guard<std::mutex> lock(mutex_);
 
