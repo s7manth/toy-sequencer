@@ -1,12 +1,12 @@
-#include "imarket_data_source.hpp"
 #include "http_market_data_source.hpp"
+#include "imarket_data_source.hpp"
 #include "market_data_feed.hpp"
 #include <atomic>
+#include <chrono>
 #include <csignal>
 #include <iostream>
 #include <memory>
 #include <thread>
-#include <chrono>
 
 static std::atomic<bool> running{true};
 static void handle_signal(int) { running.store(false); }
@@ -27,7 +27,8 @@ int main() {
             /*port=*/"8000",
             /*path=*/"/stream/AAPL");
 
-    MarketDataFeedApp md("239.255.0.2", 30002, 1, md_instance_id, log, std::move(src));
+    MarketDataFeedApp md("239.255.0.2", 30002, 1, md_instance_id, log,
+                         std::move(src));
 
     std::cout << "md: calling start()" << std::endl;
     md.start();

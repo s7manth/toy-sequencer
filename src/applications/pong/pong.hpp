@@ -11,8 +11,8 @@
 class PongApp : public ICommandSender<PongApp>, public EventReceiver<PongApp> {
 public:
   PongApp(const std::string &multicast_address, uint16_t port, uint8_t ttl,
-          std::function<void(const std::string &)> log,
-          uint64_t instance_id, uint64_t ping_instance_id);
+          std::function<void(const std::string &)> log, uint64_t instance_id,
+          uint64_t ping_instance_id);
 
   // callbacks
   void on_event(const toysequencer::TextEvent &event);
@@ -20,13 +20,9 @@ public:
   void send_command(const toysequencer::TextCommand &command,
                     const uint64_t sender_id);
 
-  void start() {
-    EventReceiver<PongApp>::start();
-  }
+  void start() { EventReceiver<PongApp>::start(); }
 
-  void stop() {
-    EventReceiver<PongApp>::stop();
-  }
+  void stop() { EventReceiver<PongApp>::stop(); }
 
 private:
   std::function<void(const std::string &)> log_;

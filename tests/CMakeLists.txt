@@ -1,118 +1,74 @@
 find_package(Protobuf QUIET REQUIRED)
 
-add_library(test_support STATIC
-    support/test_harness.cpp
+# New comprehensive test framework
+add_library(test_framework STATIC
+    test_harness.cpp
+    test_suite.hpp
 )
 
-target_include_directories(test_support PUBLIC
+target_include_directories(test_framework PUBLIC
     ${CMAKE_SOURCE_DIR}/src
-    ${CMAKE_CURRENT_SOURCE_DIR}/support
-    ${CMAKE_CURRENT_SOURCE_DIR}/stubs
+    ${CMAKE_CURRENT_SOURCE_DIR}
 )
 
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_support PRIVATE -Wall -Wextra -std=c++17)
+    target_compile_options(test_framework PRIVATE -Wall -Wextra -std=c++17)
 endif()
 
-# Ensure generated protobuf headers exist before compiling test_support
+# Ensure generated protobuf headers exist before compiling test_framework
 if(TARGET generate_msg_protos)
-    add_dependencies(test_support generate_msg_protos)
+    add_dependencies(test_framework generate_msg_protos)
 endif()
 
 # Provide protobuf headers/libs when compiling files that include generated .pb.h
 if(TARGET protobuf::libprotobuf)
-    target_link_libraries(test_support PUBLIC protobuf::libprotobuf)
+    target_link_libraries(test_framework PUBLIC protobuf::libprotobuf)
 else()
-    target_include_directories(test_support PUBLIC ${Protobuf_INCLUDE_DIRS})
-    target_link_libraries(test_support PUBLIC ${Protobuf_LIBRARIES})
+    target_include_directories(test_framework PUBLIC ${Protobuf_INCLUDE_DIRS})
+    target_link_libraries(test_framework PUBLIC ${Protobuf_LIBRARIES})
 endif()
 
-add_executable(test_sequencer_basic
-    cases/test_sequencer_basic.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
+# Link with core libraries
+target_link_libraries(test_framework PUBLIC 
+    ${CMAKE_SOURCE_DIR}/src/core/multicast_sender.cpp
+    ${CMAKE_SOURCE_DIR}/src/core/multicast_receiver.cpp
 )
-target_link_libraries(test_sequencer_basic PRIVATE test_support)
-target_include_directories(test_sequencer_basic PRIVATE ${CMAKE_SOURCE_DIR}/src)
-if(TARGET msg_protos)
-    target_link_libraries(test_sequencer_basic PRIVATE msg_protos)
-endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_sequencer_basic PRIVATE -Wall -Wextra -std=c++17)
-endif()
-add_test(NAME test_sequencer_basic COMMAND test_sequencer_basic)
 
-# Individual SID/TIN functionality tests
-add_executable(test_instance_id_assignment
-    cases/test_instance_id_assignment.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
+# Main test runner executable
+add_executable(test_runner
+    test_runner.cpp
+    test_cases.cpp
 )
-target_link_libraries(test_instance_id_assignment PRIVATE test_support)
-target_include_directories(test_instance_id_assignment PRIVATE ${CMAKE_SOURCE_DIR}/src)
-if(TARGET msg_protos)
-    target_link_libraries(test_instance_id_assignment PRIVATE msg_protos)
-endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_instance_id_assignment PRIVATE -Wall -Wextra -std=c++17)
-endif()
-add_test(NAME test_instance_id_assignment COMMAND test_instance_id_assignment)
 
-add_executable(test_sid_population
-    cases/test_sid_population.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
-)
-target_link_libraries(test_sid_population PRIVATE test_support)
-target_include_directories(test_sid_population PRIVATE ${CMAKE_SOURCE_DIR}/src)
-if(TARGET msg_protos)
-    target_link_libraries(test_sid_population PRIVATE msg_protos)
-endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_sid_population PRIVATE -Wall -Wextra -std=c++17)
-endif()
-add_test(NAME test_sid_population COMMAND test_sid_population)
+target_link_libraries(test_runner PRIVATE test_framework)
+target_include_directories(test_runner PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
-add_executable(test_tin_filtering
-    cases/test_tin_filtering.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
-)
-target_link_libraries(test_tin_filtering PRIVATE test_support)
-target_include_directories(test_tin_filtering PRIVATE ${CMAKE_SOURCE_DIR}/src)
 if(TARGET msg_protos)
-    target_link_libraries(test_tin_filtering PRIVATE msg_protos)
+    target_link_libraries(test_runner PRIVATE msg_protos)
 endif()
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_tin_filtering PRIVATE -Wall -Wextra -std=c++17)
-endif()
-add_test(NAME test_tin_filtering COMMAND test_tin_filtering)
 
-add_executable(test_ping_pong_integration
-    cases/test_ping_pong_integration.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
-    ${CMAKE_SOURCE_DIR}/src/applications/ping/ping.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/pong/pong.cpp
-)
-target_link_libraries(test_ping_pong_integration PRIVATE test_support)
-target_include_directories(test_ping_pong_integration PRIVATE ${CMAKE_SOURCE_DIR}/src)
-if(TARGET msg_protos)
-    target_link_libraries(test_ping_pong_integration PRIVATE msg_protos)
-endif()
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_ping_pong_integration PRIVATE -Wall -Wextra -std=c++17)
+    target_compile_options(test_runner PRIVATE -Wall -Wextra -std=c++17)
 endif()
-add_test(NAME test_ping_pong_integration COMMAND test_ping_pong_integration)
 
-# Comprehensive SID/TIN functionality test suite
-add_executable(test_sid_tin_functionality
-    cases/test_sid_tin_functionality.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/sequencer/sequencer.hpp
-    ${CMAKE_SOURCE_DIR}/src/applications/ping/ping.cpp
-    ${CMAKE_SOURCE_DIR}/src/applications/pong/pong.cpp
+# Simple test example executable
+add_executable(simple_test_runner
+    simple_test_runner.cpp
+    simple_test_example.cpp
 )
-target_link_libraries(test_sid_tin_functionality PRIVATE test_support)
-target_include_directories(test_sid_tin_functionality PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+target_link_libraries(simple_test_runner PRIVATE test_framework)
+target_include_directories(simple_test_runner PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
 if(TARGET msg_protos)
-    target_link_libraries(test_sid_tin_functionality PRIVATE msg_protos)
+    target_link_libraries(simple_test_runner PRIVATE msg_protos)
 endif()
+
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(test_sid_tin_functionality PRIVATE -Wall -Wextra -std=c++17)
+    target_compile_options(simple_test_runner PRIVATE -Wall -Wextra -std=c++17)
 endif()
-add_test(NAME test_sid_tin_functionality COMMAND test_sid_tin_functionality)
+
+add_test(NAME simple_test_runner COMMAND simple_test_runner)
+
+# Legacy test support (keeping for compatibility)
+# Note: Legacy test files have been removed, keeping this section for future reference

@@ -2,19 +2,20 @@
 
 #include "core/command_sender.hpp"
 #include "imarket_data_source.hpp"
-#include "md_utils.hpp"
 #include "md_notifier.hpp"
+#include "md_utils.hpp"
+#include <cstdint>
 #include <functional>
 #include <memory>
 #include <string>
-#include <cstdint>
 
 #include <generated/messages.pb.h>
 
-class MarketDataFeedApp : public ICommandSender<MarketDataFeedApp>, public MdNotifier {
+class MarketDataFeedApp : public ICommandSender<MarketDataFeedApp>,
+                          public MdNotifier {
 public:
-  MarketDataFeedApp(const std::string &multicast_address, uint16_t port, uint8_t ttl,
-                    uint64_t instance_id,
+  MarketDataFeedApp(const std::string &multicast_address, uint16_t port,
+                    uint8_t ttl, uint64_t instance_id,
                     std::function<void(const std::string &)> log,
                     std::unique_ptr<IMarketDataSource> src)
       : ICommandSender<MarketDataFeedApp>(multicast_address, port, ttl),
@@ -24,7 +25,8 @@ public:
   void start() {
     if (!source_)
       return;
-    source_->register_callback([this](const std::string &data){ this->notify(data); });
+    source_->register_callback(
+        [this](const std::string &data) { this->notify(data); });
     source_->start();
   }
 
@@ -34,7 +36,8 @@ public:
   }
 
   void notify(const std::string &data) override {
-    toysequencer::TopOfBookCommand cmd = MDUtils::parse_json_tob(data, instance_id_);
+    toysequencer::TopOfBookCommand cmd =
+        MDUtils::parse_json_tob(data, instance_id_);
     this->send_command(cmd, instance_id_);
   }
 

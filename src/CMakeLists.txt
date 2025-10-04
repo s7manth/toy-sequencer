@@ -46,6 +46,44 @@ if(WIN32)
     target_link_libraries(sequencer ws2_32)
 endif()
 
+# Standalone ping binary
+add_executable(ping
+    applications/ping/ping.cpp
+    applications/ping/ping_main.cpp
+    core/command_sender.hpp
+    core/multicast_sender.cpp
+    core/multicast_receiver.cpp
+)
+target_include_directories(ping PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+if(TARGET msg_protos)
+    target_link_libraries(ping PRIVATE msg_protos msg_protos_includes)
+endif()
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(ping PRIVATE -Wall -Wextra -std=c++17)
+endif()
+if(WIN32)
+    target_link_libraries(ping ws2_32)
+endif()
+
+# Standalone pong binary
+add_executable(pong
+    applications/pong/pong.cpp
+    applications/pong/pong_main.cpp
+    core/command_sender.hpp
+    core/multicast_sender.cpp
+    core/multicast_receiver.cpp
+)
+target_include_directories(pong PRIVATE ${CMAKE_CURRENT_SOURCE_DIR})
+if(TARGET msg_protos)
+    target_link_libraries(pong PRIVATE msg_protos msg_protos_includes)
+endif()
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    target_compile_options(pong PRIVATE -Wall -Wextra -std=c++17)
+endif()
+if(WIN32)
+    target_link_libraries(pong ws2_32)
+endif()
+
 # Standalone market data binary
 add_executable(market_data_app
     applications/md/market_data_main.cpp

@@ -3,9 +3,10 @@
 #include "core/multicast_sender.hpp"
 #include <cstdint>
 
-template <typename Derived> class ICommandSender: public MulticastSender {
+template <typename Derived> class ICommandSender : public MulticastSender {
 public:
-  ICommandSender(const std::string &multicast_address, uint16_t port, uint8_t ttl)
+  ICommandSender(const std::string &multicast_address, uint16_t port,
+                 uint8_t ttl)
       : MulticastSender(multicast_address, port, ttl) {}
 
   virtual ~ICommandSender() = default;

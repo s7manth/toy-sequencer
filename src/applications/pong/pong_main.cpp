@@ -22,7 +22,8 @@ int main() {
     uint64_t pong_instance_id = 2; // can be passed via CLI later
     uint64_t ping_instance_id = 1;
 
-    PongApp pong(mcast_addr, events_port, 1, log, pong_instance_id, ping_instance_id);
+    PongApp pong(mcast_addr, events_port, 1, log, pong_instance_id,
+                 ping_instance_id);
 
     pong.start();
 

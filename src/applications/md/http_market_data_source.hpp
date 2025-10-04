@@ -7,11 +7,11 @@
 #include <string>
 #include <vector>
 
-#include <thread>
 #include <chrono>
 #include <netdb.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <thread>
 #include <unistd.h>
 
 // HTTP Server-Sent Events (SSE) market data source. Connects to host:port/path
@@ -20,7 +20,8 @@
 class HttpSseMarketDataSource : public IMarketDataSource {
 public:
   HttpSseMarketDataSource(std::string host, std::string port, std::string path)
-      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)) {}
+      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)) {
+  }
 
   void start() override {
     if (running_.exchange(true))
@@ -52,7 +53,8 @@ private:
       hints.ai_socktype = SOCK_STREAM;
       struct addrinfo *res = nullptr;
       if (getaddrinfo(host_.c_str(), port_.c_str(), &hints, &res) != 0) {
-        if (!running_) break;
+        if (!running_)
+          break;
         std::this_thread::sleep_for(std::chrono::seconds(1));
         continue;
       }
@@ -69,13 +71,15 @@ private:
       }
       freeaddrinfo(res);
       if (fd == -1) {
-        if (!running_) break;
+        if (!running_)
+          break;
         std::this_thread::sleep_for(std::chrono::seconds(1));
         continue;
       }
       sock_.store(fd);
       // connected
-      // std::cerr << "md: connected to " << host_ << ":" << port_ << " path=" << path_ << std::endl;
+      // std::cerr << "md: connected to " << host_ << ":" << port_ << " path="
+      // << path_ << std::endl;
 
       // Send HTTP GET request
       std::ostringstream req;
@@ -100,29 +104,29 @@ private:
         buffer.append(tmp.data(), static_cast<size_t>(n));
 
         if (!headers_skipped) {
-        size_t pos = buffer.find("\r\n\r\n");
+          size_t pos = buffer.find("\r\n\r\n");
           if (pos == std::string::npos) {
             continue;
           }
-        // Optionally check HTTP status is 200
-        if (buffer.rfind("HTTP/", 0) == 0) {
-          // minimal check; if not 200, drop and reconnect
-          size_t sp1 = buffer.find(' ');
-          if (sp1 != std::string::npos && sp1 + 4 <= buffer.size()) {
-            std::string code = buffer.substr(sp1 + 1, 3);
-            if (code != "200") {
-              int expected2 = fd;
-              if (sock_.compare_exchange_strong(expected2, -1)) {
-                ::shutdown(fd, SHUT_RDWR);
-                ::close(fd);
+          // Optionally check HTTP status is 200
+          if (buffer.rfind("HTTP/", 0) == 0) {
+            // minimal check; if not 200, drop and reconnect
+            size_t sp1 = buffer.find(' ');
+            if (sp1 != std::string::npos && sp1 + 4 <= buffer.size()) {
+              std::string code = buffer.substr(sp1 + 1, 3);
+              if (code != "200") {
+                int expected2 = fd;
+                if (sock_.compare_exchange_strong(expected2, -1)) {
+                  ::shutdown(fd, SHUT_RDWR);
+                  ::close(fd);
+                }
+                break; // outer retry loop will reconnect
               }
-              break; // outer retry loop will reconnect
             }
           }
-        }
           buffer.erase(0, pos + 4);
           headers_skipped = true;
-        // std::cerr << "md: headers skipped" << std::endl;
+          // std::cerr << "md: headers skipped" << std::endl;
         }
 
         // Process by lines
@@ -144,13 +148,12 @@ private:
             bool is_data = (line[0] == 'd' || line[0] == 'D') &&
                            (line[1] == 'a' || line[1] == 'A') &&
                            (line[2] == 't' || line[2] == 'T') &&
-                           (line[3] == 'a' || line[3] == 'A') &&
-                           line[4] == ':';
+                           (line[3] == 'a' || line[3] == 'A') && line[4] == ':';
             if (is_data) {
-            size_t p = 5;
-            if (p < line.size() && line[p] == ' ')
-              ++p;
-            std::string json = line.substr(p);
+              size_t p = 5;
+              if (p < line.size() && line[p] == ' ')
+                ++p;
+              std::string json = line.substr(p);
               try {
                 on_top_of_book(json);
               } catch (...) {
