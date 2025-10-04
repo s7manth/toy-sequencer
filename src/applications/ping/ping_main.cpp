@@ -13,7 +13,6 @@ int main() {
     std::signal(SIGINT, handle_signal);
     std::signal(SIGTERM, handle_signal);
 
-    CommandBus bus;
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
     const std::string mcast_addr = "239.255.0.1";
@@ -22,7 +21,7 @@ int main() {
     uint64_t ping_instance_id = 1;
     uint64_t pong_instance_id = 2;
 
-    PingApp ping(mcast_addr, events_port, 1, bus, log, ping_instance_id, pong_instance_id);
+    PingApp ping(mcast_addr, events_port, 1, log, ping_instance_id, pong_instance_id);
     ping.start();
     std::cout << "ping listening for TextEvent on " << mcast_addr << ":"
               << events_port << ", instance=" << ping_instance_id << std::endl;
