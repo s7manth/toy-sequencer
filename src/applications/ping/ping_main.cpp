@@ -21,7 +21,8 @@ int main() {
     uint64_t ping_instance_id = 1;
     uint64_t pong_instance_id = 2;
 
-    PingApp ping(mcast_addr, events_port, 1, log, ping_instance_id, pong_instance_id);
+    PingApp ping(mcast_addr, events_port, 1, log, ping_instance_id,
+                 pong_instance_id);
     ping.start();
     std::cout << "ping listening for TextEvent on " << mcast_addr << ":"
               << events_port << ", instance=" << ping_instance_id << std::endl;

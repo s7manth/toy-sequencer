@@ -1,9 +1,9 @@
 #include "scrappy.hpp"
+#include <chrono>
+#include <csignal>
 #include <iostream>
 #include <string>
 #include <thread>
-#include <chrono>
-#include <csignal>
 
 static std::atomic<bool> running{true};
 static void handle_signal(int) { running.store(false); }
