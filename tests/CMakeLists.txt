@@ -50,25 +50,3 @@ endif()
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     target_compile_options(test_runner PRIVATE -Wall -Wextra -std=c++17)
 endif()
-
-# Simple test example executable
-add_executable(simple_test_runner
-    simple_test_runner.cpp
-    simple_test_example.cpp
-)
-
-target_link_libraries(simple_test_runner PRIVATE test_framework)
-target_include_directories(simple_test_runner PRIVATE ${CMAKE_SOURCE_DIR}/src)
-
-if(TARGET msg_protos)
-    target_link_libraries(simple_test_runner PRIVATE msg_protos)
-endif()
-
-if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU" OR CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    target_compile_options(simple_test_runner PRIVATE -Wall -Wextra -std=c++17)
-endif()
-
-add_test(NAME simple_test_runner COMMAND simple_test_runner)
-
-# Legacy test support (keeping for compatibility)
-# Note: Legacy test files have been removed, keeping this section for future reference

@@ -12,12 +12,10 @@
 
 #include "../src/generated/messages.pb.h"
 
-// Forward declarations
 class MulticastSender;
 
 namespace test_framework {
 
-// Utility function to find available ports
 uint16_t find_available_port(uint16_t start_port = 30001);
 
 enum class ApplicationType { SEQUENCER, PING, PONG, SCRAPPY, MARKET_DATA };
@@ -164,7 +162,6 @@ public:
   void wait_for_all_startup(std::chrono::milliseconds timeout = std::chrono::milliseconds(10000));
   void wait_for_all_shutdown(std::chrono::milliseconds timeout = std::chrono::milliseconds(5000));
 
-  // Test helpers
   template <typename EventT>
   bool wait_for_event_count(size_t expected_count,
                             std::chrono::milliseconds timeout = std::chrono::milliseconds(5000));
@@ -228,4 +225,4 @@ template <typename EventT> std::vector<EventT> TestHarness::get_recent_events(si
   return std::vector<EventT>(events.end() - count, events.end());
 }
 
-} // namespace test_framework
+}

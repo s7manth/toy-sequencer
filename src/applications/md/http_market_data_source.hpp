@@ -14,9 +14,6 @@
 #include <thread>
 #include <unistd.h>
 
-// HTTP Server-Sent Events (SSE) market data source. Connects to host:port/path
-// and expects lines like: "data: {json}" terminated by blank line between
-// events.
 class HttpSseMarketDataSource : public IMarketDataSource {
 public:
   HttpSseMarketDataSource(std::string host, std::string port, std::string path)
@@ -32,7 +29,6 @@ public:
   void stop() override {
     if (!running_.exchange(false))
       return;
-    // Closing socket will unblock recv
     int fd = sock_.exchange(-1);
     if (fd != -1) {
       ::shutdown(fd, SHUT_RDWR);
@@ -46,8 +42,7 @@ public:
 private:
   void run() {
     while (running_) {
-      // Resolve
-      struct addrinfo hints;
+      struct addrinfo hints{};
       std::memset(&hints, 0, sizeof(hints));
       hints.ai_family = AF_UNSPEC;
       hints.ai_socktype = SOCK_STREAM;
@@ -77,11 +72,7 @@ private:
         continue;
       }
       sock_.store(fd);
-      // connected
-      // std::cerr << "md: connected to " << host_ << ":" << port_ << " path="
-      // << path_ << std::endl;
 
-      // Send HTTP GET request
       std::ostringstream req;
       req << "GET " << path_ << " HTTP/1.1\r\n";
       req << "Host: " << host_ << ":" << port_ << "\r\n";
@@ -108,9 +99,7 @@ private:
           if (pos == std::string::npos) {
             continue;
           }
-          // Optionally check HTTP status is 200
           if (buffer.rfind("HTTP/", 0) == 0) {
-            // minimal check; if not 200, drop and reconnect
             size_t sp1 = buffer.find(' ');
             if (sp1 != std::string::npos && sp1 + 4 <= buffer.size()) {
               std::string code = buffer.substr(sp1 + 1, 3);
@@ -120,21 +109,18 @@ private:
                   ::shutdown(fd, SHUT_RDWR);
                   ::close(fd);
                 }
-                break; // outer retry loop will reconnect
+                break;
               }
             }
           }
           buffer.erase(0, pos + 4);
           headers_skipped = true;
-          // std::cerr << "md: headers skipped" << std::endl;
         }
 
-        // Process by lines
         size_t line_start = 0;
         for (;;) {
           size_t nl = buffer.find('\n', line_start);
           if (nl == std::string::npos) {
-            // keep partial line
             buffer.erase(0, line_start);
             break;
           }
@@ -143,7 +129,6 @@ private:
             line.pop_back();
           line_start = nl + 1;
 
-          // case-insensitive prefix match for "data:"
           if (line.size() >= 5) {
             bool is_data = (line[0] == 'd' || line[0] == 'D') &&
                            (line[1] == 'a' || line[1] == 'A') &&
@@ -157,7 +142,6 @@ private:
               try {
                 on_top_of_book(json);
               } catch (...) {
-                // swallow to avoid terminating the worker
               }
             }
           }
