@@ -28,6 +28,7 @@
 #include "google/protobuf/message_lite.h"
 #include "google/protobuf/repeated_field.h"  // IWYU pragma: export
 #include "google/protobuf/extension_set.h"  // IWYU pragma: export
+#include "google/protobuf/generated_enum_reflection.h"
 #include "google/protobuf/unknown_field_set.h"
 // @@protoc_insertion_point(includes)
 
@@ -53,6 +54,8 @@ extern "C" {
 extern const ::google::protobuf::internal::DescriptorTable descriptor_table_messages_2eproto;
 }  // extern "C"
 namespace toysequencer {
+enum MessageType : int;
+extern const uint32_t MessageType_internal_data_[];
 class TextCommand;
 struct TextCommandDefaultTypeInternal;
 extern TextCommandDefaultTypeInternal _TextCommand_default_instance_;
@@ -72,10 +75,52 @@ extern const ::google::protobuf::internal::ClassDataFull TopOfBookEvent_class_da
 }  // namespace toysequencer
 namespace google {
 namespace protobuf {
+template <>
+internal::EnumTraitsT<::toysequencer::MessageType_internal_data_>
+    internal::EnumTraitsImpl::value<::toysequencer::MessageType>;
 }  // namespace protobuf
 }  // namespace google
 
 namespace toysequencer {
+enum MessageType : int {
+  MESSAGE_TYPE_UNSPECIFIED = 0,
+  TEXT_COMMAND = 1,
+  TEXT_EVENT = 2,
+  TOB_COMMAND = 3,
+  TOB_EVENT = 4,
+  MessageType_INT_MIN_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::min(),
+  MessageType_INT_MAX_SENTINEL_DO_NOT_USE_ =
+      ::std::numeric_limits<::int32_t>::max(),
+};
+
+extern const uint32_t MessageType_internal_data_[];
+inline constexpr MessageType MessageType_MIN =
+    static_cast<MessageType>(0);
+inline constexpr MessageType MessageType_MAX =
+    static_cast<MessageType>(4);
+inline bool MessageType_IsValid(int value) {
+  return 0 <= value && value <= 4;
+}
+inline constexpr int MessageType_ARRAYSIZE = 4 + 1;
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL MessageType_descriptor();
+template <typename T>
+const ::std::string& MessageType_Name(T value) {
+  static_assert(::std::is_same<T, MessageType>::value ||
+                    ::std::is_integral<T>::value,
+                "Incorrect type passed to MessageType_Name().");
+  return MessageType_Name(static_cast<MessageType>(value));
+}
+template <>
+inline const ::std::string& MessageType_Name(MessageType value) {
+  return ::google::protobuf::internal::NameOfDenseEnum<MessageType_descriptor, 0, 4>(
+      static_cast<int>(value));
+}
+inline bool MessageType_Parse(
+    ::absl::string_view name, MessageType* PROTOBUF_NONNULL value) {
+  return ::google::protobuf::internal::ParseNamedEnum<MessageType>(MessageType_descriptor(), name,
+                                           value);
+}
 
 // ===================================================================
 
@@ -225,18 +270,19 @@ class TopOfBookEvent final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kSymbolFieldNumber = 5,
-    kSeqFieldNumber = 1,
-    kTimestampFieldNumber = 2,
-    kSidFieldNumber = 3,
-    kTinFieldNumber = 4,
-    kBidPriceFieldNumber = 6,
-    kBidSizeFieldNumber = 7,
-    kAskPriceFieldNumber = 8,
-    kAskSizeFieldNumber = 9,
-    kExchangeTimeFieldNumber = 10,
+    kSymbolFieldNumber = 6,
+    kSeqFieldNumber = 2,
+    kTimestampFieldNumber = 3,
+    kSidFieldNumber = 4,
+    kTinFieldNumber = 5,
+    kBidPriceFieldNumber = 7,
+    kBidSizeFieldNumber = 8,
+    kAskPriceFieldNumber = 9,
+    kAskSizeFieldNumber = 10,
+    kExchangeTimeFieldNumber = 11,
+    kMsgTypeFieldNumber = 1,
   };
-  // string symbol = 5;
+  // string symbol = 6;
   void clear_symbol() ;
   const ::std::string& symbol() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -251,7 +297,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_symbol();
 
   public:
-  // uint64 seq = 1;
+  // uint64 seq = 2;
   void clear_seq() ;
   ::uint64_t seq() const;
   void set_seq(::uint64_t value);
@@ -261,7 +307,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_seq(::uint64_t value);
 
   public:
-  // uint64 timestamp = 2;
+  // uint64 timestamp = 3;
   void clear_timestamp() ;
   ::uint64_t timestamp() const;
   void set_timestamp(::uint64_t value);
@@ -271,7 +317,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_timestamp(::uint64_t value);
 
   public:
-  // uint64 sid = 3;
+  // uint64 sid = 4;
   void clear_sid() ;
   ::uint64_t sid() const;
   void set_sid(::uint64_t value);
@@ -281,7 +327,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_sid(::uint64_t value);
 
   public:
-  // uint64 tin = 4;
+  // uint64 tin = 5;
   void clear_tin() ;
   ::uint64_t tin() const;
   void set_tin(::uint64_t value);
@@ -291,7 +337,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_tin(::uint64_t value);
 
   public:
-  // double bid_price = 6;
+  // double bid_price = 7;
   void clear_bid_price() ;
   double bid_price() const;
   void set_bid_price(double value);
@@ -301,7 +347,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_bid_price(double value);
 
   public:
-  // uint64 bid_size = 7;
+  // uint64 bid_size = 8;
   void clear_bid_size() ;
   ::uint64_t bid_size() const;
   void set_bid_size(::uint64_t value);
@@ -311,7 +357,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_bid_size(::uint64_t value);
 
   public:
-  // double ask_price = 8;
+  // double ask_price = 9;
   void clear_ask_price() ;
   double ask_price() const;
   void set_ask_price(double value);
@@ -321,7 +367,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_ask_price(double value);
 
   public:
-  // uint64 ask_size = 9;
+  // uint64 ask_size = 10;
   void clear_ask_size() ;
   ::uint64_t ask_size() const;
   void set_ask_size(::uint64_t value);
@@ -331,7 +377,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_ask_size(::uint64_t value);
 
   public:
-  // uint64 exchange_time = 10;
+  // uint64 exchange_time = 11;
   void clear_exchange_time() ;
   ::uint64_t exchange_time() const;
   void set_exchange_time(::uint64_t value);
@@ -341,11 +387,21 @@ class TopOfBookEvent final : public ::google::protobuf::Message
   void _internal_set_exchange_time(::uint64_t value);
 
   public:
+  // .toysequencer.MessageType msg_type = 1;
+  void clear_msg_type() ;
+  ::toysequencer::MessageType msg_type() const;
+  void set_msg_type(::toysequencer::MessageType value);
+
+  private:
+  ::toysequencer::MessageType _internal_msg_type() const;
+  void _internal_set_msg_type(::toysequencer::MessageType value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TopOfBookEvent)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<4, 10,
+  static const ::google::protobuf::internal::TcParseTable<4, 11,
                                    0, 50,
                                    2>
       _table_;
@@ -377,6 +433,7 @@ class TopOfBookEvent final : public ::google::protobuf::Message
     double ask_price_;
     ::uint64_t ask_size_;
     ::uint64_t exchange_time_;
+    int msg_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -529,15 +586,17 @@ class TopOfBookCommand final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kSymbolFieldNumber = 2,
-    kTinFieldNumber = 1,
-    kBidPriceFieldNumber = 3,
-    kBidSizeFieldNumber = 4,
-    kAskPriceFieldNumber = 5,
-    kAskSizeFieldNumber = 6,
-    kExchangeTimeFieldNumber = 7,
+    kSymbolFieldNumber = 4,
+    kSidFieldNumber = 2,
+    kTinFieldNumber = 3,
+    kBidPriceFieldNumber = 5,
+    kBidSizeFieldNumber = 6,
+    kAskPriceFieldNumber = 7,
+    kAskSizeFieldNumber = 8,
+    kExchangeTimeFieldNumber = 9,
+    kMsgTypeFieldNumber = 1,
   };
-  // string symbol = 2;
+  // string symbol = 4;
   void clear_symbol() ;
   const ::std::string& symbol() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -552,7 +611,17 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_symbol();
 
   public:
-  // uint64 tin = 1;
+  // uint64 sid = 2;
+  void clear_sid() ;
+  ::uint64_t sid() const;
+  void set_sid(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_sid() const;
+  void _internal_set_sid(::uint64_t value);
+
+  public:
+  // uint64 tin = 3;
   void clear_tin() ;
   ::uint64_t tin() const;
   void set_tin(::uint64_t value);
@@ -562,7 +631,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_tin(::uint64_t value);
 
   public:
-  // double bid_price = 3;
+  // double bid_price = 5;
   void clear_bid_price() ;
   double bid_price() const;
   void set_bid_price(double value);
@@ -572,7 +641,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_bid_price(double value);
 
   public:
-  // uint64 bid_size = 4;
+  // uint64 bid_size = 6;
   void clear_bid_size() ;
   ::uint64_t bid_size() const;
   void set_bid_size(::uint64_t value);
@@ -582,7 +651,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_bid_size(::uint64_t value);
 
   public:
-  // double ask_price = 5;
+  // double ask_price = 7;
   void clear_ask_price() ;
   double ask_price() const;
   void set_ask_price(double value);
@@ -592,7 +661,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_ask_price(double value);
 
   public:
-  // uint64 ask_size = 6;
+  // uint64 ask_size = 8;
   void clear_ask_size() ;
   ::uint64_t ask_size() const;
   void set_ask_size(::uint64_t value);
@@ -602,7 +671,7 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_ask_size(::uint64_t value);
 
   public:
-  // uint64 exchange_time = 7;
+  // uint64 exchange_time = 9;
   void clear_exchange_time() ;
   ::uint64_t exchange_time() const;
   void set_exchange_time(::uint64_t value);
@@ -612,12 +681,22 @@ class TopOfBookCommand final : public ::google::protobuf::Message
   void _internal_set_exchange_time(::uint64_t value);
 
   public:
+  // .toysequencer.MessageType msg_type = 1;
+  void clear_msg_type() ;
+  ::toysequencer::MessageType msg_type() const;
+  void set_msg_type(::toysequencer::MessageType value);
+
+  private:
+  ::toysequencer::MessageType _internal_msg_type() const;
+  void _internal_set_msg_type(::toysequencer::MessageType value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TopOfBookCommand)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 7,
-                                   0, 44,
+  static const ::google::protobuf::internal::TcParseTable<4, 9,
+                                   0, 52,
                                    2>
       _table_;
 
@@ -639,12 +718,14 @@ class TopOfBookCommand final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr symbol_;
+    ::uint64_t sid_;
     ::uint64_t tin_;
     double bid_price_;
     ::uint64_t bid_size_;
     double ask_price_;
     ::uint64_t ask_size_;
     ::uint64_t exchange_time_;
+    int msg_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -797,13 +878,14 @@ class TextEvent final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kTextFieldNumber = 5,
-    kSeqFieldNumber = 1,
-    kTimestampFieldNumber = 2,
-    kSidFieldNumber = 3,
-    kTinFieldNumber = 4,
+    kTextFieldNumber = 6,
+    kSeqFieldNumber = 2,
+    kTimestampFieldNumber = 3,
+    kSidFieldNumber = 4,
+    kTinFieldNumber = 5,
+    kMsgTypeFieldNumber = 1,
   };
-  // string text = 5;
+  // string text = 6;
   void clear_text() ;
   const ::std::string& text() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -818,7 +900,7 @@ class TextEvent final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_text();
 
   public:
-  // uint64 seq = 1;
+  // uint64 seq = 2;
   void clear_seq() ;
   ::uint64_t seq() const;
   void set_seq(::uint64_t value);
@@ -828,7 +910,7 @@ class TextEvent final : public ::google::protobuf::Message
   void _internal_set_seq(::uint64_t value);
 
   public:
-  // uint64 timestamp = 2;
+  // uint64 timestamp = 3;
   void clear_timestamp() ;
   ::uint64_t timestamp() const;
   void set_timestamp(::uint64_t value);
@@ -838,7 +920,7 @@ class TextEvent final : public ::google::protobuf::Message
   void _internal_set_timestamp(::uint64_t value);
 
   public:
-  // uint64 sid = 3;
+  // uint64 sid = 4;
   void clear_sid() ;
   ::uint64_t sid() const;
   void set_sid(::uint64_t value);
@@ -848,7 +930,7 @@ class TextEvent final : public ::google::protobuf::Message
   void _internal_set_sid(::uint64_t value);
 
   public:
-  // uint64 tin = 4;
+  // uint64 tin = 5;
   void clear_tin() ;
   ::uint64_t tin() const;
   void set_tin(::uint64_t value);
@@ -858,11 +940,21 @@ class TextEvent final : public ::google::protobuf::Message
   void _internal_set_tin(::uint64_t value);
 
   public:
+  // .toysequencer.MessageType msg_type = 1;
+  void clear_msg_type() ;
+  ::toysequencer::MessageType msg_type() const;
+  void set_msg_type(::toysequencer::MessageType value);
+
+  private:
+  ::toysequencer::MessageType _internal_msg_type() const;
+  void _internal_set_msg_type(::toysequencer::MessageType value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TextEvent)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<3, 5,
+  static const ::google::protobuf::internal::TcParseTable<3, 6,
                                    0, 35,
                                    2>
       _table_;
@@ -889,6 +981,7 @@ class TextEvent final : public ::google::protobuf::Message
     ::uint64_t timestamp_;
     ::uint64_t sid_;
     ::uint64_t tin_;
+    int msg_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -1041,10 +1134,12 @@ class TextCommand final : public ::google::protobuf::Message
 
   // accessors -------------------------------------------------------
   enum : int {
-    kTextFieldNumber = 2,
-    kTinFieldNumber = 1,
+    kTextFieldNumber = 4,
+    kSidFieldNumber = 2,
+    kTinFieldNumber = 3,
+    kMsgTypeFieldNumber = 1,
   };
-  // string text = 2;
+  // string text = 4;
   void clear_text() ;
   const ::std::string& text() const;
   template <typename Arg_ = const ::std::string&, typename... Args_>
@@ -1059,7 +1154,17 @@ class TextCommand final : public ::google::protobuf::Message
   ::std::string* PROTOBUF_NONNULL _internal_mutable_text();
 
   public:
-  // uint64 tin = 1;
+  // uint64 sid = 2;
+  void clear_sid() ;
+  ::uint64_t sid() const;
+  void set_sid(::uint64_t value);
+
+  private:
+  ::uint64_t _internal_sid() const;
+  void _internal_set_sid(::uint64_t value);
+
+  public:
+  // uint64 tin = 3;
   void clear_tin() ;
   ::uint64_t tin() const;
   void set_tin(::uint64_t value);
@@ -1069,11 +1174,21 @@ class TextCommand final : public ::google::protobuf::Message
   void _internal_set_tin(::uint64_t value);
 
   public:
+  // .toysequencer.MessageType msg_type = 1;
+  void clear_msg_type() ;
+  ::toysequencer::MessageType msg_type() const;
+  void set_msg_type(::toysequencer::MessageType value);
+
+  private:
+  ::toysequencer::MessageType _internal_msg_type() const;
+  void _internal_set_msg_type(::toysequencer::MessageType value);
+
+  public:
   // @@protoc_insertion_point(class_scope:toysequencer.TextCommand)
  private:
   class _Internal;
   friend class ::google::protobuf::internal::TcParser;
-  static const ::google::protobuf::internal::TcParseTable<1, 2,
+  static const ::google::protobuf::internal::TcParseTable<2, 4,
                                    0, 37,
                                    2>
       _table_;
@@ -1096,7 +1211,9 @@ class TextCommand final : public ::google::protobuf::Message
     ::google::protobuf::internal::HasBits<1> _has_bits_;
     ::google::protobuf::internal::CachedSize _cached_size_;
     ::google::protobuf::internal::ArenaStringPtr text_;
+    ::uint64_t sid_;
     ::uint64_t tin_;
+    int msg_type_;
     PROTOBUF_TSAN_DECLARE_MEMBER
   };
   union { Impl_ _impl_; };
@@ -1121,11 +1238,59 @@ extern const ::google::protobuf::internal::ClassDataFull TextCommand_class_data_
 
 // TextCommand
 
-// uint64 tin = 1;
+// .toysequencer.MessageType msg_type = 1;
+inline void TextCommand::clear_msg_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000008U;
+}
+inline ::toysequencer::MessageType TextCommand::msg_type() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextCommand.msg_type)
+  return _internal_msg_type();
+}
+inline void TextCommand::set_msg_type(::toysequencer::MessageType value) {
+  _internal_set_msg_type(value);
+  _impl_._has_bits_[0] |= 0x00000008U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextCommand.msg_type)
+}
+inline ::toysequencer::MessageType TextCommand::_internal_msg_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::toysequencer::MessageType>(_impl_.msg_type_);
+}
+inline void TextCommand::_internal_set_msg_type(::toysequencer::MessageType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = value;
+}
+
+// uint64 sid = 2;
+inline void TextCommand::clear_sid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000002U;
+}
+inline ::uint64_t TextCommand::sid() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextCommand.sid)
+  return _internal_sid();
+}
+inline void TextCommand::set_sid(::uint64_t value) {
+  _internal_set_sid(value);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextCommand.sid)
+}
+inline ::uint64_t TextCommand::_internal_sid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.sid_;
+}
+inline void TextCommand::_internal_set_sid(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = value;
+}
+
+// uint64 tin = 3;
 inline void TextCommand::clear_tin() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tin_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002U;
+  _impl_._has_bits_[0] &= ~0x00000004U;
 }
 inline ::uint64_t TextCommand::tin() const {
   // @@protoc_insertion_point(field_get:toysequencer.TextCommand.tin)
@@ -1133,7 +1298,7 @@ inline ::uint64_t TextCommand::tin() const {
 }
 inline void TextCommand::set_tin(::uint64_t value) {
   _internal_set_tin(value);
-  _impl_._has_bits_[0] |= 0x00000002U;
+  _impl_._has_bits_[0] |= 0x00000004U;
   // @@protoc_insertion_point(field_set:toysequencer.TextCommand.tin)
 }
 inline ::uint64_t TextCommand::_internal_tin() const {
@@ -1145,7 +1310,7 @@ inline void TextCommand::_internal_set_tin(::uint64_t value) {
   _impl_.tin_ = value;
 }
 
-// string text = 2;
+// string text = 4;
 inline void TextCommand::clear_text() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.text_.ClearToEmpty();
@@ -1214,7 +1379,31 @@ inline void TextCommand::set_allocated_text(::std::string* PROTOBUF_NULLABLE val
 
 // TextEvent
 
-// uint64 seq = 1;
+// .toysequencer.MessageType msg_type = 1;
+inline void TextEvent::clear_msg_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000020U;
+}
+inline ::toysequencer::MessageType TextEvent::msg_type() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TextEvent.msg_type)
+  return _internal_msg_type();
+}
+inline void TextEvent::set_msg_type(::toysequencer::MessageType value) {
+  _internal_set_msg_type(value);
+  _impl_._has_bits_[0] |= 0x00000020U;
+  // @@protoc_insertion_point(field_set:toysequencer.TextEvent.msg_type)
+}
+inline ::toysequencer::MessageType TextEvent::_internal_msg_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::toysequencer::MessageType>(_impl_.msg_type_);
+}
+inline void TextEvent::_internal_set_msg_type(::toysequencer::MessageType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = value;
+}
+
+// uint64 seq = 2;
 inline void TextEvent::clear_seq() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.seq_ = ::uint64_t{0u};
@@ -1238,7 +1427,7 @@ inline void TextEvent::_internal_set_seq(::uint64_t value) {
   _impl_.seq_ = value;
 }
 
-// uint64 timestamp = 2;
+// uint64 timestamp = 3;
 inline void TextEvent::clear_timestamp() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.timestamp_ = ::uint64_t{0u};
@@ -1262,7 +1451,7 @@ inline void TextEvent::_internal_set_timestamp(::uint64_t value) {
   _impl_.timestamp_ = value;
 }
 
-// uint64 sid = 3;
+// uint64 sid = 4;
 inline void TextEvent::clear_sid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.sid_ = ::uint64_t{0u};
@@ -1286,7 +1475,7 @@ inline void TextEvent::_internal_set_sid(::uint64_t value) {
   _impl_.sid_ = value;
 }
 
-// uint64 tin = 4;
+// uint64 tin = 5;
 inline void TextEvent::clear_tin() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tin_ = ::uint64_t{0u};
@@ -1310,7 +1499,7 @@ inline void TextEvent::_internal_set_tin(::uint64_t value) {
   _impl_.tin_ = value;
 }
 
-// string text = 5;
+// string text = 6;
 inline void TextEvent::clear_text() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.text_.ClearToEmpty();
@@ -1379,11 +1568,59 @@ inline void TextEvent::set_allocated_text(::std::string* PROTOBUF_NULLABLE value
 
 // TopOfBookCommand
 
-// uint64 tin = 1;
+// .toysequencer.MessageType msg_type = 1;
+inline void TopOfBookCommand::clear_msg_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000100U;
+}
+inline ::toysequencer::MessageType TopOfBookCommand::msg_type() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.msg_type)
+  return _internal_msg_type();
+}
+inline void TopOfBookCommand::set_msg_type(::toysequencer::MessageType value) {
+  _internal_set_msg_type(value);
+  _impl_._has_bits_[0] |= 0x00000100U;
+  // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.msg_type)
+}
+inline ::toysequencer::MessageType TopOfBookCommand::_internal_msg_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::toysequencer::MessageType>(_impl_.msg_type_);
+}
+inline void TopOfBookCommand::_internal_set_msg_type(::toysequencer::MessageType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = value;
+}
+
+// uint64 sid = 2;
+inline void TopOfBookCommand::clear_sid() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = ::uint64_t{0u};
+  _impl_._has_bits_[0] &= ~0x00000002U;
+}
+inline ::uint64_t TopOfBookCommand::sid() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.sid)
+  return _internal_sid();
+}
+inline void TopOfBookCommand::set_sid(::uint64_t value) {
+  _internal_set_sid(value);
+  _impl_._has_bits_[0] |= 0x00000002U;
+  // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.sid)
+}
+inline ::uint64_t TopOfBookCommand::_internal_sid() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return _impl_.sid_;
+}
+inline void TopOfBookCommand::_internal_set_sid(::uint64_t value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.sid_ = value;
+}
+
+// uint64 tin = 3;
 inline void TopOfBookCommand::clear_tin() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tin_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000002U;
+  _impl_._has_bits_[0] &= ~0x00000004U;
 }
 inline ::uint64_t TopOfBookCommand::tin() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.tin)
@@ -1391,7 +1628,7 @@ inline ::uint64_t TopOfBookCommand::tin() const {
 }
 inline void TopOfBookCommand::set_tin(::uint64_t value) {
   _internal_set_tin(value);
-  _impl_._has_bits_[0] |= 0x00000002U;
+  _impl_._has_bits_[0] |= 0x00000004U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.tin)
 }
 inline ::uint64_t TopOfBookCommand::_internal_tin() const {
@@ -1403,7 +1640,7 @@ inline void TopOfBookCommand::_internal_set_tin(::uint64_t value) {
   _impl_.tin_ = value;
 }
 
-// string symbol = 2;
+// string symbol = 4;
 inline void TopOfBookCommand::clear_symbol() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.symbol_.ClearToEmpty();
@@ -1468,11 +1705,11 @@ inline void TopOfBookCommand::set_allocated_symbol(::std::string* PROTOBUF_NULLA
   // @@protoc_insertion_point(field_set_allocated:toysequencer.TopOfBookCommand.symbol)
 }
 
-// double bid_price = 3;
+// double bid_price = 5;
 inline void TopOfBookCommand::clear_bid_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.bid_price_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000004U;
+  _impl_._has_bits_[0] &= ~0x00000008U;
 }
 inline double TopOfBookCommand::bid_price() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.bid_price)
@@ -1480,7 +1717,7 @@ inline double TopOfBookCommand::bid_price() const {
 }
 inline void TopOfBookCommand::set_bid_price(double value) {
   _internal_set_bid_price(value);
-  _impl_._has_bits_[0] |= 0x00000004U;
+  _impl_._has_bits_[0] |= 0x00000008U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.bid_price)
 }
 inline double TopOfBookCommand::_internal_bid_price() const {
@@ -1492,11 +1729,11 @@ inline void TopOfBookCommand::_internal_set_bid_price(double value) {
   _impl_.bid_price_ = value;
 }
 
-// uint64 bid_size = 4;
+// uint64 bid_size = 6;
 inline void TopOfBookCommand::clear_bid_size() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.bid_size_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000008U;
+  _impl_._has_bits_[0] &= ~0x00000010U;
 }
 inline ::uint64_t TopOfBookCommand::bid_size() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.bid_size)
@@ -1504,7 +1741,7 @@ inline ::uint64_t TopOfBookCommand::bid_size() const {
 }
 inline void TopOfBookCommand::set_bid_size(::uint64_t value) {
   _internal_set_bid_size(value);
-  _impl_._has_bits_[0] |= 0x00000008U;
+  _impl_._has_bits_[0] |= 0x00000010U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.bid_size)
 }
 inline ::uint64_t TopOfBookCommand::_internal_bid_size() const {
@@ -1516,11 +1753,11 @@ inline void TopOfBookCommand::_internal_set_bid_size(::uint64_t value) {
   _impl_.bid_size_ = value;
 }
 
-// double ask_price = 5;
+// double ask_price = 7;
 inline void TopOfBookCommand::clear_ask_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ask_price_ = 0;
-  _impl_._has_bits_[0] &= ~0x00000010U;
+  _impl_._has_bits_[0] &= ~0x00000020U;
 }
 inline double TopOfBookCommand::ask_price() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.ask_price)
@@ -1528,7 +1765,7 @@ inline double TopOfBookCommand::ask_price() const {
 }
 inline void TopOfBookCommand::set_ask_price(double value) {
   _internal_set_ask_price(value);
-  _impl_._has_bits_[0] |= 0x00000010U;
+  _impl_._has_bits_[0] |= 0x00000020U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.ask_price)
 }
 inline double TopOfBookCommand::_internal_ask_price() const {
@@ -1540,11 +1777,11 @@ inline void TopOfBookCommand::_internal_set_ask_price(double value) {
   _impl_.ask_price_ = value;
 }
 
-// uint64 ask_size = 6;
+// uint64 ask_size = 8;
 inline void TopOfBookCommand::clear_ask_size() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ask_size_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000020U;
+  _impl_._has_bits_[0] &= ~0x00000040U;
 }
 inline ::uint64_t TopOfBookCommand::ask_size() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.ask_size)
@@ -1552,7 +1789,7 @@ inline ::uint64_t TopOfBookCommand::ask_size() const {
 }
 inline void TopOfBookCommand::set_ask_size(::uint64_t value) {
   _internal_set_ask_size(value);
-  _impl_._has_bits_[0] |= 0x00000020U;
+  _impl_._has_bits_[0] |= 0x00000040U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.ask_size)
 }
 inline ::uint64_t TopOfBookCommand::_internal_ask_size() const {
@@ -1564,11 +1801,11 @@ inline void TopOfBookCommand::_internal_set_ask_size(::uint64_t value) {
   _impl_.ask_size_ = value;
 }
 
-// uint64 exchange_time = 7;
+// uint64 exchange_time = 9;
 inline void TopOfBookCommand::clear_exchange_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.exchange_time_ = ::uint64_t{0u};
-  _impl_._has_bits_[0] &= ~0x00000040U;
+  _impl_._has_bits_[0] &= ~0x00000080U;
 }
 inline ::uint64_t TopOfBookCommand::exchange_time() const {
   // @@protoc_insertion_point(field_get:toysequencer.TopOfBookCommand.exchange_time)
@@ -1576,7 +1813,7 @@ inline ::uint64_t TopOfBookCommand::exchange_time() const {
 }
 inline void TopOfBookCommand::set_exchange_time(::uint64_t value) {
   _internal_set_exchange_time(value);
-  _impl_._has_bits_[0] |= 0x00000040U;
+  _impl_._has_bits_[0] |= 0x00000080U;
   // @@protoc_insertion_point(field_set:toysequencer.TopOfBookCommand.exchange_time)
 }
 inline ::uint64_t TopOfBookCommand::_internal_exchange_time() const {
@@ -1592,7 +1829,31 @@ inline void TopOfBookCommand::_internal_set_exchange_time(::uint64_t value) {
 
 // TopOfBookEvent
 
-// uint64 seq = 1;
+// .toysequencer.MessageType msg_type = 1;
+inline void TopOfBookEvent::clear_msg_type() {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = 0;
+  _impl_._has_bits_[0] &= ~0x00000400U;
+}
+inline ::toysequencer::MessageType TopOfBookEvent::msg_type() const {
+  // @@protoc_insertion_point(field_get:toysequencer.TopOfBookEvent.msg_type)
+  return _internal_msg_type();
+}
+inline void TopOfBookEvent::set_msg_type(::toysequencer::MessageType value) {
+  _internal_set_msg_type(value);
+  _impl_._has_bits_[0] |= 0x00000400U;
+  // @@protoc_insertion_point(field_set:toysequencer.TopOfBookEvent.msg_type)
+}
+inline ::toysequencer::MessageType TopOfBookEvent::_internal_msg_type() const {
+  ::google::protobuf::internal::TSanRead(&_impl_);
+  return static_cast<::toysequencer::MessageType>(_impl_.msg_type_);
+}
+inline void TopOfBookEvent::_internal_set_msg_type(::toysequencer::MessageType value) {
+  ::google::protobuf::internal::TSanWrite(&_impl_);
+  _impl_.msg_type_ = value;
+}
+
+// uint64 seq = 2;
 inline void TopOfBookEvent::clear_seq() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.seq_ = ::uint64_t{0u};
@@ -1616,7 +1877,7 @@ inline void TopOfBookEvent::_internal_set_seq(::uint64_t value) {
   _impl_.seq_ = value;
 }
 
-// uint64 timestamp = 2;
+// uint64 timestamp = 3;
 inline void TopOfBookEvent::clear_timestamp() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.timestamp_ = ::uint64_t{0u};
@@ -1640,7 +1901,7 @@ inline void TopOfBookEvent::_internal_set_timestamp(::uint64_t value) {
   _impl_.timestamp_ = value;
 }
 
-// uint64 sid = 3;
+// uint64 sid = 4;
 inline void TopOfBookEvent::clear_sid() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.sid_ = ::uint64_t{0u};
@@ -1664,7 +1925,7 @@ inline void TopOfBookEvent::_internal_set_sid(::uint64_t value) {
   _impl_.sid_ = value;
 }
 
-// uint64 tin = 4;
+// uint64 tin = 5;
 inline void TopOfBookEvent::clear_tin() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.tin_ = ::uint64_t{0u};
@@ -1688,7 +1949,7 @@ inline void TopOfBookEvent::_internal_set_tin(::uint64_t value) {
   _impl_.tin_ = value;
 }
 
-// string symbol = 5;
+// string symbol = 6;
 inline void TopOfBookEvent::clear_symbol() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.symbol_.ClearToEmpty();
@@ -1753,7 +2014,7 @@ inline void TopOfBookEvent::set_allocated_symbol(::std::string* PROTOBUF_NULLABL
   // @@protoc_insertion_point(field_set_allocated:toysequencer.TopOfBookEvent.symbol)
 }
 
-// double bid_price = 6;
+// double bid_price = 7;
 inline void TopOfBookEvent::clear_bid_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.bid_price_ = 0;
@@ -1777,7 +2038,7 @@ inline void TopOfBookEvent::_internal_set_bid_price(double value) {
   _impl_.bid_price_ = value;
 }
 
-// uint64 bid_size = 7;
+// uint64 bid_size = 8;
 inline void TopOfBookEvent::clear_bid_size() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.bid_size_ = ::uint64_t{0u};
@@ -1801,7 +2062,7 @@ inline void TopOfBookEvent::_internal_set_bid_size(::uint64_t value) {
   _impl_.bid_size_ = value;
 }
 
-// double ask_price = 8;
+// double ask_price = 9;
 inline void TopOfBookEvent::clear_ask_price() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ask_price_ = 0;
@@ -1825,7 +2086,7 @@ inline void TopOfBookEvent::_internal_set_ask_price(double value) {
   _impl_.ask_price_ = value;
 }
 
-// uint64 ask_size = 9;
+// uint64 ask_size = 10;
 inline void TopOfBookEvent::clear_ask_size() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.ask_size_ = ::uint64_t{0u};
@@ -1849,7 +2110,7 @@ inline void TopOfBookEvent::_internal_set_ask_size(::uint64_t value) {
   _impl_.ask_size_ = value;
 }
 
-// uint64 exchange_time = 10;
+// uint64 exchange_time = 11;
 inline void TopOfBookEvent::clear_exchange_time() {
   ::google::protobuf::internal::TSanWrite(&_impl_);
   _impl_.exchange_time_ = ::uint64_t{0u};
@@ -1880,6 +2141,19 @@ inline void TopOfBookEvent::_internal_set_exchange_time(::uint64_t value) {
 // @@protoc_insertion_point(namespace_scope)
 }  // namespace toysequencer
 
+
+namespace google {
+namespace protobuf {
+
+template <>
+struct is_proto_enum<::toysequencer::MessageType> : std::true_type {};
+template <>
+inline const EnumDescriptor* PROTOBUF_NONNULL GetEnumDescriptor<::toysequencer::MessageType>() {
+  return ::toysequencer::MessageType_descriptor();
+}
+
+}  // namespace protobuf
+}  // namespace google
 
 // @@protoc_insertion_point(global_scope)
 

@@ -7,8 +7,7 @@
 
 class MDUtils {
 public:
-  static toysequencer::TopOfBookCommand
-  parse_json_tob(const std::string &json, uint64_t target_instance) {
+  static toysequencer::TopOfBookCommand parse_json_tob(const std::string &json, uint64_t target_instance) {
     simdjson::ondemand::parser parser;
     simdjson::padded_string padded(json);
     simdjson::ondemand::document obj = parser.iterate(padded);
@@ -56,6 +55,7 @@ public:
     uint64_t exch_ts = static_cast<uint64_t>(ts_sec * 1'000'000.0);
 
     out.Clear();
+    out.set_msg_type(toysequencer::TOB_COMMAND);
     out.set_tin(target_instance);
     out.set_symbol(symbol);
     out.set_bid_price(bid_p);

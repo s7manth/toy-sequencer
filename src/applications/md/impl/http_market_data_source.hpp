@@ -1,6 +1,6 @@
 #pragma once
 
-#include "imarket_data_source.hpp"
+#include "../abstract/imarket_data_source.hpp"
 #include <atomic>
 #include <cstring>
 #include <sstream>
@@ -17,8 +17,7 @@
 class HttpSseMarketDataSource : public IMarketDataSource {
 public:
   HttpSseMarketDataSource(std::string host, std::string port, std::string path)
-      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)) {
-  }
+      : host_(std::move(host)), port_(std::move(port)), path_(std::move(path)) {}
 
   void start() override {
     if (running_.exchange(true))
@@ -130,10 +129,8 @@ private:
           line_start = nl + 1;
 
           if (line.size() >= 5) {
-            bool is_data = (line[0] == 'd' || line[0] == 'D') &&
-                           (line[1] == 'a' || line[1] == 'A') &&
-                           (line[2] == 't' || line[2] == 'T') &&
-                           (line[3] == 'a' || line[3] == 'A') && line[4] == ':';
+            bool is_data = (line[0] == 'd' || line[0] == 'D') && (line[1] == 'a' || line[1] == 'A') &&
+                           (line[2] == 't' || line[2] == 'T') && (line[3] == 'a' || line[3] == 'A') && line[4] == ':';
             if (is_data) {
               size_t p = 5;
               if (p < line.size() && line[p] == ' ')

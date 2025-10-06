@@ -1,4 +1,5 @@
 #include "multicast_sender.hpp"
+#include <cstdlib>
 #include <cstring>
 #include <iostream>
 #include <stdexcept>
@@ -55,6 +56,17 @@ void MulticastSender::setup_socket() {
 
     if (setsockopt(socket_, IPPROTO_IP, IP_MULTICAST_TTL, reinterpret_cast<const char *>(&ttl_), sizeof(ttl_)) < 0) {
       throw std::runtime_error("Failed to set multicast TTL");
+    }
+
+    // If provided, set the outgoing multicast interface to avoid duplicate loopback across interfaces
+    const char *ifenv = std::getenv("MCAST_IF_ADDR");
+    if (ifenv && ifenv[0] != '\0') {
+      in_addr ifaddr{};
+      ifaddr.s_addr = inet_addr(ifenv);
+      if (setsockopt(socket_, IPPROTO_IP, IP_MULTICAST_IF, reinterpret_cast<const char *>(&ifaddr), sizeof(ifaddr)) <
+          0) {
+        throw std::runtime_error("Failed to set IP_MULTICAST_IF");
+      }
     }
 
     // enable loopback so local subscribers on the same host receive packets

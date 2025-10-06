@@ -1,6 +1,9 @@
+#include "../../utils/env_utils.hpp"
+#include "../../utils/instanceid_utils.hpp"
 #include "ping.hpp"
 #include <chrono>
 #include <csignal>
+#include <cstdlib>
 #include <iostream>
 #include <thread>
 
@@ -9,29 +12,36 @@ static void handle_signal(int) { running.store(false); }
 
 int main() {
   try {
+    EnvUtils::load_env();
+
     std::signal(SIGINT, handle_signal);
     std::signal(SIGTERM, handle_signal);
 
     auto log = [](const std::string &s) { std::cout << s << std::endl; };
 
-    const std::string cmd_addr = "239.255.0.2"; // commands to sequencer
-    const uint16_t cmd_port = 30002;
-    const std::string events_addr = "239.255.0.1"; // events from sequencer
-    const uint16_t events_port = 30001;
+    const std::string events_addr = std::getenv("EVENTS_ADDR");
+    const uint16_t events_port = std::stoi(std::getenv("EVENTS_PORT"));
+    const std::string cmd_addr = std::getenv("CMD_ADDR");
+    const uint16_t cmd_port = std::stoi(std::getenv("CMD_PORT"));
+    const uint8_t mcast_ttl = 1;
 
-    uint64_t ping_instance_id = 18;
-    uint64_t pong_instance_id = 81;
-
-    PingApp ping(cmd_addr, cmd_port, 1, events_addr, events_port, log, ping_instance_id, pong_instance_id);
+    PingApp ping(cmd_addr, cmd_port, 1, events_addr, events_port, log);
+    ping.subscribe<toysequencer::TextEvent>(toysequencer::TEXT_EVENT);
 
     ping.start();
+
     std::cout << "ping sending commands to " << cmd_addr << ":" << cmd_port << ", listening for events on "
-              << events_addr << ":" << events_port << ", instance=" << ping_instance_id << std::endl;
+              << events_addr << ":" << events_port << std::endl;
 
     auto cmd = toysequencer::TextCommand();
+    cmd.set_msg_type(toysequencer::TEXT_COMMAND);
     cmd.set_text("PING");
-    cmd.set_tin(pong_instance_id);
-    ping.send_command(cmd, ping_instance_id);
+    cmd.set_tin(InstanceIdUtils::get_instance_id("PONG"));
+    ping.send_command(cmd, InstanceIdUtils::get_instance_id("PING"));
+
+    while (running.load()) {
+      std::this_thread::sleep_for(std::chrono::milliseconds(200));
+    }
 
     ping.stop();
     return 0;

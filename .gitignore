@@ -39,3 +39,6 @@ test_output/
 
 # Windows
 Thumbs.db
+
+# Environment Variables 
+.env

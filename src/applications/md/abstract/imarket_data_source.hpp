@@ -13,9 +13,7 @@ public:
   using MdCallback = std::function<void(const std::string &)>;
   std::vector<MdCallback> callbacks{};
 
-  void register_callback(MdCallback cb) {
-    callbacks.emplace_back(std::move(cb));
-  }
+  void register_callback(MdCallback cb) { callbacks.emplace_back(std::move(cb)); }
 
   void on_top_of_book(const std::string &data) {
     for (auto &cb : callbacks) {

@@ -17,8 +17,8 @@
 
 class MulticastSender : public ISender {
 public:
-  MulticastSender(const std::string &multicast_address = "239.255.0.1",
-                  uint16_t port = 30001, uint8_t ttl = 1);
+  MulticastSender(const std::string &multicast_address,
+                  uint16_t port, uint8_t ttl);
 
   ~MulticastSender();
 

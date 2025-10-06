@@ -8,9 +8,10 @@
 namespace adapters {
 
 struct TextCommandToTextEvent {
-  toysequencer::TextEvent make_event(const toysequencer::TextCommand &command, uint64_t seq,
-                                     uint64_t sender_id, uint64_t ts) const {
+  toysequencer::TextEvent make_event(const toysequencer::TextCommand &command, uint64_t seq, uint64_t sender_id,
+                                     uint64_t ts) const {
     toysequencer::TextEvent event;
+    event.set_msg_type(toysequencer::TEXT_EVENT);
     event.set_seq(seq);
     event.set_text(command.text());
     event.set_timestamp(ts);
@@ -33,9 +34,10 @@ struct TextCommandToTextEvent {
 namespace adapters {
 
 struct TopOfBookCommandToTopOfBookEvent {
-  toysequencer::TopOfBookEvent make_event(const toysequencer::TopOfBookCommand &command,
-                                          uint64_t seq, uint64_t sender_id, uint64_t ts) const {
+  toysequencer::TopOfBookEvent make_event(const toysequencer::TopOfBookCommand &command, uint64_t seq,
+                                          uint64_t sender_id, uint64_t ts) const {
     toysequencer::TopOfBookEvent event;
+    event.set_msg_type(toysequencer::TOB_EVENT);
     event.set_seq(seq);
     event.set_timestamp(ts);
     event.set_sid(sender_id);

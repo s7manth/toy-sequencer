@@ -5,7 +5,6 @@ target_include_directories(simdjson_local PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/ven
 
 add_subdirectory(msg)
 
-# Standalone scrappy binary to subscribe to multicast events and write them
 add_executable(scrappy
     applications/scrappy/scrappy.cpp
     applications/scrappy/scrappy_main.cpp
@@ -87,11 +86,11 @@ endif()
 # Standalone market data binary
 add_executable(market_data_app
     applications/md/market_data_main.cpp
-    applications/md/http_market_data_source.hpp
+    applications/md/impl/http_market_data_source.hpp
     applications/md/market_data_feed.hpp
-    applications/md/md_utils.hpp
-    applications/md/md_notifier.hpp
-    applications/md/imarket_data_source.hpp
+    applications/md/utils/md_utils.hpp
+    applications/md/abstract/md_notifier.hpp
+    applications/md/abstract/imarket_data_source.hpp
     core/command_sender.hpp
     core/multicast_sender.cpp
 )

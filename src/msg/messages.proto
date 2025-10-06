@@ -2,47 +2,61 @@ syntax = "proto3";
 
 package toysequencer;
 
+enum MessageType {
+  MESSAGE_TYPE_UNSPECIFIED = 0;
+  TEXT_COMMAND = 1;
+  TEXT_EVENT = 2;
+  TOB_COMMAND = 3;
+  TOB_EVENT = 4;
+}
+
 message TextCommand {
-  uint64 tin = 1;
-  string text = 2;
+  MessageType msg_type = 1;
+  uint64 sid = 2;
+  uint64 tin = 3;
+  string text = 4;
 }
 
 message TextEvent {
-  uint64 seq = 1;
-  uint64 timestamp = 2;
-  uint64 sid = 3;
-  uint64 tin = 4;
+  MessageType msg_type = 1;
+  uint64 seq = 2;
+  uint64 timestamp = 3;
+  uint64 sid = 4;
+  uint64 tin = 5;
 
-  string text = 5;
+  string text = 6;
 }
 
 // Market Data
 message TopOfBookCommand {
-  uint64 tin = 1;
-  string symbol = 2;
+  MessageType msg_type = 1;
+  uint64 sid = 2;
+  uint64 tin = 3;
+  string symbol = 4;
 
-  double bid_price = 3;
-  uint64 bid_size = 4;
+  double bid_price = 5;
+  uint64 bid_size = 6;
 
-  double ask_price = 5;
-  uint64 ask_size = 6;
+  double ask_price = 7;
+  uint64 ask_size = 8;
 
-  uint64 exchange_time = 7;
+  uint64 exchange_time = 9;
 }
 
 message TopOfBookEvent {
-  uint64 seq = 1;
-  uint64 timestamp = 2;
-  uint64 sid = 3;
-  uint64 tin = 4;
+  MessageType msg_type = 1;
+  uint64 seq = 2;
+  uint64 timestamp = 3;
+  uint64 sid = 4;
+  uint64 tin = 5;
 
-  string symbol = 5;
+  string symbol = 6;
 
-  double bid_price = 6;
-  uint64 bid_size = 7;
+  double bid_price = 7;
+  uint64 bid_size = 8;
 
-  double ask_price = 8;
-  uint64 ask_size = 9;
+  double ask_price = 9;
+  uint64 ask_size = 10;
 
-  uint64 exchange_time = 10;
+  uint64 exchange_time = 11;
 }

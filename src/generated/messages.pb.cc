@@ -40,7 +40,8 @@ inline constexpr TopOfBookEvent::Impl_::Impl_(
         bid_size_{::uint64_t{0u}},
         ask_price_{0},
         ask_size_{::uint64_t{0u}},
-        exchange_time_{::uint64_t{0u}} {}
+        exchange_time_{::uint64_t{0u}},
+        msg_type_{static_cast< ::toysequencer::MessageType >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TopOfBookEvent::TopOfBookEvent(::_pbi::ConstantInitialized)
@@ -68,12 +69,14 @@ inline constexpr TopOfBookCommand::Impl_::Impl_(
         symbol_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
+        sid_{::uint64_t{0u}},
         tin_{::uint64_t{0u}},
         bid_price_{0},
         bid_size_{::uint64_t{0u}},
         ask_price_{0},
         ask_size_{::uint64_t{0u}},
-        exchange_time_{::uint64_t{0u}} {}
+        exchange_time_{::uint64_t{0u}},
+        msg_type_{static_cast< ::toysequencer::MessageType >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TopOfBookCommand::TopOfBookCommand(::_pbi::ConstantInitialized)
@@ -104,7 +107,8 @@ inline constexpr TextEvent::Impl_::Impl_(
         seq_{::uint64_t{0u}},
         timestamp_{::uint64_t{0u}},
         sid_{::uint64_t{0u}},
-        tin_{::uint64_t{0u}} {}
+        tin_{::uint64_t{0u}},
+        msg_type_{static_cast< ::toysequencer::MessageType >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TextEvent::TextEvent(::_pbi::ConstantInitialized)
@@ -132,7 +136,9 @@ inline constexpr TextCommand::Impl_::Impl_(
         text_(
             &::google::protobuf::internal::fixed_address_empty_string,
             ::_pbi::ConstantInitialized()),
-        tin_{::uint64_t{0u}} {}
+        sid_{::uint64_t{0u}},
+        tin_{::uint64_t{0u}},
+        msg_type_{static_cast< ::toysequencer::MessageType >(0)} {}
 
 template <typename>
 PROTOBUF_CONSTEXPR TextCommand::TextCommand(::_pbi::ConstantInitialized)
@@ -154,8 +160,8 @@ struct TextCommandDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT
     PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 TextCommandDefaultTypeInternal _TextCommand_default_instance_;
 }  // namespace toysequencer
-static constexpr const ::_pb::EnumDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
-    file_level_enum_descriptors_messages_2eproto = nullptr;
+static const ::_pb::EnumDescriptor* PROTOBUF_NONNULL
+    file_level_enum_descriptors_messages_2eproto[1];
 static constexpr const ::_pb::ServiceDescriptor *PROTOBUF_NONNULL *PROTOBUF_NULLABLE
     file_level_service_descriptors_messages_2eproto = nullptr;
 const ::uint32_t
@@ -163,19 +169,25 @@ const ::uint32_t
         protodesc_cold) = {
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_._has_bits_),
-        5, // hasbit index offset
+        7, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.msg_type_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.sid_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.tin_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextCommand, _impl_.text_),
+        3,
         1,
+        2,
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_._has_bits_),
-        8, // hasbit index offset
+        9, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.msg_type_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.seq_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.timestamp_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.sid_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.tin_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TextEvent, _impl_.text_),
+        5,
         1,
         2,
         3,
@@ -183,7 +195,9 @@ const ::uint32_t
         0,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_._has_bits_),
-        10, // hasbit index offset
+        12, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.msg_type_),
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.sid_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.tin_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.symbol_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.bid_price_),
@@ -191,16 +205,19 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.ask_price_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.ask_size_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookCommand, _impl_.exchange_time_),
+        8,
         1,
-        0,
         2,
+        0,
         3,
         4,
         5,
         6,
+        7,
         0x081, // bitmap
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_._has_bits_),
-        13, // hasbit index offset
+        14, // hasbit index offset
+        PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.msg_type_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.seq_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.timestamp_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.sid_),
@@ -211,6 +228,7 @@ const ::uint32_t
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.ask_price_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.ask_size_),
         PROTOBUF_FIELD_OFFSET(::toysequencer::TopOfBookEvent, _impl_.exchange_time_),
+        10,
         1,
         2,
         3,
@@ -226,9 +244,9 @@ const ::uint32_t
 static const ::_pbi::MigrationSchema
     schemas[] ABSL_ATTRIBUTE_SECTION_VARIABLE(protodesc_cold) = {
         {0, sizeof(::toysequencer::TextCommand)},
-        {7, sizeof(::toysequencer::TextEvent)},
-        {20, sizeof(::toysequencer::TopOfBookCommand)},
-        {37, sizeof(::toysequencer::TopOfBookEvent)},
+        {11, sizeof(::toysequencer::TextEvent)},
+        {26, sizeof(::toysequencer::TopOfBookCommand)},
+        {47, sizeof(::toysequencer::TopOfBookEvent)},
 };
 static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
     &::toysequencer::_TextCommand_default_instance_._instance,
@@ -238,25 +256,33 @@ static const ::_pb::Message* PROTOBUF_NONNULL const file_default_instances[] = {
 };
 const char descriptor_table_protodef_messages_2eproto[] ABSL_ATTRIBUTE_SECTION_VARIABLE(
     protodesc_cold) = {
-    "\n\016messages.proto\022\014toysequencer\"(\n\013TextCo"
-    "mmand\022\013\n\003tin\030\001 \001(\004\022\014\n\004text\030\002 \001(\t\"S\n\tText"
-    "Event\022\013\n\003seq\030\001 \001(\004\022\021\n\ttimestamp\030\002 \001(\004\022\013\n"
-    "\003sid\030\003 \001(\004\022\013\n\003tin\030\004 \001(\004\022\014\n\004text\030\005 \001(\t\"\220\001"
-    "\n\020TopOfBookCommand\022\013\n\003tin\030\001 \001(\004\022\016\n\006symbo"
-    "l\030\002 \001(\t\022\021\n\tbid_price\030\003 \001(\001\022\020\n\010bid_size\030\004"
-    " \001(\004\022\021\n\task_price\030\005 \001(\001\022\020\n\010ask_size\030\006 \001("
-    "\004\022\025\n\rexchange_time\030\007 \001(\004\"\273\001\n\016TopOfBookEv"
-    "ent\022\013\n\003seq\030\001 \001(\004\022\021\n\ttimestamp\030\002 \001(\004\022\013\n\003s"
-    "id\030\003 \001(\004\022\013\n\003tin\030\004 \001(\004\022\016\n\006symbol\030\005 \001(\t\022\021\n"
-    "\tbid_price\030\006 \001(\001\022\020\n\010bid_size\030\007 \001(\004\022\021\n\tas"
-    "k_price\030\010 \001(\001\022\020\n\010ask_size\030\t \001(\004\022\025\n\rexcha"
-    "nge_time\030\n \001(\004b\006proto3"
+    "\n\016messages.proto\022\014toysequencer\"b\n\013TextCo"
+    "mmand\022+\n\010msg_type\030\001 \001(\0162\031.toysequencer.M"
+    "essageType\022\013\n\003sid\030\002 \001(\004\022\013\n\003tin\030\003 \001(\004\022\014\n\004"
+    "text\030\004 \001(\t\"\200\001\n\tTextEvent\022+\n\010msg_type\030\001 \001"
+    "(\0162\031.toysequencer.MessageType\022\013\n\003seq\030\002 \001"
+    "(\004\022\021\n\ttimestamp\030\003 \001(\004\022\013\n\003sid\030\004 \001(\004\022\013\n\003ti"
+    "n\030\005 \001(\004\022\014\n\004text\030\006 \001(\t\"\312\001\n\020TopOfBookComma"
+    "nd\022+\n\010msg_type\030\001 \001(\0162\031.toysequencer.Mess"
+    "ageType\022\013\n\003sid\030\002 \001(\004\022\013\n\003tin\030\003 \001(\004\022\016\n\006sym"
+    "bol\030\004 \001(\t\022\021\n\tbid_price\030\005 \001(\001\022\020\n\010bid_size"
+    "\030\006 \001(\004\022\021\n\task_price\030\007 \001(\001\022\020\n\010ask_size\030\010 "
+    "\001(\004\022\025\n\rexchange_time\030\t \001(\004\"\350\001\n\016TopOfBook"
+    "Event\022+\n\010msg_type\030\001 \001(\0162\031.toysequencer.M"
+    "essageType\022\013\n\003seq\030\002 \001(\004\022\021\n\ttimestamp\030\003 \001"
+    "(\004\022\013\n\003sid\030\004 \001(\004\022\013\n\003tin\030\005 \001(\004\022\016\n\006symbol\030\006"
+    " \001(\t\022\021\n\tbid_price\030\007 \001(\001\022\020\n\010bid_size\030\010 \001("
+    "\004\022\021\n\task_price\030\t \001(\001\022\020\n\010ask_size\030\n \001(\004\022\025"
+    "\n\rexchange_time\030\013 \001(\004*m\n\013MessageType\022\034\n\030"
+    "MESSAGE_TYPE_UNSPECIFIED\020\000\022\020\n\014TEXT_COMMA"
+    "ND\020\001\022\016\n\nTEXT_EVENT\020\002\022\017\n\013TOB_COMMAND\020\003\022\r\n"
+    "\tTOB_EVENT\020\004b\006proto3"
 };
 static ::absl::once_flag descriptor_table_messages_2eproto_once;
 PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_messages_2eproto = {
     false,
     false,
-    502,
+    820,
     descriptor_table_protodef_messages_2eproto,
     "messages.proto",
     &descriptor_table_messages_2eproto_once,
@@ -270,6 +296,12 @@ PROTOBUF_CONSTINIT const ::_pbi::DescriptorTable descriptor_table_messages_2epro
     file_level_service_descriptors_messages_2eproto,
 };
 namespace toysequencer {
+const ::google::protobuf::EnumDescriptor* PROTOBUF_NONNULL MessageType_descriptor() {
+  ::google::protobuf::internal::AssignDescriptors(&descriptor_table_messages_2eproto);
+  return file_level_enum_descriptors_messages_2eproto[0];
+}
+PROTOBUF_CONSTINIT const uint32_t MessageType_internal_data_[] = {
+    327680u, 0u, };
 // ===================================================================
 
 class TextCommand::_Internal {
@@ -310,7 +342,13 @@ TextCommand::TextCommand(
   _internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
-  _impl_.tin_ = from._impl_.tin_;
+  ::memcpy(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, sid_),
+           reinterpret_cast<const char *>(&from._impl_) +
+               offsetof(Impl_, sid_),
+           offsetof(Impl_, msg_type_) -
+               offsetof(Impl_, sid_) +
+               sizeof(Impl_::msg_type_));
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TextCommand)
 }
@@ -322,7 +360,12 @@ PROTOBUF_NDEBUG_INLINE TextCommand::Impl_::Impl_(
 
 inline void TextCommand::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
-  _impl_.tin_ = {};
+  ::memset(reinterpret_cast<char *>(&_impl_) +
+               offsetof(Impl_, sid_),
+           0,
+           offsetof(Impl_, msg_type_) -
+               offsetof(Impl_, sid_) +
+               sizeof(Impl_::msg_type_));
 }
 TextCommand::~TextCommand() {
   // @@protoc_insertion_point(destructor:toysequencer.TextCommand)
@@ -382,16 +425,16 @@ TextCommand::GetClassData() const {
   return TextCommand_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<1, 2, 0, 37, 2>
+const ::_pbi::TcParseTable<2, 4, 0, 37, 2>
 TextCommand::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TextCommand, _impl_._has_bits_),
     0, // no _extensions_
-    2, 8,  // max_field_number, fast_idx_mask
+    4, 24,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967292,  // skipmap
+    4294967280,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    2,  // num_field_entries
+    4,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TextCommand_class_data_.base(),
@@ -401,23 +444,33 @@ TextCommand::_table_ = {
     ::_pbi::TcParser::GetTable<::toysequencer::TextCommand>(),  // to_prefetch
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
-    // string text = 2;
+    // string text = 4;
     {::_pbi::TcParser::FastUS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_)}},
-    // uint64 tin = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.tin_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_)}},
+     {34, 0, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_)}},
+    // .toysequencer.MessageType msg_type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TextCommand, _impl_.msg_type_), 3>(),
+     {8, 3, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.msg_type_)}},
+    // uint64 sid = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.sid_), 1>(),
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.sid_)}},
+    // uint64 tin = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextCommand, _impl_.tin_), 2>(),
+     {24, 2, 0, PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_)}},
   }}, {{
     65535, 65535
   }}, {{
-    // uint64 tin = 1;
-    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // string text = 2;
+    // .toysequencer.MessageType msg_type = 1;
+    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.msg_type_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint64 sid = 2;
+    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.sid_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 tin = 3;
+    {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.tin_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string text = 4;
     {PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\30\0\4\0\0\0\0\0"
+    "\30\0\0\0\4\0\0\0"
     "toysequencer.TextCommand"
     "text"
   }},
@@ -433,7 +486,11 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   if ((cached_has_bits & 0x00000001U) != 0) {
     _impl_.text_.ClearNonDefaultToEmpty();
   }
-  _impl_.tin_ = ::uint64_t{0u};
+  if ((cached_has_bits & 0x0000000eU) != 0) {
+    ::memset(&_impl_.sid_, 0, static_cast<::size_t>(
+        reinterpret_cast<char*>(&_impl_.msg_type_) -
+        reinterpret_cast<char*>(&_impl_.sid_)) + sizeof(_impl_.msg_type_));
+  }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -456,22 +513,40 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // uint64 tin = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
-    if (this_._internal_tin() != 0) {
+  // .toysequencer.MessageType msg_type = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+    if (this_._internal_msg_type() != 0) {
       target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_tin(), target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          1, this_._internal_msg_type(), target);
     }
   }
 
-  // string text = 2;
+  // uint64 sid = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_sid() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_sid(), target);
+    }
+  }
+
+  // uint64 tin = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          3, this_._internal_tin(), target);
+    }
+  }
+
+  // string text = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_text().empty()) {
       const ::std::string& _s = this_._internal_text();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TextCommand.text");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
+      target = stream->WriteStringMaybeAliased(4, _s, target);
     }
   }
 
@@ -500,19 +575,33 @@ PROTOBUF_NOINLINE void TextCommand::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003U) != 0) {
-    // string text = 2;
+  if ((cached_has_bits & 0x0000000fU) != 0) {
+    // string text = 4;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_text());
       }
     }
-    // uint64 tin = 1;
+    // uint64 sid = 2;
     if ((cached_has_bits & 0x00000002U) != 0) {
+      if (this_._internal_sid() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_sid());
+      }
+    }
+    // uint64 tin = 3;
+    if ((cached_has_bits & 0x00000004U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_tin());
+      }
+    }
+    // .toysequencer.MessageType msg_type = 1;
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (this_._internal_msg_type() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_msg_type());
       }
     }
   }
@@ -532,7 +621,7 @@ void TextCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x00000003U) != 0) {
+  if ((cached_has_bits & 0x0000000fU) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!from._internal_text().empty()) {
         _this->_internal_set_text(from._internal_text());
@@ -543,8 +632,18 @@ void TextCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::goo
       }
     }
     if ((cached_has_bits & 0x00000002U) != 0) {
+      if (from._internal_sid() != 0) {
+        _this->_impl_.sid_ = from._impl_.sid_;
+      }
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
       if (from._internal_tin() != 0) {
         _this->_impl_.tin_ = from._impl_.tin_;
+      }
+    }
+    if ((cached_has_bits & 0x00000008U) != 0) {
+      if (from._internal_msg_type() != 0) {
+        _this->_impl_.msg_type_ = from._impl_.msg_type_;
       }
     }
   }
@@ -567,7 +666,12 @@ void TextCommand::InternalSwap(TextCommand* PROTOBUF_RESTRICT PROTOBUF_NONNULL o
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.text_, &other->_impl_.text_, arena);
-  swap(_impl_.tin_, other->_impl_.tin_);
+  ::google::protobuf::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.msg_type_)
+      + sizeof(TextCommand::_impl_.msg_type_)
+      - PROTOBUF_FIELD_OFFSET(TextCommand, _impl_.sid_)>(
+          reinterpret_cast<char*>(&_impl_.sid_),
+          reinterpret_cast<char*>(&other->_impl_.sid_));
 }
 
 ::google::protobuf::Metadata TextCommand::GetMetadata() const {
@@ -617,9 +721,9 @@ TextEvent::TextEvent(
                offsetof(Impl_, seq_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, seq_),
-           offsetof(Impl_, tin_) -
+           offsetof(Impl_, msg_type_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::tin_));
+               sizeof(Impl_::msg_type_));
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TextEvent)
 }
@@ -634,9 +738,9 @@ inline void TextEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, seq_),
            0,
-           offsetof(Impl_, tin_) -
+           offsetof(Impl_, msg_type_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::tin_));
+               sizeof(Impl_::msg_type_));
 }
 TextEvent::~TextEvent() {
   // @@protoc_insertion_point(destructor:toysequencer.TextEvent)
@@ -696,16 +800,16 @@ TextEvent::GetClassData() const {
   return TextEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 5, 0, 35, 2>
+const ::_pbi::TcParseTable<3, 6, 0, 35, 2>
 TextEvent::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TextEvent, _impl_._has_bits_),
     0, // no _extensions_
-    5, 56,  // max_field_number, fast_idx_mask
+    6, 56,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967264,  // skipmap
+    4294967232,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    5,  // num_field_entries
+    6,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TextEvent_class_data_.base(),
@@ -716,40 +820,44 @@ TextEvent::_table_ = {
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // uint64 seq = 1;
+    // .toysequencer.MessageType msg_type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TextEvent, _impl_.msg_type_), 5>(),
+     {8, 5, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.msg_type_)}},
+    // uint64 seq = 2;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.seq_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_)}},
-    // uint64 timestamp = 2;
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_)}},
+    // uint64 timestamp = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.timestamp_), 2>(),
-     {16, 2, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)}},
-    // uint64 sid = 3;
+     {24, 2, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_)}},
+    // uint64 sid = 4;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.sid_), 3>(),
-     {24, 3, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_)}},
-    // uint64 tin = 4;
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_)}},
+    // uint64 tin = 5;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TextEvent, _impl_.tin_), 4>(),
-     {32, 4, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)}},
-    // string text = 5;
+     {40, 4, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)}},
+    // string text = 6;
     {::_pbi::TcParser::FastUS1,
-     {42, 0, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {50, 0, 0, PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_)}},
     {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
-    // uint64 seq = 1;
+    // .toysequencer.MessageType msg_type = 1;
+    {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.msg_type_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint64 seq = 2;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 timestamp = 2;
+    // uint64 timestamp = 3;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.timestamp_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 sid = 3;
+    // uint64 sid = 4;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.sid_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 tin = 4;
+    // uint64 tin = 5;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // string text = 5;
+    // string text = 6;
     {PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.text_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
   }},
   // no aux_entries
   {{
-    "\26\0\0\0\0\4\0\0"
+    "\26\0\0\0\0\0\4\0"
     "toysequencer.TextEvent"
     "text"
   }},
@@ -765,10 +873,10 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
   if ((cached_has_bits & 0x00000001U) != 0) {
     _impl_.text_.ClearNonDefaultToEmpty();
   }
-  if ((cached_has_bits & 0x0000001eU) != 0) {
+  if ((cached_has_bits & 0x0000003eU) != 0) {
     ::memset(&_impl_.seq_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.tin_) -
-        reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.tin_));
+        reinterpret_cast<char*>(&_impl_.msg_type_) -
+        reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.msg_type_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -792,49 +900,58 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // uint64 seq = 1;
+  // .toysequencer.MessageType msg_type = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
+    if (this_._internal_msg_type() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          1, this_._internal_msg_type(), target);
+    }
+  }
+
+  // uint64 seq = 2;
   if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
     if (this_._internal_seq() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_seq(), target);
+          2, this_._internal_seq(), target);
     }
   }
 
-  // uint64 timestamp = 2;
+  // uint64 timestamp = 3;
   if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
     if (this_._internal_timestamp() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          2, this_._internal_timestamp(), target);
+          3, this_._internal_timestamp(), target);
     }
   }
 
-  // uint64 sid = 3;
+  // uint64 sid = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
     if (this_._internal_sid() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          3, this_._internal_sid(), target);
+          4, this_._internal_sid(), target);
     }
   }
 
-  // uint64 tin = 4;
+  // uint64 tin = 5;
   if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
     if (this_._internal_tin() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          4, this_._internal_tin(), target);
+          5, this_._internal_tin(), target);
     }
   }
 
-  // string text = 5;
+  // string text = 6;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_text().empty()) {
       const ::std::string& _s = this_._internal_text();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TextEvent.text");
-      target = stream->WriteStringMaybeAliased(5, _s, target);
+      target = stream->WriteStringMaybeAliased(6, _s, target);
     }
   }
 
@@ -863,40 +980,47 @@ PROTOBUF_NOINLINE void TextEvent::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fU) != 0) {
-    // string text = 5;
+  if ((cached_has_bits & 0x0000003fU) != 0) {
+    // string text = 6;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_text().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_text());
       }
     }
-    // uint64 seq = 1;
+    // uint64 seq = 2;
     if ((cached_has_bits & 0x00000002U) != 0) {
       if (this_._internal_seq() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_seq());
       }
     }
-    // uint64 timestamp = 2;
+    // uint64 timestamp = 3;
     if ((cached_has_bits & 0x00000004U) != 0) {
       if (this_._internal_timestamp() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_timestamp());
       }
     }
-    // uint64 sid = 3;
+    // uint64 sid = 4;
     if ((cached_has_bits & 0x00000008U) != 0) {
       if (this_._internal_sid() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_sid());
       }
     }
-    // uint64 tin = 4;
+    // uint64 tin = 5;
     if ((cached_has_bits & 0x00000010U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_tin());
+      }
+    }
+    // .toysequencer.MessageType msg_type = 1;
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (this_._internal_msg_type() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_msg_type());
       }
     }
   }
@@ -916,7 +1040,7 @@ void TextEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::googl
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000001fU) != 0) {
+  if ((cached_has_bits & 0x0000003fU) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!from._internal_text().empty()) {
         _this->_internal_set_text(from._internal_text());
@@ -946,6 +1070,11 @@ void TextEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::googl
         _this->_impl_.tin_ = from._impl_.tin_;
       }
     }
+    if ((cached_has_bits & 0x00000020U) != 0) {
+      if (from._internal_msg_type() != 0) {
+        _this->_impl_.msg_type_ = from._impl_.msg_type_;
+      }
+    }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
   _this->_internal_metadata_.MergeFrom<::google::protobuf::UnknownFieldSet>(from._internal_metadata_);
@@ -967,8 +1096,8 @@ void TextEvent::InternalSwap(TextEvent* PROTOBUF_RESTRICT PROTOBUF_NONNULL other
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.text_, &other->_impl_.text_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.tin_)
-      + sizeof(TextEvent::_impl_.tin_)
+      PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.msg_type_)
+      + sizeof(TextEvent::_impl_.msg_type_)
       - PROTOBUF_FIELD_OFFSET(TextEvent, _impl_.seq_)>(
           reinterpret_cast<char*>(&_impl_.seq_),
           reinterpret_cast<char*>(&other->_impl_.seq_));
@@ -1018,12 +1147,12 @@ TopOfBookCommand::TopOfBookCommand(
       from._internal_metadata_);
   new (&_impl_) Impl_(internal_visibility(), arena, from._impl_, from);
   ::memcpy(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, tin_),
+               offsetof(Impl_, sid_),
            reinterpret_cast<const char *>(&from._impl_) +
-               offsetof(Impl_, tin_),
-           offsetof(Impl_, exchange_time_) -
-               offsetof(Impl_, tin_) +
-               sizeof(Impl_::exchange_time_));
+               offsetof(Impl_, sid_),
+           offsetof(Impl_, msg_type_) -
+               offsetof(Impl_, sid_) +
+               sizeof(Impl_::msg_type_));
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TopOfBookCommand)
 }
@@ -1036,11 +1165,11 @@ PROTOBUF_NDEBUG_INLINE TopOfBookCommand::Impl_::Impl_(
 inline void TopOfBookCommand::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   new (&_impl_) Impl_(internal_visibility(), arena);
   ::memset(reinterpret_cast<char *>(&_impl_) +
-               offsetof(Impl_, tin_),
+               offsetof(Impl_, sid_),
            0,
-           offsetof(Impl_, exchange_time_) -
-               offsetof(Impl_, tin_) +
-               sizeof(Impl_::exchange_time_));
+           offsetof(Impl_, msg_type_) -
+               offsetof(Impl_, sid_) +
+               sizeof(Impl_::msg_type_));
 }
 TopOfBookCommand::~TopOfBookCommand() {
   // @@protoc_insertion_point(destructor:toysequencer.TopOfBookCommand)
@@ -1100,16 +1229,16 @@ TopOfBookCommand::GetClassData() const {
   return TopOfBookCommand_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<3, 7, 0, 44, 2>
+const ::_pbi::TcParseTable<4, 9, 0, 52, 2>
 TopOfBookCommand::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_._has_bits_),
     0, // no _extensions_
-    7, 56,  // max_field_number, fast_idx_mask
+    9, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294967168,  // skipmap
+    4294966784,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    7,  // num_field_entries
+    9,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TopOfBookCommand_class_data_.base(),
@@ -1120,48 +1249,64 @@ TopOfBookCommand::_table_ = {
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // uint64 tin = 1;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.tin_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_)}},
-    // string symbol = 2;
+    // .toysequencer.MessageType msg_type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TopOfBookCommand, _impl_.msg_type_), 8>(),
+     {8, 8, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.msg_type_)}},
+    // uint64 sid = 2;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.sid_), 1>(),
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.sid_)}},
+    // uint64 tin = 3;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.tin_), 2>(),
+     {24, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_)}},
+    // string symbol = 4;
     {::_pbi::TcParser::FastUS1,
-     {18, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.symbol_)}},
-    // double bid_price = 3;
+     {34, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.symbol_)}},
+    // double bid_price = 5;
     {::_pbi::TcParser::FastF64S1,
-     {25, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_)}},
-    // uint64 bid_size = 4;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.bid_size_), 3>(),
-     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_)}},
-    // double ask_price = 5;
+     {41, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_)}},
+    // uint64 bid_size = 6;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.bid_size_), 4>(),
+     {48, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_)}},
+    // double ask_price = 7;
     {::_pbi::TcParser::FastF64S1,
-     {41, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_)}},
-    // uint64 ask_size = 6;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.ask_size_), 5>(),
-     {48, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_)}},
-    // uint64 exchange_time = 7;
-    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.exchange_time_), 6>(),
-     {56, 6, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.exchange_time_)}},
+     {57, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_)}},
+    // uint64 ask_size = 8;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.ask_size_), 6>(),
+     {64, 6, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_)}},
+    // uint64 exchange_time = 9;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookCommand, _impl_.exchange_time_), 7>(),
+     {72, 7, 0, PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.exchange_time_)}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
+    {::_pbi::TcParser::MiniParse, {}},
   }}, {{
     65535, 65535
   }}, {{
-    // uint64 tin = 1;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // string symbol = 2;
+    // .toysequencer.MessageType msg_type = 1;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.msg_type_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint64 sid = 2;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.sid_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 tin = 3;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // string symbol = 4;
     {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.symbol_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // double bid_price = 3;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // uint64 bid_size = 4;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // double ask_price = 5;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // uint64 ask_size = 6;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 exchange_time = 7;
-    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.exchange_time_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // double bid_price = 5;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_price_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 bid_size = 6;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.bid_size_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // double ask_price = 7;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_price_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
+    // uint64 ask_size = 8;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.ask_size_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
+    // uint64 exchange_time = 9;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.exchange_time_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   // no aux_entries
   {{
-    "\35\0\6\0\0\0\0\0"
+    "\35\0\0\0\6\0\0\0\0\0\0\0\0\0\0\0"
     "toysequencer.TopOfBookCommand"
     "symbol"
   }},
@@ -1177,11 +1322,12 @@ PROTOBUF_NOINLINE void TopOfBookCommand::Clear() {
   if ((cached_has_bits & 0x00000001U) != 0) {
     _impl_.symbol_.ClearNonDefaultToEmpty();
   }
-  if ((cached_has_bits & 0x0000007eU) != 0) {
-    ::memset(&_impl_.tin_, 0, static_cast<::size_t>(
+  if ((cached_has_bits & 0x000000feU) != 0) {
+    ::memset(&_impl_.sid_, 0, static_cast<::size_t>(
         reinterpret_cast<char*>(&_impl_.exchange_time_) -
-        reinterpret_cast<char*>(&_impl_.tin_)) + sizeof(_impl_.exchange_time_));
+        reinterpret_cast<char*>(&_impl_.sid_)) + sizeof(_impl_.exchange_time_));
   }
+  _impl_.msg_type_ = 0;
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
 }
@@ -1204,67 +1350,85 @@ PROTOBUF_NOINLINE void TopOfBookCommand::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // uint64 tin = 1;
-  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
-    if (this_._internal_tin() != 0) {
+  // .toysequencer.MessageType msg_type = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000100U) != 0) {
+    if (this_._internal_msg_type() != 0) {
       target = stream->EnsureSpace(target);
-      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_tin(), target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          1, this_._internal_msg_type(), target);
     }
   }
 
-  // string symbol = 2;
+  // uint64 sid = 2;
+  if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
+    if (this_._internal_sid() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          2, this_._internal_sid(), target);
+    }
+  }
+
+  // uint64 tin = 3;
+  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+    if (this_._internal_tin() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
+          3, this_._internal_tin(), target);
+    }
+  }
+
+  // string symbol = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_symbol().empty()) {
       const ::std::string& _s = this_._internal_symbol();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TopOfBookCommand.symbol");
-      target = stream->WriteStringMaybeAliased(2, _s, target);
+      target = stream->WriteStringMaybeAliased(4, _s, target);
     }
   }
 
-  // double bid_price = 3;
-  if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
+  // double bid_price = 5;
+  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          3, this_._internal_bid_price(), target);
+          5, this_._internal_bid_price(), target);
     }
   }
 
-  // uint64 bid_size = 4;
-  if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
+  // uint64 bid_size = 6;
+  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
     if (this_._internal_bid_size() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          4, this_._internal_bid_size(), target);
+          6, this_._internal_bid_size(), target);
     }
   }
 
-  // double ask_price = 5;
-  if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
+  // double ask_price = 7;
+  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          5, this_._internal_ask_price(), target);
+          7, this_._internal_ask_price(), target);
     }
   }
 
-  // uint64 ask_size = 6;
-  if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
+  // uint64 ask_size = 8;
+  if ((this_._impl_._has_bits_[0] & 0x00000040U) != 0) {
     if (this_._internal_ask_size() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          6, this_._internal_ask_size(), target);
+          8, this_._internal_ask_size(), target);
     }
   }
 
-  // uint64 exchange_time = 7;
-  if ((this_._impl_._has_bits_[0] & 0x00000040U) != 0) {
+  // uint64 exchange_time = 9;
+  if ((this_._impl_._has_bits_[0] & 0x00000080U) != 0) {
     if (this_._internal_exchange_time() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          7, this_._internal_exchange_time(), target);
+          9, this_._internal_exchange_time(), target);
     }
   }
 
@@ -1293,52 +1457,68 @@ PROTOBUF_NOINLINE void TopOfBookCommand::Clear() {
 
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000007fU) != 0) {
-    // string symbol = 2;
+  if ((cached_has_bits & 0x000000ffU) != 0) {
+    // string symbol = 4;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_symbol().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_symbol());
       }
     }
-    // uint64 tin = 1;
+    // uint64 sid = 2;
     if ((cached_has_bits & 0x00000002U) != 0) {
+      if (this_._internal_sid() != 0) {
+        total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
+            this_._internal_sid());
+      }
+    }
+    // uint64 tin = 3;
+    if ((cached_has_bits & 0x00000004U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_tin());
       }
     }
-    // double bid_price = 3;
-    if ((cached_has_bits & 0x00000004U) != 0) {
+    // double bid_price = 5;
+    if ((cached_has_bits & 0x00000008U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
         total_size += 9;
       }
     }
-    // uint64 bid_size = 4;
-    if ((cached_has_bits & 0x00000008U) != 0) {
+    // uint64 bid_size = 6;
+    if ((cached_has_bits & 0x00000010U) != 0) {
       if (this_._internal_bid_size() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_bid_size());
       }
     }
-    // double ask_price = 5;
-    if ((cached_has_bits & 0x00000010U) != 0) {
+    // double ask_price = 7;
+    if ((cached_has_bits & 0x00000020U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
         total_size += 9;
       }
     }
-    // uint64 ask_size = 6;
-    if ((cached_has_bits & 0x00000020U) != 0) {
+    // uint64 ask_size = 8;
+    if ((cached_has_bits & 0x00000040U) != 0) {
       if (this_._internal_ask_size() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_ask_size());
       }
     }
-    // uint64 exchange_time = 7;
-    if ((cached_has_bits & 0x00000040U) != 0) {
+    // uint64 exchange_time = 9;
+    if ((cached_has_bits & 0x00000080U) != 0) {
       if (this_._internal_exchange_time() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_exchange_time());
+      }
+    }
+  }
+   {
+    // .toysequencer.MessageType msg_type = 1;
+    if ((cached_has_bits & 0x00000100U) != 0) {
+      if (this_._internal_msg_type() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_msg_type());
       }
     }
   }
@@ -1358,7 +1538,7 @@ void TopOfBookCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
   (void) cached_has_bits;
 
   cached_has_bits = from._impl_._has_bits_[0];
-  if ((cached_has_bits & 0x0000007fU) != 0) {
+  if ((cached_has_bits & 0x000000ffU) != 0) {
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!from._internal_symbol().empty()) {
         _this->_internal_set_symbol(from._internal_symbol());
@@ -1369,34 +1549,44 @@ void TopOfBookCommand::MergeImpl(::google::protobuf::MessageLite& to_msg, const 
       }
     }
     if ((cached_has_bits & 0x00000002U) != 0) {
+      if (from._internal_sid() != 0) {
+        _this->_impl_.sid_ = from._impl_.sid_;
+      }
+    }
+    if ((cached_has_bits & 0x00000004U) != 0) {
       if (from._internal_tin() != 0) {
         _this->_impl_.tin_ = from._impl_.tin_;
       }
     }
-    if ((cached_has_bits & 0x00000004U) != 0) {
+    if ((cached_has_bits & 0x00000008U) != 0) {
       if (::absl::bit_cast<::uint64_t>(from._internal_bid_price()) != 0) {
         _this->_impl_.bid_price_ = from._impl_.bid_price_;
       }
     }
-    if ((cached_has_bits & 0x00000008U) != 0) {
+    if ((cached_has_bits & 0x00000010U) != 0) {
       if (from._internal_bid_size() != 0) {
         _this->_impl_.bid_size_ = from._impl_.bid_size_;
       }
     }
-    if ((cached_has_bits & 0x00000010U) != 0) {
+    if ((cached_has_bits & 0x00000020U) != 0) {
       if (::absl::bit_cast<::uint64_t>(from._internal_ask_price()) != 0) {
         _this->_impl_.ask_price_ = from._impl_.ask_price_;
       }
     }
-    if ((cached_has_bits & 0x00000020U) != 0) {
+    if ((cached_has_bits & 0x00000040U) != 0) {
       if (from._internal_ask_size() != 0) {
         _this->_impl_.ask_size_ = from._impl_.ask_size_;
       }
     }
-    if ((cached_has_bits & 0x00000040U) != 0) {
+    if ((cached_has_bits & 0x00000080U) != 0) {
       if (from._internal_exchange_time() != 0) {
         _this->_impl_.exchange_time_ = from._impl_.exchange_time_;
       }
+    }
+  }
+  if ((cached_has_bits & 0x00000100U) != 0) {
+    if (from._internal_msg_type() != 0) {
+      _this->_impl_.msg_type_ = from._impl_.msg_type_;
     }
   }
   _this->_impl_._has_bits_[0] |= cached_has_bits;
@@ -1419,11 +1609,11 @@ void TopOfBookCommand::InternalSwap(TopOfBookCommand* PROTOBUF_RESTRICT PROTOBUF
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, &other->_impl_.symbol_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.exchange_time_)
-      + sizeof(TopOfBookCommand::_impl_.exchange_time_)
-      - PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.tin_)>(
-          reinterpret_cast<char*>(&_impl_.tin_),
-          reinterpret_cast<char*>(&other->_impl_.tin_));
+      PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.msg_type_)
+      + sizeof(TopOfBookCommand::_impl_.msg_type_)
+      - PROTOBUF_FIELD_OFFSET(TopOfBookCommand, _impl_.sid_)>(
+          reinterpret_cast<char*>(&_impl_.sid_),
+          reinterpret_cast<char*>(&other->_impl_.sid_));
 }
 
 ::google::protobuf::Metadata TopOfBookCommand::GetMetadata() const {
@@ -1473,9 +1663,9 @@ TopOfBookEvent::TopOfBookEvent(
                offsetof(Impl_, seq_),
            reinterpret_cast<const char *>(&from._impl_) +
                offsetof(Impl_, seq_),
-           offsetof(Impl_, exchange_time_) -
+           offsetof(Impl_, msg_type_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::exchange_time_));
+               sizeof(Impl_::msg_type_));
 
   // @@protoc_insertion_point(copy_constructor:toysequencer.TopOfBookEvent)
 }
@@ -1490,9 +1680,9 @@ inline void TopOfBookEvent::SharedCtor(::_pb::Arena* PROTOBUF_NULLABLE arena) {
   ::memset(reinterpret_cast<char *>(&_impl_) +
                offsetof(Impl_, seq_),
            0,
-           offsetof(Impl_, exchange_time_) -
+           offsetof(Impl_, msg_type_) -
                offsetof(Impl_, seq_) +
-               sizeof(Impl_::exchange_time_));
+               sizeof(Impl_::msg_type_));
 }
 TopOfBookEvent::~TopOfBookEvent() {
   // @@protoc_insertion_point(destructor:toysequencer.TopOfBookEvent)
@@ -1552,16 +1742,16 @@ TopOfBookEvent::GetClassData() const {
   return TopOfBookEvent_class_data_.base();
 }
 PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1
-const ::_pbi::TcParseTable<4, 10, 0, 50, 2>
+const ::_pbi::TcParseTable<4, 11, 0, 50, 2>
 TopOfBookEvent::_table_ = {
   {
     PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_._has_bits_),
     0, // no _extensions_
-    10, 120,  // max_field_number, fast_idx_mask
+    11, 120,  // max_field_number, fast_idx_mask
     offsetof(decltype(_table_), field_lookup_table),
-    4294966272,  // skipmap
+    4294965248,  // skipmap
     offsetof(decltype(_table_), field_entries),
-    10,  // num_field_entries
+    11,  // num_field_entries
     0,  // num_aux_entries
     offsetof(decltype(_table_), field_names),  // no aux_entries
     TopOfBookEvent_class_data_.base(),
@@ -1572,37 +1762,39 @@ TopOfBookEvent::_table_ = {
     #endif  // PROTOBUF_PREFETCH_PARSE_TABLE
   }, {{
     {::_pbi::TcParser::MiniParse, {}},
-    // uint64 seq = 1;
+    // .toysequencer.MessageType msg_type = 1;
+    {::_pbi::TcParser::SingularVarintNoZag1<::uint32_t, offsetof(TopOfBookEvent, _impl_.msg_type_), 10>(),
+     {8, 10, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.msg_type_)}},
+    // uint64 seq = 2;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.seq_), 1>(),
-     {8, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_)}},
-    // uint64 timestamp = 2;
+     {16, 1, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_)}},
+    // uint64 timestamp = 3;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.timestamp_), 2>(),
-     {16, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.timestamp_)}},
-    // uint64 sid = 3;
+     {24, 2, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.timestamp_)}},
+    // uint64 sid = 4;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.sid_), 3>(),
-     {24, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.sid_)}},
-    // uint64 tin = 4;
+     {32, 3, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.sid_)}},
+    // uint64 tin = 5;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.tin_), 4>(),
-     {32, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.tin_)}},
-    // string symbol = 5;
+     {40, 4, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.tin_)}},
+    // string symbol = 6;
     {::_pbi::TcParser::FastUS1,
-     {42, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.symbol_)}},
-    // double bid_price = 6;
+     {50, 0, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.symbol_)}},
+    // double bid_price = 7;
     {::_pbi::TcParser::FastF64S1,
-     {49, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_price_)}},
-    // uint64 bid_size = 7;
+     {57, 5, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_price_)}},
+    // uint64 bid_size = 8;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.bid_size_), 6>(),
-     {56, 6, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_size_)}},
-    // double ask_price = 8;
+     {64, 6, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_size_)}},
+    // double ask_price = 9;
     {::_pbi::TcParser::FastF64S1,
-     {65, 7, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_price_)}},
-    // uint64 ask_size = 9;
+     {73, 7, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_price_)}},
+    // uint64 ask_size = 10;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.ask_size_), 8>(),
-     {72, 8, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_)}},
-    // uint64 exchange_time = 10;
+     {80, 8, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_)}},
+    // uint64 exchange_time = 11;
     {::_pbi::TcParser::SingularVarintNoZag1<::uint64_t, offsetof(TopOfBookEvent, _impl_.exchange_time_), 9>(),
-     {80, 9, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.exchange_time_)}},
-    {::_pbi::TcParser::MiniParse, {}},
+     {88, 9, 0, PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.exchange_time_)}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
     {::_pbi::TcParser::MiniParse, {}},
@@ -1610,30 +1802,32 @@ TopOfBookEvent::_table_ = {
   }}, {{
     65535, 65535
   }}, {{
-    // uint64 seq = 1;
+    // .toysequencer.MessageType msg_type = 1;
+    {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.msg_type_), _Internal::kHasBitsOffset + 10, 0, (0 | ::_fl::kFcOptional | ::_fl::kOpenEnum)},
+    // uint64 seq = 2;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_), _Internal::kHasBitsOffset + 1, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 timestamp = 2;
+    // uint64 timestamp = 3;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.timestamp_), _Internal::kHasBitsOffset + 2, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 sid = 3;
+    // uint64 sid = 4;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.sid_), _Internal::kHasBitsOffset + 3, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 tin = 4;
+    // uint64 tin = 5;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.tin_), _Internal::kHasBitsOffset + 4, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // string symbol = 5;
+    // string symbol = 6;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.symbol_), _Internal::kHasBitsOffset + 0, 0, (0 | ::_fl::kFcOptional | ::_fl::kUtf8String | ::_fl::kRepAString)},
-    // double bid_price = 6;
+    // double bid_price = 7;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_price_), _Internal::kHasBitsOffset + 5, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // uint64 bid_size = 7;
+    // uint64 bid_size = 8;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.bid_size_), _Internal::kHasBitsOffset + 6, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // double ask_price = 8;
+    // double ask_price = 9;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_price_), _Internal::kHasBitsOffset + 7, 0, (0 | ::_fl::kFcOptional | ::_fl::kDouble)},
-    // uint64 ask_size = 9;
+    // uint64 ask_size = 10;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.ask_size_), _Internal::kHasBitsOffset + 8, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
-    // uint64 exchange_time = 10;
+    // uint64 exchange_time = 11;
     {PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.exchange_time_), _Internal::kHasBitsOffset + 9, 0, (0 | ::_fl::kFcOptional | ::_fl::kUInt64)},
   }},
   // no aux_entries
   {{
-    "\33\0\0\0\0\6\0\0\0\0\0\0\0\0\0\0"
+    "\33\0\0\0\0\0\6\0\0\0\0\0\0\0\0\0"
     "toysequencer.TopOfBookEvent"
     "symbol"
   }},
@@ -1654,10 +1848,10 @@ PROTOBUF_NOINLINE void TopOfBookEvent::Clear() {
         reinterpret_cast<char*>(&_impl_.ask_price_) -
         reinterpret_cast<char*>(&_impl_.seq_)) + sizeof(_impl_.ask_price_));
   }
-  if ((cached_has_bits & 0x00000300U) != 0) {
+  if ((cached_has_bits & 0x00000700U) != 0) {
     ::memset(&_impl_.ask_size_, 0, static_cast<::size_t>(
-        reinterpret_cast<char*>(&_impl_.exchange_time_) -
-        reinterpret_cast<char*>(&_impl_.ask_size_)) + sizeof(_impl_.exchange_time_));
+        reinterpret_cast<char*>(&_impl_.msg_type_) -
+        reinterpret_cast<char*>(&_impl_.ask_size_)) + sizeof(_impl_.msg_type_));
   }
   _impl_._has_bits_.Clear();
   _internal_metadata_.Clear<::google::protobuf::UnknownFieldSet>();
@@ -1681,94 +1875,103 @@ PROTOBUF_NOINLINE void TopOfBookEvent::Clear() {
   ::uint32_t cached_has_bits = 0;
   (void)cached_has_bits;
 
-  // uint64 seq = 1;
+  // .toysequencer.MessageType msg_type = 1;
+  if ((this_._impl_._has_bits_[0] & 0x00000400U) != 0) {
+    if (this_._internal_msg_type() != 0) {
+      target = stream->EnsureSpace(target);
+      target = ::_pbi::WireFormatLite::WriteEnumToArray(
+          1, this_._internal_msg_type(), target);
+    }
+  }
+
+  // uint64 seq = 2;
   if ((this_._impl_._has_bits_[0] & 0x00000002U) != 0) {
     if (this_._internal_seq() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          1, this_._internal_seq(), target);
+          2, this_._internal_seq(), target);
     }
   }
 
-  // uint64 timestamp = 2;
+  // uint64 timestamp = 3;
   if ((this_._impl_._has_bits_[0] & 0x00000004U) != 0) {
     if (this_._internal_timestamp() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          2, this_._internal_timestamp(), target);
+          3, this_._internal_timestamp(), target);
     }
   }
 
-  // uint64 sid = 3;
+  // uint64 sid = 4;
   if ((this_._impl_._has_bits_[0] & 0x00000008U) != 0) {
     if (this_._internal_sid() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          3, this_._internal_sid(), target);
+          4, this_._internal_sid(), target);
     }
   }
 
-  // uint64 tin = 4;
+  // uint64 tin = 5;
   if ((this_._impl_._has_bits_[0] & 0x00000010U) != 0) {
     if (this_._internal_tin() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          4, this_._internal_tin(), target);
+          5, this_._internal_tin(), target);
     }
   }
 
-  // string symbol = 5;
+  // string symbol = 6;
   if ((this_._impl_._has_bits_[0] & 0x00000001U) != 0) {
     if (!this_._internal_symbol().empty()) {
       const ::std::string& _s = this_._internal_symbol();
       ::google::protobuf::internal::WireFormatLite::VerifyUtf8String(
           _s.data(), static_cast<int>(_s.length()), ::google::protobuf::internal::WireFormatLite::SERIALIZE, "toysequencer.TopOfBookEvent.symbol");
-      target = stream->WriteStringMaybeAliased(5, _s, target);
+      target = stream->WriteStringMaybeAliased(6, _s, target);
     }
   }
 
-  // double bid_price = 6;
+  // double bid_price = 7;
   if ((this_._impl_._has_bits_[0] & 0x00000020U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          6, this_._internal_bid_price(), target);
+          7, this_._internal_bid_price(), target);
     }
   }
 
-  // uint64 bid_size = 7;
+  // uint64 bid_size = 8;
   if ((this_._impl_._has_bits_[0] & 0x00000040U) != 0) {
     if (this_._internal_bid_size() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          7, this_._internal_bid_size(), target);
+          8, this_._internal_bid_size(), target);
     }
   }
 
-  // double ask_price = 8;
+  // double ask_price = 9;
   if ((this_._impl_._has_bits_[0] & 0x00000080U) != 0) {
     if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteDoubleToArray(
-          8, this_._internal_ask_price(), target);
+          9, this_._internal_ask_price(), target);
     }
   }
 
-  // uint64 ask_size = 9;
+  // uint64 ask_size = 10;
   if ((this_._impl_._has_bits_[0] & 0x00000100U) != 0) {
     if (this_._internal_ask_size() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          9, this_._internal_ask_size(), target);
+          10, this_._internal_ask_size(), target);
     }
   }
 
-  // uint64 exchange_time = 10;
+  // uint64 exchange_time = 11;
   if ((this_._impl_._has_bits_[0] & 0x00000200U) != 0) {
     if (this_._internal_exchange_time() != 0) {
       target = stream->EnsureSpace(target);
       target = ::_pbi::WireFormatLite::WriteUInt64ToArray(
-          10, this_._internal_exchange_time(), target);
+          11, this_._internal_exchange_time(), target);
     }
   }
 
@@ -1798,74 +2001,81 @@ PROTOBUF_NOINLINE void TopOfBookEvent::Clear() {
   ::_pbi::Prefetch5LinesFrom7Lines(&this_);
   cached_has_bits = this_._impl_._has_bits_[0];
   if ((cached_has_bits & 0x000000ffU) != 0) {
-    // string symbol = 5;
+    // string symbol = 6;
     if ((cached_has_bits & 0x00000001U) != 0) {
       if (!this_._internal_symbol().empty()) {
         total_size += 1 + ::google::protobuf::internal::WireFormatLite::StringSize(
                                         this_._internal_symbol());
       }
     }
-    // uint64 seq = 1;
+    // uint64 seq = 2;
     if ((cached_has_bits & 0x00000002U) != 0) {
       if (this_._internal_seq() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_seq());
       }
     }
-    // uint64 timestamp = 2;
+    // uint64 timestamp = 3;
     if ((cached_has_bits & 0x00000004U) != 0) {
       if (this_._internal_timestamp() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_timestamp());
       }
     }
-    // uint64 sid = 3;
+    // uint64 sid = 4;
     if ((cached_has_bits & 0x00000008U) != 0) {
       if (this_._internal_sid() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_sid());
       }
     }
-    // uint64 tin = 4;
+    // uint64 tin = 5;
     if ((cached_has_bits & 0x00000010U) != 0) {
       if (this_._internal_tin() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_tin());
       }
     }
-    // double bid_price = 6;
+    // double bid_price = 7;
     if ((cached_has_bits & 0x00000020U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_bid_price()) != 0) {
         total_size += 9;
       }
     }
-    // uint64 bid_size = 7;
+    // uint64 bid_size = 8;
     if ((cached_has_bits & 0x00000040U) != 0) {
       if (this_._internal_bid_size() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_bid_size());
       }
     }
-    // double ask_price = 8;
+    // double ask_price = 9;
     if ((cached_has_bits & 0x00000080U) != 0) {
       if (::absl::bit_cast<::uint64_t>(this_._internal_ask_price()) != 0) {
         total_size += 9;
       }
     }
   }
-  if ((cached_has_bits & 0x00000300U) != 0) {
-    // uint64 ask_size = 9;
+  if ((cached_has_bits & 0x00000700U) != 0) {
+    // uint64 ask_size = 10;
     if ((cached_has_bits & 0x00000100U) != 0) {
       if (this_._internal_ask_size() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_ask_size());
       }
     }
-    // uint64 exchange_time = 10;
+    // uint64 exchange_time = 11;
     if ((cached_has_bits & 0x00000200U) != 0) {
       if (this_._internal_exchange_time() != 0) {
         total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(
             this_._internal_exchange_time());
+      }
+    }
+    // .toysequencer.MessageType msg_type = 1;
+    if ((cached_has_bits & 0x00000400U) != 0) {
+      if (this_._internal_msg_type() != 0) {
+        total_size += 1 +
+                      ::_pbi::WireFormatLite::EnumSize(this_._internal_msg_type());
       }
     }
   }
@@ -1931,7 +2141,7 @@ void TopOfBookEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::
       }
     }
   }
-  if ((cached_has_bits & 0x00000300U) != 0) {
+  if ((cached_has_bits & 0x00000700U) != 0) {
     if ((cached_has_bits & 0x00000100U) != 0) {
       if (from._internal_ask_size() != 0) {
         _this->_impl_.ask_size_ = from._impl_.ask_size_;
@@ -1940,6 +2150,11 @@ void TopOfBookEvent::MergeImpl(::google::protobuf::MessageLite& to_msg, const ::
     if ((cached_has_bits & 0x00000200U) != 0) {
       if (from._internal_exchange_time() != 0) {
         _this->_impl_.exchange_time_ = from._impl_.exchange_time_;
+      }
+    }
+    if ((cached_has_bits & 0x00000400U) != 0) {
+      if (from._internal_msg_type() != 0) {
+        _this->_impl_.msg_type_ = from._impl_.msg_type_;
       }
     }
   }
@@ -1963,8 +2178,8 @@ void TopOfBookEvent::InternalSwap(TopOfBookEvent* PROTOBUF_RESTRICT PROTOBUF_NON
   swap(_impl_._has_bits_[0], other->_impl_._has_bits_[0]);
   ::_pbi::ArenaStringPtr::InternalSwap(&_impl_.symbol_, &other->_impl_.symbol_, arena);
   ::google::protobuf::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.exchange_time_)
-      + sizeof(TopOfBookEvent::_impl_.exchange_time_)
+      PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.msg_type_)
+      + sizeof(TopOfBookEvent::_impl_.msg_type_)
       - PROTOBUF_FIELD_OFFSET(TopOfBookEvent, _impl_.seq_)>(
           reinterpret_cast<char*>(&_impl_.seq_),
           reinterpret_cast<char*>(&other->_impl_.seq_));

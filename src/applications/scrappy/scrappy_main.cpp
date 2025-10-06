@@ -1,3 +1,5 @@
+#include "../../utils/env_utils.hpp"
+#include "messages.pb.h"
 #include "scrappy.hpp"
 #include <chrono>
 #include <csignal>
@@ -10,12 +12,14 @@ static void handle_signal(int) { running.store(false); }
 
 int main(int argc, char **argv) {
   try {
+    EnvUtils::load_env();
+
     std::signal(SIGINT, handle_signal);
     std::signal(SIGTERM, handle_signal);
 
-    std::string output = "sequenced_events.txt";
-    std::string mcast_addr = "239.255.0.1";
-    uint16_t port = 30001;
+    std::string output = std::getenv("SCRAPPY_FILE");
+    std::string mcast_addr = std::getenv("EVENTS_ADDR");
+    uint16_t port = std::stoi(std::getenv("EVENTS_PORT"));
 
     if (argc > 1) {
       output = argv[1];
@@ -30,11 +34,10 @@ int main(int argc, char **argv) {
     ScrappyApp scrappy(output, mcast_addr, port);
     scrappy.start();
 
-    scrappy.subscribe<toysequencer::TopOfBookEvent>();
-    scrappy.subscribe<toysequencer::TextEvent>();
+    scrappy.subscribe<toysequencer::TopOfBookEvent>(toysequencer::TOB_EVENT);
+    scrappy.subscribe<toysequencer::TextEvent>(toysequencer::TEXT_EVENT);
 
-    std::cout << "scrappy listening on " << mcast_addr << ":" << port
-              << ", writing to " << output << std::endl;
+    std::cout << "scrappy listening on " << mcast_addr << ":" << port << ", writing to " << output << std::endl;
 
     while (running.load()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(200));
