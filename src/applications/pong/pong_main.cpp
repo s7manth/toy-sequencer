@@ -23,17 +23,14 @@ int main() {
     const uint16_t cmd_port = std::stoi(std::getenv("CMD_PORT"));
     const uint8_t mcast_ttl = 1;
 
-    uint64_t ping_instance_id = 18;
-    uint64_t pong_instance_id = 81;
-
     PongApp pong(cmd_addr, cmd_port, 1, events_addr, events_port, log);
 
     pong.start();
 
     pong.subscribe<toysequencer::TextEvent>(toysequencer::TEXT_EVENT);
 
-    std::cout << "pong listening for TextEvent on " << cmd_addr << ":" << cmd_port << ", instance=" << pong_instance_id
-              << std::endl;
+    std::cout << "pong listening for TextEvent on " << cmd_addr << ":" << cmd_port
+              << ", instance=" << pong.get_instance_id() << std::endl;
 
     while (running.load()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(200));

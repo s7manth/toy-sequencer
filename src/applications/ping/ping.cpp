@@ -8,6 +8,9 @@ PingApp::PingApp(const std::string &commands_multicast_address, const uint16_t c
       EventReceiver<PingApp>(get_instance_id(), events_multicast_address, events_port), log_(std::move(log)) {}
 
 void PingApp::on_event(const toysequencer::TextEvent &event) {
+  if (event.tin() != get_instance_id())
+    return;
+
   if (event.text() == "PING") {
     log_("Ping received ack for sequenced PING, seq=" + std::to_string(event.seq()));
   }

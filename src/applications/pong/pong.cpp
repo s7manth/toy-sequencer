@@ -8,11 +8,16 @@ PongApp::PongApp(const std::string &cmd_multicast_address, const uint16_t cmd_po
       EventReceiver<PongApp>(get_instance_id(), events_multicast_address, events_port), log_(std::move(log)) {}
 
 void PongApp::on_event(const toysequencer::TextEvent &event) {
+  if (event.tin() != get_instance_id())
+    return;
+
   log_("Pong received message from Ping, seq=" + std::to_string(event.seq()));
 
   toysequencer::TextCommand cmd;
+  cmd.set_msg_type(toysequencer::TEXT_COMMAND);
   cmd.set_text("PONG");
   cmd.set_tin(InstanceIdUtils::get_instance_id("PING"));
+  cmd.set_sid(get_instance_id());
   this->send_command(cmd, get_instance_id());
   log_("Pong sent PONG response to Ping");
 }

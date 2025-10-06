@@ -28,7 +28,6 @@ public:
             // read varint (should be 1 byte for our enum values)
             uint8_t msg_type_val = data[1];
             if (msg_type_val == static_cast<uint8_t>(msg_type)) {
-              std::cout << "herere: " << msg_type_val << std::endl;
               on_datagram<CommandT>(data, len);
             }
           }

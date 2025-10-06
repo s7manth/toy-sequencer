@@ -69,10 +69,16 @@ void MulticastSender::setup_socket() {
       }
     }
 
-    // enable loopback so local subscribers on the same host receive packets
-    unsigned char loop = 1;
+    // Control multicast loopback: default disabled to avoid duplicate deliveries on some OSes.
+    // Override via env var MCAST_LOOPBACK=1 to enable.
+    unsigned char loop = 0;
+    if (const char *loopenv = std::getenv("MCAST_LOOPBACK")) {
+      if (loopenv[0] == '1') {
+        loop = 1;
+      }
+    }
     if (setsockopt(socket_, IPPROTO_IP, IP_MULTICAST_LOOP, reinterpret_cast<const char *>(&loop), sizeof(loop)) < 0) {
-      throw std::runtime_error("Failed to enable multicast loopback");
+      throw std::runtime_error("Failed to set multicast loopback");
     }
 
     int reuse = 1;

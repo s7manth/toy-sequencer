@@ -1,6 +1,7 @@
 #pragma once
 
 #include <atomic>
+#include <chrono>
 #include <cstdint>
 #include <functional>
 #include <mutex>
@@ -50,4 +51,13 @@ private:
 #else
   int socket_ = -1;
 #endif
+
+  // Deduplication state and config
+  std::chrono::steady_clock::time_point last_recv_time_{};
+  uint64_t last_payload_hash_ = 0;
+  size_t last_payload_len_ = 0;
+  in_addr last_src_addr_{};
+  uint16_t last_src_port_ = 0;
+  std::chrono::milliseconds dedup_window_{100};
+  bool enable_dedup_ = true;
 };

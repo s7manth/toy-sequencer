@@ -20,7 +20,8 @@ public:
       : ICommandSender<MarketDataFeedApp>(cmd_addr, cmd_port, ttl), log_(std::move(log)), source_(std::move(src)) {}
 
   void notify(const std::string &data) override {
-    toysequencer::TopOfBookCommand cmd = MDUtils::parse_json_tob(data, InstanceIdUtils::get_instance_id("SEQ"));
+    toysequencer::TopOfBookCommand cmd =
+        MDUtils::parse_json_tob(data, get_instance_id(), InstanceIdUtils::get_instance_id("SEQ"));
     this->send_command(cmd, get_instance_id());
   }
 

@@ -1,5 +1,5 @@
 #include "multicast_receiver.hpp"
-#include <iostream>
+#include <cstdlib>
 #include <stdexcept>
 
 MulticastReceiver::MulticastReceiver(const std::string &multicast_address, uint16_t port)
@@ -15,6 +15,16 @@ void MulticastReceiver::subscribe(DatagramHandler handler) {
 void MulticastReceiver::start() {
   if (running_.exchange(true)) {
     return;
+  }
+  // Configure dedup behavior from environment before starting thread
+  if (const char *dedupenv = std::getenv("MCAST_DEDUP")) {
+    this->enable_dedup_ = (dedupenv[0] != '0');
+  }
+  if (const char *winenv = std::getenv("MCAST_DEDUP_MS")) {
+    long ms = std::strtol(winenv, nullptr, 10);
+    if (ms > 0 && ms < 10000) {
+      this->dedup_window_ = std::chrono::milliseconds(ms);
+    }
   }
   worker_ = std::thread([this] { this->run_loop(); });
 }
@@ -87,12 +97,6 @@ void MulticastReceiver::run_loop() {
   }
 
   std::vector<uint8_t> buffer(64 * 1024);
-  // Deduplication state (function-local, receiver thread only)
-  static auto last_recv_time = std::chrono::steady_clock::time_point{};
-  static uint64_t last_payload_hash = 0;
-  static size_t last_payload_len = 0;
-  static in_addr last_src_addr{};
-  static uint16_t last_src_port = 0;
   while (running_.load()) {
     sockaddr_in src{};
 #ifdef _WIN32
@@ -108,34 +112,34 @@ void MulticastReceiver::run_loop() {
     }
 
     // Deduplicate immediate duplicates from same src:port (common on macOS with multicast)
-    auto now = std::chrono::steady_clock::now();
-    // Simple 64-bit FNV-1a hash over the payload
-    const uint8_t *p = buffer.data();
-    size_t len = static_cast<size_t>(n);
-    uint64_t h = 1469598103934665603ULL;
-    for (size_t i = 0; i < len; ++i) {
-      h ^= static_cast<uint64_t>(p[i]);
-      h *= 1099511628211ULL;
+    if (this->enable_dedup_) {
+      auto now = std::chrono::steady_clock::now();
+      // Simple 64-bit FNV-1a hash over the payload
+      const uint8_t *p = buffer.data();
+      size_t len = static_cast<size_t>(n);
+      uint64_t h = 1469598103934665603ULL;
+      for (size_t i = 0; i < len; ++i) {
+        h ^= static_cast<uint64_t>(p[i]);
+        h *= 1099511628211ULL;
+      }
+
+      uint16_t src_port = ntohs(src.sin_port);
+      bool same_src = (this->last_src_addr_.s_addr == src.sin_addr.s_addr) && (this->last_src_port_ == src_port);
+      bool same_payload = (this->last_payload_len_ == len) && (this->last_payload_hash_ == h);
+      bool within_window =
+          (this->last_recv_time_.time_since_epoch().count() != 0) &&
+          (std::chrono::duration_cast<std::chrono::milliseconds>(now - this->last_recv_time_) < this->dedup_window_);
+
+      if (same_src && same_payload && within_window) {
+        continue; // drop duplicate
+      }
+
+      this->last_recv_time_ = now;
+      this->last_payload_hash_ = h;
+      this->last_payload_len_ = len;
+      this->last_src_addr_ = src.sin_addr;
+      this->last_src_port_ = src_port;
     }
-
-    uint16_t src_port = ntohs(src.sin_port);
-    bool same_src = (last_src_addr.s_addr == src.sin_addr.s_addr) && (last_src_port == src_port);
-    bool same_payload = (last_payload_len == len) && (last_payload_hash == h);
-    bool within_window =
-        (last_recv_time.time_since_epoch().count() != 0) &&
-        (std::chrono::duration_cast<std::chrono::milliseconds>(now - last_recv_time) < std::chrono::milliseconds(100));
-
-    if (same_src && same_payload && within_window) {
-      continue; // drop duplicate
-    }
-
-    last_recv_time = now;
-    last_payload_hash = h;
-    last_payload_len = len;
-    last_src_addr = src.sin_addr;
-    last_src_port = src_port;
-
-    std::cout << "recv " << n << " bytes from " << inet_ntoa(src.sin_addr) << ":" << src_port << std::endl;
 
     std::vector<DatagramHandler> copy;
     {

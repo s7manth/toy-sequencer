@@ -29,7 +29,7 @@ public:
                       std::chrono::high_resolution_clock::now().time_since_epoch())
                       .count();
 
-    this->send(text_adapter.make_event(cmd, seq, 8888, ts));
+    this->send(text_adapter.make_event(cmd, seq, cmd.sid(), ts));
   }
 
   void on_command(const toysequencer::TopOfBookCommand &cmd) {
@@ -40,7 +40,7 @@ public:
                       std::chrono::high_resolution_clock::now().time_since_epoch())
                       .count();
 
-    this->send(tob_adapter.make_event(cmd, seq, 9999, ts));
+    this->send(tob_adapter.make_event(cmd, seq, cmd.sid(), ts));
   }
 
   template <typename EventT> void send_event(const EventT &event) {

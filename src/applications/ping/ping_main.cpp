@@ -37,7 +37,8 @@ int main() {
     cmd.set_msg_type(toysequencer::TEXT_COMMAND);
     cmd.set_text("PING");
     cmd.set_tin(InstanceIdUtils::get_instance_id("PONG"));
-    ping.send_command(cmd, InstanceIdUtils::get_instance_id("PING"));
+    cmd.set_sid(ping.get_instance_id());
+    ping.send_command(cmd, ping.get_instance_id());
 
     while (running.load()) {
       std::this_thread::sleep_for(std::chrono::milliseconds(200));
